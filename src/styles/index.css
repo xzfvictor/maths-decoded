@@ -1,0 +1,35 @@
+@import 'katex/dist/katex.min.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-100;
+}
+
+/* Keep KaTeX from overflowing on small screens for long expressions. */
+.katex-display {
+  @apply overflow-x-auto overflow-y-hidden py-1;
+}
+
+/* Prose-ish spacing for authored theory. */
+.theory > * + * {
+  @apply mt-4;
+}
+.theory h3 {
+  @apply mt-8 text-lg font-semibold text-slate-900 dark:text-white;
+}
+.theory ul {
+  @apply list-disc space-y-1 pl-6;
+}
+.theory ol {
+  @apply list-decimal space-y-1 pl-6;
+}
