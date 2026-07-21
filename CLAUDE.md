@@ -9,9 +9,10 @@ Units 1 & 2, covering every VCAA study-design dot point. A student navigates to 
 topic, works through short lessons (theory + worked examples), and does exercises
 with worked solutions. No backend; progress is stored in the browser.
 
-**Status:** Unit 1 is fully authored (11 topics). Unit 2 is not yet authored — its
-dot points exist in `coverage.ts` but no topics claim them yet (so `check:coverage`
-reports them as unmapped; this is expected until Unit 2 is written).
+**Status:** Both units are fully authored. **22 topics, 80 lessons, 140
+exercises** covering every study-design dot point (43/43 claimed). Unit 1 has
+11 topics; Unit 2 has 11 topics in the same shape (each one is a separate file
+in `src/content/topics/` registered in the `TOPICS` array).
 
 ## Stack
 
@@ -28,9 +29,8 @@ npm run check:coverage   # assert every VCAA dot point is claimed by >=1 topic
 npm run check:exercises  # instantiate every param exercise over 300 seeds and validate
 ```
 
-Always run all three before considering content work done. `check:coverage` will
-"fail" on unmapped Unit 2 dot points until Unit 2 is authored — that's expected;
-what matters is that no **Unit 1** dot point regresses to unmapped.
+Always run all three before considering content work done. `check:coverage` must
+stay green — that means no dot point, in either unit, is ever unmapped.
 
 ## Content model (`src/content/types.ts`)
 
@@ -97,6 +97,8 @@ refreshes (`src/lib/useProgress.ts`). A legacy `sections` key is read for migrat
 
 ## Next up
 
-Author the 11 Unit 2 topics (circular functions, exponentials & logarithms, the
-derivative and differentiation, anti-differentiation, and the Unit 2 probability
-strand) so the remaining `u2-*` dot points are all claimed.
+Both Units 1 and 2 are complete. Likely next directions (when one comes up):
+enrich existing topics with more curated exercises, or add a Unit 3/4 study
+strand when the user asks. Any new topic follows the same registration pattern
+(`Topic` shape, registered in the `TOPICS` array) — `check:coverage` will
+fail loudly if a `dotPoints` id is unknown or unmapped.
