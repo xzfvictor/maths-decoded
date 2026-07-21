@@ -14,6 +14,17 @@ import { simultaneousEquations } from './08-simultaneous-equations'
 import { ratesOfChange } from './09-rates-of-change'
 import { probabilityFoundations } from './10-probability-foundations'
 import { countingTechniques } from './11-counting'
+import { circularFunctions } from './12-circular-functions'
+import { periodicProperties } from './13-periodic-properties'
+import { exponentialFunctions } from './14-exponential-functions'
+import { logarithmsTopic } from './15-logarithms'
+import { solvingTranscendental } from './16-solving-transcendental'
+import { newtonsMethod } from './17-newtons-method'
+import { limitsAndDerivative } from './18-limits-and-derivative'
+import { differentiationTopic } from './19-differentiation'
+import { antidifferentiation } from './20-antidifferentiation'
+import { probabilityCompound } from './21-probability-compound'
+import { conditionalProbability } from './22-conditional-probability'
 
 // Topics are registered here in curriculum order. As more are authored they get
 // added to this array. The coverage checker reads TOPICS to verify every dot
@@ -30,6 +41,17 @@ export const TOPICS: Topic[] = [
   ratesOfChange,
   probabilityFoundations,
   countingTechniques,
+  circularFunctions,
+  periodicProperties,
+  exponentialFunctions,
+  logarithmsTopic,
+  solvingTranscendental,
+  newtonsMethod,
+  limitsAndDerivative,
+  differentiationTopic,
+  antidifferentiation,
+  probabilityCompound,
+  conditionalProbability,
 ]
 
 export function topicById(id: string): Topic | undefined {
