@@ -14,8 +14,10 @@ VCAA study-design content, so the app covers the whole course — not just a sam
 - **Complete coverage, guaranteed.** A build-time check asserts that every VCAA
   study-design dot point is covered by a topic.
 
-> **Status:** Unit 1 is fully authored (11 topics, 39 lessons, 61 exercises).
-> Unit 2 is in progress.
+> **Status:** Both units are fully authored. **22 topics, 80 lessons, 140
+> exercises**, covering every study-design dot point. The
+> `check:coverage` script asserts that 43/43 dot points are claimed and
+> stays green.
 
 ## Tech stack
 
@@ -44,6 +46,37 @@ npm run dev       # start the dev server (http://localhost:5173)
 | `npm run preview` | Serve the built site locally. |
 | `npm run check:coverage` | Verify every VCAA dot point is claimed by a topic. |
 | `npm run check:exercises` | Validate every randomised exercise across 300 seeds. |
+
+## Course map
+
+### Unit 1 — Functions, algebra, calculus & probability
+1. Functions, relations, domain & range
+2. Inverse functions & their graphs
+3. Linear & quadratic functions
+4. Cubic & quartic functions
+5. Power functions
+6. Transformations of the plane
+7. Solving polynomials
+8. Simultaneous equations
+9. Rates of change
+10. Probability foundations
+11. Counting techniques
+
+### Unit 2 — Transcendental functions, calculus & probability
+12. Circular functions
+13. Periodicity, symmetry & transformed circular functions
+14. Exponential functions & their graphs
+15. Logarithms
+16. Solving transcendental equations
+17. Newton's method
+18. Limits & the derivative from first principles
+19. Differentiation rules & applications
+20. Anti-differentiation
+21. Probability of compound events
+22. Conditional probability & independence
+
+See [`src/content/coverage.ts`](./src/content/coverage.ts) for the full dot-point
+catalog and which topics cover each one.
 
 ## How content is organised
 
