@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { topicById } from '../content/topics'
 import { Prose } from '../components/Prose'
 import { ExerciseCard } from '../components/ExerciseCard'
+import { WorkedExample } from '../components/WorkedExample'
 import { isLessonDone, setLessonDone } from '../lib/storage'
 import { useProgress } from '../lib/useProgress'
 
@@ -50,26 +51,7 @@ export function LessonPage() {
           <h2 className="mb-4 text-2xl font-bold text-slate-900 dark:text-white">Worked examples</h2>
           <div className="space-y-4">
             {lesson.examples.map((ex) => (
-              <details
-                key={ex.id}
-                className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
-              >
-                <summary className="cursor-pointer list-none">
-                  <span className="font-medium text-slate-800 dark:text-slate-100">
-                    <Prose text={ex.statement} className="inline" />
-                  </span>
-                  <span className="ml-2 text-xs text-brand-500 group-open:hidden">
-                    Show solution ▾
-                  </span>
-                </summary>
-                <ol className="mt-4 list-decimal space-y-2 border-t border-slate-100 pl-5 pt-4 text-sm dark:border-slate-800">
-                  {ex.steps.map((step, i) => (
-                    <li key={i}>
-                      <Prose text={step} className="inline" />
-                    </li>
-                  ))}
-                </ol>
-              </details>
+              <WorkedExample key={ex.id} example={ex} />
             ))}
           </div>
         </section>
