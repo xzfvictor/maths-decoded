@@ -50,10 +50,12 @@ function splitToSegments(step: string): Segment[] {
   return out
 }
 
-/** Split a plain-text segment into word tokens, preserving whitespace. */
+/** Split a plain-text segment into word tokens. Each non-whitespace run
+ *  grabs its trailing whitespace so the rendered HTML never has a
+ *  whitespace-only token (those collapse to zero width inside an
+ *  inline-block). */
 function tokenize(text: string): string[] {
-  // Keep separator runs as their own tokens so spaces still render.
-  return text.split(/(\s+)/).filter((t) => t.length > 0)
+  return text.match(/\s+|\S+\s*/g) ?? []
 }
 
 /** Per-step animation tuning. */
@@ -137,6 +139,9 @@ export function AnimatedStepText({
         }
         .animated-step-text .anim-token {
           display: inline-block;
+          /* Preserve trailing whitespace inside the token; otherwise the
+             browser trims it and words run together. */
+          white-space: pre;
           opacity: 0;
           animation-name: animTokenIn;
           animation-timing-function: ease-out;
