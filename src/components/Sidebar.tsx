@@ -4,7 +4,7 @@ import type { Unit } from '../content/types'
 import { useProgress } from '../lib/useProgress'
 import { topicLessonRatio, isLessonDone } from '../lib/storage'
 
-const UNITS: Unit[] = [1, 2]
+const UNITS: Unit[] = [1, 2, 10]
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   useProgress() // re-render on progress changes so ticks update live
@@ -18,7 +18,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         className="text-lg font-bold text-slate-900 dark:text-white"
       >
         VCE Maths Methods
-        <span className="block text-xs font-normal text-slate-500">Units 1 &amp; 2</span>
+        <span className="block text-xs font-normal text-slate-500">Units 1, 2 &amp; Pre-VCE</span>
       </NavLink>
 
       {UNITS.map((unit) => {
