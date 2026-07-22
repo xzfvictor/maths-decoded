@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { WorkedExample } from '../content/types'
 import { Prose } from './Prose'
+import { AnimatedStepText } from './AnimatedStepText'
 
 /**
  * Interactive worked-example card.
@@ -161,7 +162,7 @@ export function WorkedExample({ example }: { example: WorkedExample }) {
                       : undefined
                   }
                 >
-                  <Prose text={step} className="inline" />
+                  <AnimatedStepText text={step} triggerKey={i} />
                 </li>
               )
             })}
