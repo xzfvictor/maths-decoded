@@ -20,6 +20,30 @@ import { measurementTrig } from './25-measurement-trig'
 import { spaceProofs } from './26-space-proofs'
 import { statisticsBoxplots } from './27-statistics-boxplots'
 import { probabilityConditional } from './28-probability-conditional'
+import { algebraFactorisation } from './29-m-algebra-factorisation'
+import { algebraExponentLaws } from './30-m-algebra-exponent-laws'
+import { algebraFractions } from './31-m-algebra-fractions'
+import { algebraBinomial } from './32-m-algebra-binomial'
+import { algebraFormulas } from './33-m-algebra-formulas'
+import { algebraAlgorithms } from './34-m-algebra-algorithms'
+import { algebraLinearEq } from './35-m-algebra-linear-eq'
+import { algebraInequalities } from './36-m-algebra-linear-inequalities'
+import { algebraSimultaneous } from './37-m-algebra-simultaneous'
+import { algebraGradients } from './38-m-algebra-gradients'
+import { algebraRelations } from './39-m-algebra-relations'
+import { algebraLinearFractions } from './40-m-algebra-linear-fractions'
+import { algebraExponentials } from './41-m-algebra-exponentials'
+import { algebraModelling } from './42-m-algebra-modelling'
+import { algebraNumerical } from './43-m-algebra-numerical'
+import { measurementAreaVolume } from './44-m-measurement-area-volume'
+import { measurementLogScales } from './45-m-measurement-log-scales'
+import { measurementScaling } from './46-m-measurement-scaling'
+import { spaceNetworks } from './47-m-space-networks'
+import { statisticsScatter } from './48-m-statistics-scatter'
+import { statisticsTwoWay } from './49-m-statistics-two-way'
+import { statisticsClaims } from './50-m-statistics-claims'
+import { statisticsInvestigations } from './51-m-statistics-investigations'
+import { probabilityExperiments } from './52-m-probability-experiments'
 import { circularFunctions } from './12-circular-functions'
 import { periodicProperties } from './13-periodic-properties'
 import { exponentialFunctions } from './14-exponential-functions'
@@ -64,6 +88,30 @@ export const TOPICS: Topic[] = [
   spaceProofs,
   statisticsBoxplots,
   probabilityConditional,
+  algebraFactorisation,
+  algebraExponentLaws,
+  algebraFractions,
+  algebraBinomial,
+  algebraFormulas,
+  algebraAlgorithms,
+  algebraLinearEq,
+  algebraInequalities,
+  algebraSimultaneous,
+  algebraGradients,
+  algebraRelations,
+  algebraLinearFractions,
+  algebraExponentials,
+  algebraModelling,
+  algebraNumerical,
+  measurementAreaVolume,
+  measurementLogScales,
+  measurementScaling,
+  spaceNetworks,
+  statisticsScatter,
+  statisticsTwoWay,
+  statisticsClaims,
+  statisticsInvestigations,
+  probabilityExperiments,
 ]
 
 export function topicById(id: string): Topic | undefined {
