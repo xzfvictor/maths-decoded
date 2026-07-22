@@ -45,13 +45,30 @@ Differentiating $x^2 + 7$ and $x^2 - 5$ both give $2x$. So the **family** of ant
             'In general: $f(x) = 2x^3 + C$.',
           ],
         },
+        {
+          id: 'ex-integrate-linear',
+          statement: 'Find an anti-derivative of $g(x) = 5x$.',
+          steps: [
+            'Look for $f$ with $f\\prime(x) = 5x$.',
+            'Try $f(x) = \\tfrac{5}{2}x^2$: $\\tfrac{d}{dx}(\\tfrac{5}{2}x^2) = 5x$ — right.',
+            "So an anti-derivative is $\\tfrac{5}{2}x^2 + C$.",
+          ],
+        },
+        {
+          id: 'ex-undoing-diff',
+          statement: 'Verify that $f(x) = \\tfrac{4}{3}x^3 + 2x^2 - 7x + 5$ is an anti-derivative of $g(x) = 4x^2 + 4x - 7$.',
+          steps: [
+            'Differentiate $f$ term-by-term: $f\\prime(x) = 4x^2 + 4x - 7$.',
+            'That matches $g(x)$, so yes.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-antiderive-power',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             // integrate a * x^n
             const a = (seed % 4) + 2 // 2..5
             const n = (Math.floor(seed / 4) % 3) + 1 // 1..3 to keep polynomial answers clean
@@ -92,6 +109,21 @@ Differentiating $x^2 + 7$ and $x^2 - 5$ both give $2x$. So the **family** of ant
             ],
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-power-rule-anti',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Find an anti-derivative of $g(x) = x^2$. (Omit the constant.)',
+            answer: 'x^3/3',
+            answerType: 'polynomial',
+            hint: '$\\int x^n \\, dx = \\dfrac{x^{n+1}}{n+1} + C$.',
+            solution: [
+              '$\\int x^2\\, dx = \\dfrac{x^3}{3} + C$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -127,13 +159,32 @@ The family has one free parameter ($C$); one equation pins it down. If the rule 
             'The member is $f(x) = x^2 + 2$.',
           ],
         },
+        {
+          id: 'ex-family-cos',
+          statement:
+            'The family $f(x) = \\sin x + C$ has gradient $f\\prime(x) = \\cos x$. Find the member through $(0, 4)$.',
+          steps: [
+            '$\\sin 0 = 0$, so $f(0) = 0 + C = C$.',
+            'Want $C = 4$.',
+            'So $f(x) = \\sin x + 4$.',
+          ],
+        },
+        {
+          id: 'ex-family-initial-condition',
+          statement:
+            'Given the family $f(x) = x^3 + C$ and $f(1) = 2$, find the member.',
+          steps: [
+            'Plug $x = 1$: $f(1) = 1 + C = 2$, so $C = 1$.',
+            'So $f(x) = x^3 + 1$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-family-pin',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // family f(x) = x^2 + C. passes through (a, b) means b = a^2 + C → C = b - a^2.
             const a = (seed % 3) + 1 // 1..3
             const C = (Math.floor(seed / 3) % 5) - 2 // -2..2
@@ -162,6 +213,21 @@ The family has one free parameter ($C$); one equation pins it down. If the rule 
             hint: 'C can be any real number.',
             solution: [
               '$C$ is unconstrained by the gradient function, so $C \\in \\mathbb{R}$ gives infinitely many members.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-two-parameters',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'The family $f(x) = ax^2 + b$ has how many parameters? Answer as a single digit.',
+            answer: '2',
+            answerType: 'numeric',
+            hint: 'Count the placeholders $a$ and $b$.',
+            solution: [
+              'Two parameters: $a$ and $b$. So $2$ equations are needed to pin down a member.',
             ],
           },
         },
@@ -204,13 +270,23 @@ Given velocity $v(t)$, anti-differentiate to get displacement $s(t)$. Given acce
             'So $s(t) = 3t^2$ metres.',
           ],
         },
+        {
+          id: 'ex-acceleration',
+          statement:
+            'A particle has acceleration $a(t) = 4$ m/s² and $v(0) = 3$ m/s, $s(0) = 0$. Find $v(t)$ and $s(t)$.',
+          steps: [
+            'Anti-differentiate $a$: $v(t) = 4t + C_1$. $v(0) = 3 \\Rightarrow C_1 = 3$, so $v(t) = 4t + 3$.',
+            'Anti-differentiate $v$: $s(t) = 2t^2 + 3t + C_2$. $s(0) = 0 \\Rightarrow C_2 = 0$.',
+            'So $s(t) = 2t^2 + 3t$ metres.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-recover',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // f'(x) = 2 a x => f(x) = a x^2 + C ; f(1) = a + C → C = boundary - a
             const a = (seed % 3) + 2 // 2..4
             const boundary = (Math.floor(seed / 3) % 5) + 6 // 6..10
@@ -242,6 +318,22 @@ Given velocity $v(t)$, anti-differentiate to get displacement $s(t)$. Given acce
               '$\\int (4t + 2)\\, dt = 2t^2 + 2t + C$.',
               "$s(0) = 1$ gives $C = 1$.",
               '$s(t) = 2t^2 + 2t + 1$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-recover-from-f-prime',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              "If $f'(x) = 4x$ and $f(1) = 5$, find $f(2)$.",
+            answer: '11',
+            answerType: 'numeric',
+            hint: 'Find $f(x)$, then evaluate.',
+            solution: [
+              '$f(x) = 2x^2 + C$. $f(1) = 5 \\Rightarrow 2 + C = 5 \\Rightarrow C = 3$.',
+              '$f(x) = 2x^2 + 3$, so $f(2) = 8 + 3 = 11$.',
             ],
           },
         },

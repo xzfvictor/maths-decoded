@@ -39,6 +39,26 @@ A function is **one-to-one** if different $x$-values always give different $y$-v
             'One input gives two outputs, so it is **not** a function.',
           ],
         },
+        {
+          id: 'ex-vlt-graph',
+          statement:
+            'A graph passes through $(2, 5)$ and $(2, 7)$. Does it represent a function of $x$?',
+          steps: [
+            'At $x = 2$, the graph has two different $y$-values: $5$ and $7$.',
+            'A vertical line at $x = 2$ hits the graph at two points — the vertical line test fails.',
+            'So the relation is not a function.',
+          ],
+        },
+        {
+          id: 'ex-relation-yes',
+          statement:
+            'A taxi fare in dollars is $f(t) = 3 + 2t$ where $t$ is the trip length in km. Is this a function of $t$?',
+          steps: [
+            'For every trip length $t$ the rule gives exactly one fare.',
+            'No two different fares come from the same trip length.',
+            'Yes — it is a function (in fact a one-to-one function on $t \\ge 0$).',
+          ],
+        },
       ],
       exercises: [
         {
@@ -74,6 +94,40 @@ A function is **one-to-one** if different $x$-values always give different $y$-v
             ],
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-many-to-one-example',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Which of these is an example of a function that is many-to-one? $y = 3x$, $y = x^3$, $y = x^2 + 1$. (Type the function as it appears.)',
+            answer: 'y=x^2+1',
+            answerType: 'exact',
+            hint: 'A many-to-one function sends different inputs to the same output.',
+            solution: [
+              '$y = 3x$ is one-to-one (and $y = x^3$ is too).',
+              '$y = x^2 + 1$ is many-to-one: $f(2) = f(-2) = 5$.',
+            ],
+          },
+        },
+        {
+          kind: 'param',
+          id: 'p-vertical-line',
+          difficulty: 'intro',
+          build: (seed) => {
+            const a = ((seed % 5) + 1) // 1..5
+            return {
+              prompt: `On the graph of $x = y^2$, how many $y$-values correspond to $x = ${a * a}$? Answer as an integer.`,
+              answer: '2',
+              answerType: 'numeric',
+              hint: `Solve $y^2 = ${a * a}$.`,
+              solution: [
+                `$${a * a}$ is positive, so $y = \\pm ${a}$.`,
+                `Two $y$-values correspond to $x = ${a * a}$.`,
+              ],
+            }
+          },
+        },
       ],
     },
 
@@ -101,6 +155,24 @@ The "maps to" arrow $\\mapsto$ is also used: $x \\mapsto x^2$.`,
             '$g(-3) = (-3)^2 - 2(-3) = 9 + 6 = 15$.',
             '$g(x+1) = (x+1)^2 - 2(x+1)$.',
             'Expand: $(x^2 + 2x + 1) - (2x + 2) = x^2 - 1$.',
+          ],
+        },
+        {
+          id: 'ex-maps-to',
+          statement: 'Express $g(x) = x^2 - 2x$ in map form $f : \\mathbb{R} \\to \\mathbb{R}, \\, x \\mapsto \\ldots$.',
+          steps: [
+            'The rule is $x \\mapsto x^2 - 2x$.',
+            'Both domain and co-domain are $\\mathbb{R}$.',
+            'Full statement: $g : \\mathbb{R} \\to \\mathbb{R}, \\, x \\mapsto x^2 - 2x$.',
+          ],
+        },
+        {
+          id: 'ex-numerical-eval',
+          statement: 'If $f(x) = \\sqrt{x + 4}$, evaluate $f(5)$ and $f(-3)$.',
+          steps: [
+            '$f(5) = \\sqrt{5 + 4} = \\sqrt{9} = 3$.',
+            '$f(-3) = \\sqrt{-3 + 4} = \\sqrt{1} = 1$.',
+            'Both are defined because $x \\ge -4$ for the maximal domain.',
           ],
         },
       ],
@@ -152,6 +224,21 @@ The "maps to" arrow $\\mapsto$ is also used: $x \\mapsto x^2$.`,
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-evaluate-expression',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'If $f(x) = 3 - 5x$, find $f(-2)$ as an integer.',
+            answer: '13',
+            answerType: 'numeric',
+            hint: "Substitute $x = -2$ into the rule.",
+            solution: [
+              '$f(-2) = 3 - 5(-2) = 3 + 10 = 13$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -190,6 +277,15 @@ $[a, b]$ includes both endpoints; $(a, b)$ excludes them; $[a, b)$ mixes. $\\inf
             '$x^2 \\ge 0$ for all real $x$, with minimum $0$ at $x = 0$.',
             'So $x^2 + 1 \\ge 1$, achieving its least value $1$.',
             'The range is $[1, \\infty)$.',
+          ],
+        },
+        {
+          id: 'ex-fraction-domain',
+          statement: 'State the maximal domain of $f(x) = \\dfrac{3}{x - 5}$.',
+          steps: [
+            'A fraction is undefined when its denominator is $0$.',
+            'Set $x - 5 = 0 \\Rightarrow x = 5$; this value must be excluded.',
+            'The maximal domain is $\\mathbb{R} \\setminus \\{5\\}$.',
           ],
         },
       ],
@@ -233,6 +329,22 @@ $[a, b]$ includes both endpoints; $(a, b)$ excludes them; $[a, b)$ mixes. $\\inf
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-range-linear',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Find the range of $f(x) = 2x + 3$ with domain $\\mathbb{R}$.',
+            answer: 'R',
+            answerType: 'exact',
+            hint: 'A non-horizontal straight line covers every real $y$.',
+            solution: [
+              'As $x$ varies over $\\mathbb{R}$, $2x + 3$ takes every real value.',
+              'The range is $\\mathbb{R}$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -261,6 +373,26 @@ Graphs of real data (temperature over a day, a car's distance over time) may hav
             'After 3 pm the graph is decreasing.',
           ],
         },
+        {
+          id: 'ex-distance-graph',
+          statement:
+            'A distance-time graph for a bike is flat from 0–5 min, rises linearly from 5–20 min, then is flat again. What features are visible?',
+          steps: [
+            'Flat from 0–5 min: bike is stationary.',
+            'Linear rise from 5–20 min: constant non-zero speed (rate of change is positive and constant).',
+            'Flat after 20 min: bike stops again. Two turning-point-like changes at $t = 5$ and $t = 20$.',
+          ],
+        },
+        {
+          id: 'ex-water-container',
+          statement:
+            'A graph of water height vs. time in a bathtub starts flat, has a steeper middle section, then flattens. Identify when the rate of change is largest.',
+          steps: [
+            'Where the graph is steepest, the rate of change of height is largest.',
+            'In this case the middle section has the steepest slope, so the rate is largest then.',
+            'This matches the moment water is pouring in fastest (e.g. with both taps open).',
+          ],
+        },
       ],
       exercises: [
         {
@@ -276,6 +408,43 @@ Graphs of real data (temperature over a day, a car's distance over time) may hav
             solution: [
               'Decreasing then increasing means the graph reaches a trough.',
               'That lowest turning point is a local minimum.',
+            ],
+          },
+        },
+        {
+          kind: 'param',
+          id: 'p-y-intercept',
+          difficulty: 'intro',
+          build: (seed) => {
+            const a = (seed % 4) + 2 // 2..5
+            const b = ((Math.floor(seed / 4) % 4) + 1) // 1..4
+            const c = ((Math.floor(seed / 16) % 5) + 1) // 1..5
+            // y-intercept of f(x) = ax^2 + bx + c is c
+            void a; void b
+            return {
+              prompt: `What is the $y$-intercept of $y = ${a}x^2 + ${b}x + ${c}$? (State the $y$-value as an integer.)`,
+              answer: String(c),
+              answerType: 'numeric',
+              hint: 'Set $x = 0$.',
+              solution: [
+                `At $x = 0$: $y = ${c}$.`,
+                `The $y$-intercept is $(0, ${c})$.`,
+              ],
+            }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-x-intercepts-graph',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A curve crosses the $x$-axis at three points: $x = -2$, $x = 0$, and $x = 3$. How many $x$-intercepts does the curve have? (As an integer.)',
+            answer: '3',
+            answerType: 'numeric',
+            hint: 'Each crossing counts as one $x$-intercept.',
+            solution: [
+              'The curve crosses the $x$-axis three times — so it has three $x$-intercepts.',
             ],
           },
         },

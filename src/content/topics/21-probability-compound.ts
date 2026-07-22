@@ -46,13 +46,31 @@ A **tree** successively branches through each stage of the experiment; branch pr
             '$2 \\times 6 = 12$. List: $\\{(H,1), (H,2), \\ldots, (T, 6)\\}$.',
           ],
         },
+        {
+          id: 'ex-two-way-table',
+          statement:
+            'Of 60 students, 25 study biology and 30 study chemistry, with 10 studying both. How many study neither?',
+          steps: [
+            'Use the addition rule: $|B \\cup C| = |B| + |C| - |B \\cap C| = 25 + 30 - 10 = 45$.',
+            'Neither = $60 - 45 = 15$ students.',
+          ],
+        },
+        {
+          id: 'ex-venn',
+          statement:
+            'Two events $A$ and $B$ satisfy $\\Pr(A) = 0.5$, $\\Pr(B) = 0.4$, and $\\Pr(A \\cap B) = 0.2$. Which is bigger: $\\Pr(A)$ or $\\Pr(A \\cap B)$?',
+          steps: [
+            'A sub-event cannot be more likely than its enclosing event: $\\Pr(A \\cap B) \\le \\Pr(A)$.',
+            '$0.2 < 0.5$, so $\\Pr(A)$ is bigger.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-sample-space-size',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             // Two events with result counts a * b.
             const aVals = [2, 4, 6]
             const bVals = [3, 4, 5, 6]
@@ -82,6 +100,21 @@ A **tree** successively branches through each stage of the experiment; branch pr
             solution: [
               'Every outcome belongs to exactly one region.',
               'So the probabilities of all (disjoint) regions sum to $1$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-sample-size',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'A coin is tossed and a 4-sided die is rolled. How many equally likely outcomes are there?',
+            answer: '8',
+            answerType: 'numeric',
+            hint: 'Multiply the choices: $2 \\times 4$.',
+            solution: [
+              '$2 \\times 4 = 8$ equally likely outcomes.',
             ],
           },
         },
@@ -127,13 +160,22 @@ $\\Pr(A^c) = 1 - \\Pr(A)$, where $A^c$ is everything in the sample space that is
             'So they are not mutually exclusive (there is one overlap).',
           ],
         },
+        {
+          id: 'ex-mutually-exclusive-2',
+          statement:
+            'A coin is tossed once. $A = \\{$heads$\\}$ and $B = \\{$tails$\\}$. Are $A$ and $B$ mutually exclusive?',
+          steps: [
+            'Heads and tails cannot both happen — $\\Pr(A \\cap B) = 0$.',
+            'So $A$ and $B$ are mutually exclusive.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-addition-rule',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // Pr(A), Pr(B), Pr(A∩B) chosen so result is a nice decimal.
             const choices: Array<[number, number, number]> = [
               [0.5, 0.4, 0.2], // 0.7
@@ -158,7 +200,7 @@ $\\Pr(A^c) = 1 - \\Pr(A)$, where $A^c$ is everything in the sample space that is
           kind: 'param',
           id: 'p-mutually-exclusive',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // Pre-selected pair sums that are always < 1.
             const choices: Array<[number, number]> = [
               [0.2, 0.3],
@@ -177,6 +219,21 @@ $\\Pr(A^c) = 1 - \\Pr(A)$, where $A^c$ is everything in the sample space that is
                 `$\\Pr(A \\cup B) = ${pA} + ${pB} = ${ans}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-union-overlap',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'For $\\Pr(A) = 0.4$, $\\Pr(B) = 0.5$, $\\Pr(A \\cap B) = 0.2$, find $\\Pr(A \\cup B)$.',
+            answer: '0.7',
+            answerType: 'numeric',
+            hint: 'Addition rule.',
+            solution: [
+              '$\\Pr(A \\cup B) = 0.4 + 0.5 - 0.2 = 0.7$.',
+            ],
           },
         },
       ],
@@ -210,6 +267,26 @@ Toss a coin twice. Branch probabilities: $\\tfrac12, \\tfrac12$ at each toss.
             '$\\Pr(\\text{RB or BR}) = \\tfrac{12}{25}$.',
           ],
         },
+        {
+          id: 'ex-tree-two-coins',
+          statement:
+            'Two fair coins are tossed. Compute $\\Pr(\\text{exactly one head})$.',
+          steps: [
+            'Two paths give exactly one head: HT and TH.',
+            'Each has probability $\\tfrac{1}{2} \\cdot \\tfrac{1}{2} = \\tfrac{1}{4}$.',
+            '$\\Pr(\\text{exactly one H}) = \\tfrac{1}{4} + \\tfrac{1}{4} = \\tfrac{1}{2}$.',
+          ],
+        },
+        {
+          id: 'ex-tree-conditional',
+          statement:
+            'A bag has 3 red, 2 blue. **Without replacement**, what is $\\Pr(\\text{R then B})$?',
+          steps: [
+            'First red: $\\tfrac{3}{5}$.',
+            'Without replacement, 4 balls left, 2 blue: $\\tfrac{2}{4} = \\tfrac{1}{2}$.',
+            'Multiply: $\\tfrac{3}{5} \\cdot \\tfrac{1}{2} = \\tfrac{3}{10}$.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -234,7 +311,7 @@ Toss a coin twice. Branch probabilities: $\\tfrac12, \\tfrac12$ at each toss.
           kind: 'param',
           id: 'p-tree-mixed',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // Bag has r red and b blue. Draw one. P(red) = r/(r+b).
             const r = (seed % 3) + 2 // 2..4
             const b = (seed % 4) + 1 // 1..4
@@ -252,6 +329,22 @@ Toss a coin twice. Branch probabilities: $\\tfrac12, \\tfrac12$ at each toss.
                 `$\\Pr(\\text{red}) = \\dfrac{${r}}{${total}} = \\dfrac{${num}}{${den}}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-two-dice-sum-7',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Two fair dice are rolled. What is $\\Pr(\\text{sum equals } 7)$? Answer as a fraction.',
+            answer: '6/36',
+            answerType: 'numeric',
+            hint: 'There are $6 \\cdot 6 = 36$ equally likely outcomes; how many give sum 7?',
+            solution: [
+              'Six ordered pairs $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)$ give sum 7.',
+              'So $\\Pr = 6/36 = 1/6$.',
+            ],
           },
         },
       ],

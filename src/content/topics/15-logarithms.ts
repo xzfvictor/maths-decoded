@@ -51,13 +51,23 @@ where $a > 0$, $a \\ne 1$, and $x > 0$.
             'So $\\log_{10}(10000) = 4$.',
           ],
         },
+        {
+          id: 'ex-ln',
+          statement:
+            'Without a calculator, state whether $\\ln 2$ is positive or negative. (Hint: $e \\approx 2.718$.)',
+          steps: [
+            '$\\ln 2 = \\log_e 2$: what power of $e$ equals $2$?',
+            'Since $e^0 = 1 < 2 < e^1 = e$, we need a power between $0$ and $1$.',
+            'So $\\ln 2$ is positive but less than $1$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-log-eval',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const pairs: Array<[number, number, number]> = [
               [2, 3, 8],
               [2, 4, 16],
@@ -85,7 +95,7 @@ where $a > 0$, $a \\ne 1$, and $x > 0$.
           kind: 'param',
           id: 'p-express-as-log',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const choices: Array<[number, number, number]> = [
               [2, 5, 32],
               [3, 4, 81],
@@ -102,6 +112,21 @@ where $a > 0$, $a \\ne 1$, and $x > 0$.
                 `Convert $${a}^${e} = ${x}$ to log form: $\\log_{${a}}(${x}) = ${e}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-rewrite-zero',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Write $7^0 = 1$ as a log statement. (Type "log_7(1) = 0".)',
+            answer: 'log_7(1) = 0',
+            answerType: 'exact',
+            hint: 'Base $7$, value $1$, exponent $0$.',
+            solution: [
+              '$\\log_7(1) = 0$.',
+            ],
           },
         },
       ],
@@ -136,13 +161,32 @@ The graph of $y = \\log_a(x)$ is the graph of $y = a^x$ **reflected in the line 
             'Check: $2^2 = 4$, i.e. $\\log_2(4) = 2$. ✓',
           ],
         },
+        {
+          id: 'ex-log-x-axis',
+          statement:
+            'Where does $y = \\log_2(x)$ cross the $x$-axis? Why?',
+          steps: [
+            'On the $x$-axis, $y = 0$.',
+            'So $\\log_2(x) = 0 \\Rightarrow x = 2^0 = 1$.',
+            'The curve crosses at $(1, 0)$.',
+          ],
+        },
+        {
+          id: 'ex-domain',
+          statement:
+            'What is the maximal domain of $y = \\log_a(x)$?',
+          steps: [
+            'A logarithm requires a positive input.',
+            'So the maximal domain is $x > 0$, i.e. $(0, \\infty)$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-log-identity',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // a^(log_a(x)) = x
             const choices = [
               [3, 27],
@@ -174,6 +218,21 @@ The graph of $y = \\log_a(x)$ is the graph of $y = a^x$ **reflected in the line 
             hint: 'The log undoes the exponent.',
             solution: [
               '$\\log_2(2^{17}) = 17$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-exp-of-log',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Use the identity $a^{\\log_a(x)} = x$ to evaluate $5^{\\log_5(7)}$.',
+            answer: '7',
+            answerType: 'numeric',
+            hint: 'Exponentiating undoes the log.',
+            solution: [
+              '$5^{\\log_5(7)} = 7$.',
             ],
           },
         },
@@ -214,13 +273,22 @@ The product law looks like the exponent law for multiplication ($a^m \\cdot a^n 
             'Difference: $8 - 2 = 6 = \\log_a(a^6)$.',
           ],
         },
+        {
+          id: 'ex-quotient',
+          statement:
+            'Use the quotient law to simplify $\\log_3(45) - \\log_3(5)$.',
+          steps: [
+            '$\\log_3(45) - \\log_3(5) = \\log_3(45/5) = \\log_3(9)$.',
+            'And $\\log_3(9) = 2$ because $3^2 = 9$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-product-law',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const m = (seed % 4) + 2 // 2..5
             const n = (Math.floor(seed / 4) % 4) + 2 // 2..5
             return {
@@ -238,7 +306,7 @@ The product law looks like the exponent law for multiplication ($a^m \\cdot a^n 
           kind: 'param',
           id: 'p-power-law',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // log_a(m^k) = k log_a(m). Always in base 2 with m a power of 2 to keep things integer.
             const m = [2, 4, 8][seed % 3] // 2,4,8 = 2^1, 2^2, 2^3
             const k = (Math.floor(seed / 3) % 4) + 2 // 2..5
@@ -300,13 +368,29 @@ The base may be anything; choosing $a = 10$ (or $a = e$) means the log values co
             'Solve: $x = \\dfrac{\\ln 10}{\\ln 2} \\approx \\dfrac{2.3026}{0.6931} \\approx 3.322$.',
           ],
         },
+        {
+          id: 'ex-solve-clean',
+          statement: 'Solve $2^x = 8$ for $x$.',
+          steps: [
+            '$2^x = 8 = 2^3$.',
+            'Match bases: $x = 3$.',
+          ],
+        },
+        {
+          id: 'ex-solve-quotient',
+          statement: 'Solve $3^{2x} = 5$ in log form. Write the answer as $\\dfrac{\\log 5}{\\log 9}$.',
+          steps: [
+            'Take $\\ln$: $2x \\ln 3 = \\ln 5$.',
+            'So $x = \\dfrac{\\ln 5}{2 \\ln 3} = \\dfrac{\\ln 5}{\\ln 9}$ (using $2\\ln 3 = \\ln 9$).',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-solve-exp',
           difficulty: 'challenge',
-          build: (seed) => {
+          build: (seed: number) => {
             // We restrict to integer solutions, e.g. 2^x = 8 -> x = 3.
             // Or (2^2)^x = 4^x = 2^x * x... Actually let's just restrict to 2^x = 2^k.
             const k = (seed % 5) + 1 // 1..5
@@ -334,6 +418,21 @@ The base may be anything; choosing $a = 10$ (or $a = e$) means the log values co
             hint: '$\\ln(5^x) = x \\ln 5$.',
             solution: [
               '$\\ln(5^x) = \\ln 12$, then the power law gives $x \\ln 5 = \\ln 12$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-solve-3x-9',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Solve $3^x = 9$ for $x$.',
+            answer: '2',
+            answerType: 'numeric',
+            hint: 'Match bases: $9 = 3^2$.',
+            solution: [
+              '$3^x = 3^2$, so $x = 2$.',
             ],
           },
         },

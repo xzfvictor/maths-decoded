@@ -52,13 +52,31 @@ Use it for "this **or** that" where the options don't overlap.`,
             'That gives $24$ possible sandwiches.',
           ],
         },
+        {
+          id: 'ex-add-principle',
+          statement:
+            'A vending machine sells 4 chocolate bars and 6 chips. How many snack choices are there?',
+          steps: [
+            'Either buy a chocolate bar OR buy chips. The choices do not overlap.',
+            'Use the addition principle: $4 + 6 = 10$ snack choices.',
+          ],
+        },
+        {
+          id: 'ex-mixed',
+          statement:
+            'A coach picks one of 3 captains and one of 2 vice-captains from the squad. How many ordered captain/vice-captain pairs?',
+          steps: [
+            'Captain AND vice-captain: multiply.',
+            '$3 \\times 2 = 6$ ordered pairs.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-mult-principle',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const a = (seed % 4) + 2 // 2..5
             const b = (Math.floor(seed / 4) % 4) + 2
             const c = (Math.floor(seed / 16) % 3) + 2
@@ -72,6 +90,36 @@ Use it for "this **or** that" where the options don't overlap.`,
                 `$${a} \\times ${b} \\times ${c} = ${a * b * c}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-add-principle',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'A class has 12 boys and 15 girls. How many ways are there to choose one student to represent the class?',
+            answer: '27',
+            answerType: 'numeric',
+            hint: 'Boy OR girl — addition principle.',
+            solution: [
+              'Either a boy or a girl: $12 + 15 = 27$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-mult-vs-add',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'You choose a topping (5 options) AND a sauce (3 options). How many combinations?',
+            answer: '15',
+            answerType: 'numeric',
+            hint: 'Topping AND sauce: multiplication.',
+            solution: [
+              'Topping AND sauce: $5 \\times 3 = 15$.',
+            ],
           },
         },
       ],
@@ -98,13 +146,29 @@ By convention $0! = 1$. Arrangements answer questions like "how many ways can 4 
             '$5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120$.',
           ],
         },
+        {
+          id: 'ex-npr',
+          statement: 'How many ways can 3 trophies be awarded from 8 contestants?',
+          steps: [
+            'Order matters (gold vs silver vs bronze are distinct).',
+            '$^8P_3 = \\dfrac{8!}{5!} = 8 \\times 7 \\times 6 = 336$.',
+          ],
+        },
+        {
+          id: 'ex-zero-factorial',
+          statement: 'Why is $0!$ defined to equal $1$?',
+          steps: [
+            '$^nP_n = \\dfrac{n!}{0!}$. We know there is exactly $1$ way to arrange $n$ distinct items in $n$ positions.',
+            'So $n! / 0! = n! \\Rightarrow 0! = 1$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-arrange-n',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const n = (seed % 4) + 3 // 3..6
             return {
               prompt: `In how many ways can ${n} different people line up in a row?`,
@@ -113,6 +177,36 @@ By convention $0! = 1$. Arrangements answer questions like "how many ways can 4 
               hint: 'All $n$ people, order matters — that is $n!$.',
               solution: [`Arrange all ${n}: $${n}! = ${factorial(n)}$.`],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-arrange-3-of-5',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'How many ways are there to line up 3 runners out of 5?',
+            answer: '60',
+            answerType: 'numeric',
+            hint: 'Order matters — that is $^5P_3 = 5 \\times 4 \\times 3$.',
+            solution: [
+              '$^5P_3 = \\dfrac{5!}{(5-3)!} = \\dfrac{5!}{2!} = 5 \\times 4 \\times 3 = 60$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-arrange-or-comb',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Choose a top-3 finish from 5 runners. Is this an arrangement or a combination? (Answer "arrangement" or "combination".)',
+            answer: 'arrangement',
+            answerType: 'exact',
+            hint: 'Does the order (1st, 2nd, 3rd) matter?',
+            solution: [
+              'Yes — 1st, 2nd, 3rd are different. It is an arrangement.',
+            ],
           },
         },
       ],
@@ -141,6 +235,24 @@ The extra $r!$ in the denominator (compared with $^nP_r$) removes the duplicate 
             'Compute $\\binom{7}{3} = \\dfrac{7!}{3!\\,4!}$.',
             '$= \\dfrac{7 \\times 6 \\times 5}{3 \\times 2 \\times 1} = \\dfrac{210}{6} = 35$.',
             'There are $35$ possible committees.',
+          ],
+        },
+        {
+          id: 'ex-choose-hand',
+          statement:
+            'How many 5-card hands can be dealt from a standard 52-card deck?',
+          steps: [
+            'Order does not matter for a hand.',
+            '$\\binom{52}{5} = 2,598,960$ hands.',
+          ],
+        },
+        {
+          id: 'ex-symmetry',
+          statement:
+            'Use $\\binom{n}{r} = \\binom{n}{n-r}$ to evaluate $\\binom{12}{9}$.',
+          steps: [
+            '$\\binom{12}{9} = \\binom{12}{3}$.',
+            '$\\binom{12}{3} = \\dfrac{12 \\times 11 \\times 10}{6} = 220$.',
           ],
         },
       ],
@@ -177,7 +289,7 @@ The extra $r!$ in the denominator (compared with $^nP_r$) removes the duplicate 
           kind: 'param',
           id: 'p-choose-committee',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const n = (seed % 6) + 5 // 5..10
             const r = (Math.floor(seed / 6) % 3) + 2 // 2..4
             const val = nCr(n, r)
@@ -218,13 +330,32 @@ For example, the probability of drawing 2 red counters from a bag of reds and bl
             'Since all selections are equally likely, $\\Pr(\\text{both red}) = \\dfrac{10}{28} = \\dfrac{5}{14}$.',
           ],
         },
+        {
+          id: 'ex-poker-hands',
+          statement:
+            'In 5-card poker hands from a 52-card deck, what is the probability of getting 4 aces (and any other card)?',
+          steps: [
+            'Number of 4-ace hands: $\\binom{4}{4} \\cdot \\binom{48}{1} = 48$.',
+            'Total hands: $\\binom{52}{5} = 2,598,960$.',
+            '$\\Pr = \\dfrac{48}{2{,}598{,}960} \\approx 0.0000185$.',
+          ],
+        },
+        {
+          id: 'ex-failure',
+          statement:
+            'Why is "favourable ÷ total" a valid probability when each outcome is equally likely?',
+          steps: [
+            'If every outcome has the same probability $p$, and there are $N$ outcomes, then $N \\cdot p = 1$ so $p = 1/N$.',
+            'Favourable outcomes count $f$ of the $N$, so the probability is $f \\cdot (1/N) = f/N$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-prob-all-red',
           difficulty: 'challenge',
-          build: (seed) => {
+          build: (seed: number) => {
             const red = (seed % 4) + 3 // 3..6
             const blue = (Math.floor(seed / 4) % 3) + 2 // 2..4
             const total = red + blue
@@ -242,6 +373,40 @@ For example, the probability of drawing 2 red counters from a bag of reds and bl
                 `$\\Pr(\\text{both red}) = \\dfrac{${favourable}}{${all}} = \\dfrac{${favourable / g}}{${all / g}}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-one-king',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A 5-card hand is dealt from a 52-card deck. Find the probability it contains exactly one king. Give as a fraction $a/b$ in simplest form.',
+            answer: '5/26',
+            answerType: 'numeric',
+            hint: 'Favourable = $\\binom{4}{1}\\binom{48}{4}$, total = $\\binom{52}{5}$.',
+            solution: [
+              '$\\binom{4}{1}\\binom{48}{4} = 4 \\cdot 194580 = 778320$.',
+              '$\\binom{52}{5} = 2,598,960$.',
+              'Simplify: $\\dfrac{778320}{2598960} = \\dfrac{5}{26}$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-two-boys-two-girls',
+          difficulty: 'challenge',
+          instance: {
+            prompt:
+              'From a class of 6 boys and 4 girls, a committee of 4 is chosen at random. What is the probability the committee has exactly 2 boys and 2 girls? (As a fraction in lowest terms.)',
+            answer: '3/7',
+            answerType: 'numeric',
+            hint: 'Favourable = $\\binom{6}{2}\\binom{4}{2}$, total = $\\binom{10}{4}$.',
+            solution: [
+              '$\\binom{6}{2} = 15$, $\\binom{4}{2} = 6$, product $= 90$.',
+              '$\\binom{10}{4} = 210$.',
+              'Probability $= 90/210 = 3/7$.',
+            ],
           },
         },
       ],

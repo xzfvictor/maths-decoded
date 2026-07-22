@@ -44,13 +44,33 @@ export const periodicProperties: Topic = {
             '$4\\pi$ is two full periods, so $\\sin(\\theta + 4\\pi) = \\sin\\theta$.',
           ],
         },
+        {
+          id: 'ex-cos-period',
+          statement:
+            'Write $\\cos(\\theta + 6\\pi)$ in terms of $\\cos\\theta$.',
+          steps: [
+            'Period of $\\cos$ is $2\\pi$.',
+            '$6\\pi = 3 \\cdot 2\\pi$ — three full periods.',
+            'So $\\cos(\\theta + 6\\pi) = \\cos\\theta$.',
+          ],
+        },
+        {
+          id: 'ex-tan-period',
+          statement:
+            'Why does $\\tan$ have a shorter period than $\\sin$ or $\\cos$?',
+          steps: [
+            'On the unit circle, $\\tan\\theta = \\sin\\theta / \\cos\\theta$.',
+            'Replacing $\\theta$ by $\\theta + \\pi$ changes $\\sin$ to $-\\sin$ and $\\cos$ to $-\\cos$.',
+            'The negatives cancel in the ratio, so $\\tan(\\theta + \\pi) = \\tan\\theta$ — period $\\pi$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-period-fn',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const fns = [
               { name: '\\sin', period: '2pi' },
               { name: '\\cos', period: '2pi' },
@@ -72,7 +92,7 @@ export const periodicProperties: Topic = {
           kind: 'param',
           id: 'p-co-periodic-value',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // Use the co-periodic identity sin(x + pi) = -sin x.
             // Ask: what is sin(theta + pi) if sin(theta) = v, where v is a simple fraction.
             const fns = [
@@ -90,6 +110,21 @@ export const periodicProperties: Topic = {
                 `$${it.sym}(\\theta + \\pi) = -${it.sym}\\theta = ${it.sign}${it.value}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-period-cos',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Does $\\cos(x + 4\\pi) = \\cos x$? (Answer "yes" or "no".)',
+            answer: 'yes',
+            answerType: 'exact',
+            hint: '$4\\pi$ is two full periods of cosine.',
+            solution: [
+              'Period of $\\cos$ is $2\\pi$, so $4\\pi$ is two periods. $\\cos(x + 4\\pi) = \\cos x$.',
+            ],
           },
         },
       ],
@@ -127,13 +162,33 @@ These identities let you recognise familiar values inside a less-familiar angle.
             '$\\sin\\left(\\pi - \\dfrac{\\pi}{3}\\right) = \\sin\\dfrac{\\pi}{3} = \\dfrac{\\sqrt{3}}{2}$.',
           ],
         },
+        {
+          id: 'ex-odd-test',
+          statement:
+            'Show that $\\sin\\theta$ is odd by using the unit circle.',
+          steps: [
+            'On the unit circle, the point for $-\\theta$ is the mirror of the point for $\\theta$ across the $x$-axis.',
+            'So if $(\\cos\\theta, \\sin\\theta)$ is on the circle, so is $(\\cos\\theta, -\\sin\\theta)$.',
+            'That point corresponds to angle $-\\theta$ with $y$-coordinate $\\sin(-\\theta)$.',
+            'Equating: $\\sin(-\\theta) = -\\sin\\theta$.',
+          ],
+        },
+        {
+          id: 'ex-comp-cos',
+          statement:
+            'Use the complementary identity to write $\\cos\\dfrac{\\pi}{12}$ as a sine.',
+          steps: [
+            '$\\dfrac{\\pi}{12} = \\dfrac{\\pi}{2} - \\dfrac{5\\pi}{12}$.',
+            'So $\\cos\\dfrac{\\pi}{12} = \\cos\\left(\\dfrac{\\pi}{2} - \\dfrac{5\\pi}{12}\\right) = \\sin\\dfrac{5\\pi}{12}$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-even-odd',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const items = [
               { fn: '\\sin', kind: 'odd' },
               { fn: '\\cos', kind: 'even' },
@@ -159,7 +214,7 @@ These identities let you recognise familiar values inside a less-familiar angle.
           kind: 'param',
           id: 'p-supplementary-sign',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const cases = [
               { ang: '2π/3', sym: 'sin', sign: 'positive', val: 'sqrt(3)/2' },
               { ang: '3π/4', sym: 'cos', sign: 'negative', val: '-sqrt(2)/2' },
@@ -176,6 +231,21 @@ These identities let you recognise familiar values inside a less-familiar angle.
                 `So $${it.sym}\\dfrac{${it.ang}}$ is ${it.sign}.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-complementary-cos',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Use $\\cos(\\pi/2 - x) = \\sin x$ to evaluate $\\cos(\\pi/3)$. (Type "sqrt(3)/2" or "1/2".)',
+            answer: '1/2',
+            answerType: 'exact',
+            hint: '$\\pi/3 = \\pi/2 - \\pi/6$.',
+            solution: [
+              '$\\cos(\\pi/3) = \\cos(\\pi/2 - \\pi/6) = \\sin(\\pi/6) = 1/2$.',
+            ],
           },
         },
       ],
@@ -208,24 +278,58 @@ Use the approximation when $x$ is small enough that the gap is negligible **for 
             'Compare with the true value $\\sin(0.03) \\approx 0.0299955$ — extremely close.',
           ],
         },
+        {
+          id: 'ex-small-large',
+          statement:
+            'Compare the accuracy of $\\sin x \\approx x$ at $x = 0.05$ vs $x = 1.5$.',
+          steps: [
+            'At $x = 0.05$, $\\sin(0.05) \\approx 0.04998$ — off by $\\sim 0.00002$.',
+            'At $x = 1.5$, $\\sin(1.5) \\approx 0.997$ — off by $\\sim 0.503$ (large error).',
+            'The approximation is excellent for small $x$, terrible for moderate $x$.',
+          ],
+        },
+        {
+          id: 'ex-graph-near-zero',
+          statement:
+            'Sketch the relationship between $y = \\sin x$ and $y = x$ near the origin. Describe in one sentence.',
+          steps: [
+            'Both pass through $(0, 0)$ with slope $1$.',
+            'They are visually indistinguishable for $|x| < 0.3$, then $\\sin x$ curves below the line.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-small-angle',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const choices = [0.01, 0.02, 0.05, 0.1, 0.15, 0.2]
             const x = choices[seed % choices.length]
             return {
               prompt: `Use the small-angle approximation $\\sin x \\approx x$ to estimate $\\sin(${x})$ as a decimal.`,
               answer: String(x),
               answerType: 'numeric',
-              hint: 'With $x$ small (in radians), $\\sin x \\approx x$.',
+              hint: 'Replace $\\sin(${x})$ with $${x}$.',
               solution: [
-                `$${x}$ radians is small, so $\\sin(${x}) \\approx ${x}$.`,
+                `$\\sin(${x}) \\approx ${x}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-small-angle-graph',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Is the small-angle approximation $\\sin x \\approx x$ better for $x = 0.1$ or $x = 1$? (Answer with the value of $x$.)',
+            answer: '0.1',
+            answerType: 'exact',
+            hint: 'The approximation improves as $|x| \\to 0$.',
+            solution: [
+              '$0.1$ is closer to $0$, so the approximation is better there.',
+            ],
           },
         },
         {
@@ -241,6 +345,21 @@ Use the approximation when $x$ is small enough that the gap is negligible **for 
             solution: [
               '$|x|$ matters — smaller is better.',
               '$0.05 \\ll 1.5$, so $\\sin(0.05) \\approx 0.05$ is far more accurate than $\\sin(1.5) \\approx 1.5$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-small-angle-graph',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Is the small-angle approximation $\\sin x \\approx x$ better for $x = 0.1$ or $x = 1$? (Answer with the value of $x$.)',
+            answer: '0.1',
+            answerType: 'exact',
+            hint: 'The approximation improves as $|x| \\to 0$.',
+            solution: [
+              '$0.1$ is closer to $0$, so the approximation is better there.',
             ],
           },
         },
@@ -275,13 +394,30 @@ For $y = 3\\sin\\bigl(2(x + \\tfrac{\\pi}{4})\\bigr) + 1$:
             'Mean value $= c = -1$.',
           ],
         },
+        {
+          id: 'ex-identify',
+          statement:
+            'For $y = 2\\cos(3x) + 1$, identify the amplitude, period and mean value.',
+          steps: [
+            'Amplitude $= 2$, period $= \\dfrac{2\\pi}{3}$, mean value $= 1$.',
+          ],
+        },
+        {
+          id: 'ex-phase-shift',
+          statement:
+            'In $y = \\sin(2(x - \\pi/6))$, what is the phase shift?',
+          steps: [
+            'Inside the bracket $x - \\pi/6$: zero when $x = \\pi/6$.',
+            'So features move from $x = 0$ to $x = \\pi/6$ — a right shift of $\\pi/6$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-period',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // period of sin(nx) = 2π/n, period of tan(nx) = π/n.
             // Pick n ∈ {2, 3, 4} and function so the period is a clean fraction of π.
             const nTable = [2, 3, 4]
@@ -316,7 +452,7 @@ For $y = 3\\sin\\bigl(2(x + \\tfrac{\\pi}{4})\\bigr) + 1$:
           kind: 'param',
           id: 'p-amplitude',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const a = (seed % 4) + 2 // 2..5
             return {
               prompt: `For $y = ${a}\\sin(2x) - 1$, state the amplitude as a positive integer.`,
@@ -343,6 +479,21 @@ For $y = 3\\sin\\bigl(2(x + \\tfrac{\\pi}{4})\\bigr) + 1$:
             solution: [
               'In $y = a\\sin(nx) + c$, the mean value is $c$.',
               'Here $c = -5$, so the mean value is $-5$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-amplitude-easy',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'State the amplitude of $y = 5\\sin(x)$.',
+            answer: '5',
+            answerType: 'numeric',
+            hint: 'Amplitude is the absolute value of the coefficient of $\\sin$.',
+            solution: [
+              'Amplitude $= |5| = 5$.',
             ],
           },
         },
@@ -379,13 +530,29 @@ encodes everything we need to describe the motion.
             'Maximum temperature is the mean plus the amplitude: $18 + 5 = 23$.',
           ],
         },
+        {
+          id: 'ex-period-decode',
+          statement:
+            'For a tide model $d(t) = 1.2\\sin(\\tfrac{\\pi}{6}t) + 4$, find the period in hours.',
+          steps: [
+            '$n = \\pi/6$, so period $= \\dfrac{2\\pi}{\\pi/6} = 12$ hours.',
+          ],
+        },
+        {
+          id: 'ex-amplitude-mean',
+          statement:
+            'In a model $y = 3\\cos(2x) - 4$, give the amplitude and the mean value.',
+          steps: [
+            'Amplitude $= 3$, mean value $= -4$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-model-max',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const a = (seed % 3) + 2 // 2..4
             const c = ((Math.floor(seed / 3) % 5) + 10) // 10..14
             return {
@@ -413,6 +580,21 @@ encodes everything we need to describe the motion.
             solution: [
               '$|a| = 3$, mean value $7$.',
               'Minimum $= 7 - 3 = 4$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-model-period',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'For a temperature model $T = 5\\cos(\\tfrac{\\pi}{12}(t - 14)) + 18$, what is the period in hours?',
+            answer: '24',
+            answerType: 'numeric',
+            hint: 'Period $= \\dfrac{2\\pi}{\\pi/12} = 24$.',
+            solution: [
+              'Period $= 2\\pi / (\\pi/12) = 24$ hours.',
             ],
           },
         },

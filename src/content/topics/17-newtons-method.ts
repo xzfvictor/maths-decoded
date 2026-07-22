@@ -51,13 +51,32 @@ Each iterate is the $x$-intercept of the tangent — usually closer to the root 
             'The true root is $\\sqrt{2} \\approx 1.4142$, so one iteration lands very close.',
           ],
         },
+        {
+          id: 'ex-tangent-xint',
+          statement: 'Explain in one sentence why $x_{n+1}$ is the $x$-intercept of the tangent at $x_n$.',
+          steps: [
+            'Tangent equation: $y = f(x_n) + f\\prime(x_n)(x - x_n)$.',
+            'Setting $y = 0$ gives $x = x_n - f(x_n)/f\\prime(x_n) = x_{n+1}$.',
+            'So the next iterate is exactly the tangent\'s $x$-intercept.',
+          ],
+        },
+        {
+          id: 'ex-when-fails',
+          statement:
+            'Give one reason Newton\'s method might fail at a given starting estimate.',
+          steps: [
+            'Possible: starting estimate is in the wrong basin (converges to a different root).',
+            'Or: $f\\prime(x_n) = 0$ at the iterate (division by zero).',
+            'Or: an inflection point near the root (iteration escapes or oscillates).',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-derivative',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // f(x) = x^3 - c, f'(x) = 3x^2. We use Newton's iteration in a later exercise.
             const c = (seed % 5) + 2 // 2..6
             return {
@@ -83,6 +102,22 @@ Each iterate is the $x$-intercept of the tangent — usually closer to the root 
             hint: 'It is the gradient of the tangent at $x_n$.',
             solution: [
               "$x_{n + 1} = x_n - \\dfrac{f(x_n)}{f'(x_n)}$ — the slope is $f'(x_n)$.",
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-newton-sqrt2',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Apply one Newton step to $f(x) = x^2 - 4$ starting at $x_0 = 2.5$. What is $x_1$? Give as a decimal to 2 dp.',
+            answer: '2.05',
+            answerType: 'numeric',
+            hint: '$f(2.5) = 6.25 - 4 = 2.25$; $f\\prime(2.5) = 5$.',
+            solution: [
+              '$f(2.5) = 2.25$, $f\\prime(2.5) = 5$.',
+              '$x_1 = 2.5 - 2.25/5 = 2.5 - 0.45 = 2.05$.',
             ],
           },
         },
@@ -115,13 +150,33 @@ Continue until $|x_{n + 1} - x_n|$ is smaller than the tolerance you require (e.
             '$x_1 = 2 - \\dfrac{1}{12} = 2 - 0.0833 = 1.9167$.',
           ],
         },
+        {
+          id: 'ex-ans-table',
+          statement:
+            'Show two iterations of Newton for $f(x) = x^2 - 2$ starting at $x_0 = 1.4$ (give each answer to 4 dp).',
+          steps: [
+            '$f(1.4) = -0.04$, $f\\prime(1.4) = 2.8$.',
+            '$x_1 = 1.4 - (-0.04)/2.8 = 1.4143$.',
+            '$f(1.4143) = 1.4143^2 - 2 \\approx 0.0002$.',
+            '$x_2 \\approx 1.4143 - 0.0002/2.8286 \\approx 1.4142$.',
+          ],
+        },
+        {
+          id: 'ex-stops',
+          statement:
+            'When do you stop iterating Newton? Give one common criterion.',
+          steps: [
+            'One standard criterion: $|x_{n+1} - x_n|$ is smaller than a chosen tolerance.',
+            'Alternatively: $|f(x_n)|$ is close to $0$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-one-step',
           difficulty: 'challenge',
-          build: (seed) => {
+          build: (seed: number) => {
             // f(x) = x^3 - n, x0 = 2. Compute x1 = 2 - (8-n)/(3*4) = 2 - (8-n)/12
             const n = (seed % 6) + 3 // 3..8
             const fxn0 = Math.pow(2, 3) - n // = 8 - n
@@ -141,6 +196,38 @@ Continue until $|x_{n + 1} - x_n|$ is smaller than the tolerance you require (e.
                 `$x_1 = 2 - \\dfrac{${fxn0}}{${denom}} = 2 - \\dfrac{${fxn0}}{${denom}} \\approx ${rounded}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-one-step-cube',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Apply one Newton step to $f(x) = x^2 - 9$ with $x_0 = 3.5$. What is $x_1$? Give to 2 dp.',
+            answer: '3.04',
+            answerType: 'numeric',
+            hint: '$f(3.5) = 12.25 - 9 = 3.25$; $f\\prime(3.5) = 7$.',
+            solution: [
+              '$f(3.5) = 3.25$, $f\\prime(3.5) = 7$.',
+              '$x_1 = 3.5 - 3.25/7 = 3.5 - 0.464 = 3.04$ (to 2 dp).',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-newton-on-quad',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Apply one Newton step to $f(x) = x^2 + x - 6$ starting at $x_0 = 2$. What is $x_1$?',
+            answer: '2',
+            answerType: 'numeric',
+            hint: '$f(2) = 0$, $f\\prime(2) = 5$.',
+            solution: [
+              '$f(2) = 2^2 + 2 - 6 = 0$.',
+              "$x_1 = 2 - 0/5 = 2$. Already at the root.",
+            ],
           },
         },
       ],
@@ -170,13 +257,33 @@ If the quadratic factor has real roots but they are ugly (square roots with deep
             'So $x = 1$ is a rational root.',
           ],
         },
+        {
+          id: 'ex-discriminant',
+          statement:
+            'After pulling out $x = 1$ from $x^3 - 6x^2 + 11x - 6$, the remaining quadratic factor has discriminant?',
+          steps: [
+            'Divide: $f(x) = (x - 1)(x^2 - 5x + 6)$.',
+            'Quadratic: $x^2 - 5x + 6$, discriminant $\\Delta = 25 - 24 = 1 > 0$.',
+            'Two real roots, so the cubic has three real roots.',
+          ],
+        },
+        {
+          id: 'ex-no-rational',
+          statement:
+            'What if no rational root works (discriminant of the cubic says it has one)? What do you do?',
+          steps: [
+            'Apply Newton\'s method to get a decimal approximation.',
+            'Or use the cubic formula.',
+            'Use technology / calculator if needed.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-rational-root',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // f(x) = (x - a)(x - b)(x - c). Vary a in {2, 3}, b = -1, c = 1.
             // f at roots gives 0.
             // We'll ask for the chosen root's value.
@@ -205,6 +312,21 @@ If the quadratic factor has real roots but they are ugly (square roots with deep
             hint: 'Think about polynomials with multiple roots.',
             solution: [
               'Newton\'s method can converge to a different root than the one you wanted, depending on which basin of attraction you start in.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-cubic-root-1',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Find a rational root of $f(x) = x^3 - 6x^2 + 11x - 6$.',
+            answer: '1',
+            answerType: 'numeric',
+            hint: 'Test factors of the constant term, $-6$: $\\pm 1, \\pm 2, \\pm 3, \\pm 6$.',
+            solution: [
+              '$f(1) = 1 - 6 + 11 - 6 = 0$. So $x = 1$ is a root.',
             ],
           },
         },

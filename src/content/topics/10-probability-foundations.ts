@@ -41,13 +41,31 @@ Every probability satisfies $0 \\le \\Pr(A) \\le 1$, and the probabilities of al
             '$\\Pr = \\dfrac{2}{6} = \\dfrac{1}{3}$.',
           ],
         },
+        {
+          id: 'ex-spinner-equal',
+          statement:
+            'A spinner has 4 equal sectors labelled A, B, C, D. What is the probability of landing on A or D?',
+          steps: [
+            'Each sector has probability $\\tfrac14$.',
+            'For A or D, add: $\\tfrac14 + \\tfrac14 = \\tfrac12$.',
+          ],
+        },
+        {
+          id: 'ex-card-hearts',
+          statement:
+            'A card is drawn at random from a 52-card deck. Find the probability it is a heart.',
+          steps: [
+            '13 hearts in 52 cards.',
+            '$\\Pr = \\dfrac{13}{52} = \\dfrac{1}{4}$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-die-probability',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const threshold = (seed % 5) + 1 // 1..5: P(roll > threshold)
             const favourable = 6 - threshold
             const g = gcd(favourable, 6)
@@ -77,6 +95,21 @@ Every probability satisfies $0 \\le \\Pr(A) \\le 1$, and the probabilities of al
             solution: [
               'Each coin has 2 outcomes, so together there are $2 \\times 2 = 4$.',
               'The sample space is $\\{HH, HT, TH, TT\\}$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-coin-red',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'A fair coin is tossed. State the probability it lands heads.',
+            answer: '1/2',
+            answerType: 'numeric',
+            hint: 'Two equally likely outcomes, one is heads.',
+            solution: [
+              '$\\Pr(H) = 1/2$.',
             ],
           },
         },
@@ -115,13 +148,30 @@ This is a useful check, and lets you find a missing probability by subtraction.`
             '$= 0.3$.',
           ],
         },
+        {
+          id: 'ex-die-distribution',
+          statement: 'For one die roll, write the distribution of $X$ = the value rolled.',
+          steps: [
+            'Each value $1, 2, 3, 4, 5, 6$ has probability $\\tfrac16$.',
+            'Tabulate: $\\Pr(X = k) = 1/6$ for $k = 1, 2, 3, 4, 5, 6$.',
+          ],
+        },
+        {
+          id: 'ex-mean-from-dist',
+          statement:
+            'For $X$ with $\\Pr(X = 0) = 0.4$, $\\Pr(X = 1) = 0.6$, find $\\Pr(X \\ge 0)$.',
+          steps: [
+            'Every outcome in the distribution counts as $\\ge 0$ when $X$ takes values $0, 1$.',
+            '$\\Pr(X \\ge 0) = 0.4 + 0.6 = 1$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-missing-prob',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const p1 = ((seed % 4) + 1) * 10 // 10..40 (%)
             const p2 = ((Math.floor(seed / 4) % 4) + 1) * 10 // 10..40 (%)
             const capped2 = Math.min(p2, 90 - p1) // keep total < 100
@@ -136,6 +186,51 @@ This is a useful check, and lets you find a missing probability by subtraction.`
                 `$p = 1 - ${p1 / 100} - ${capped2 / 100} = ${p3 / 100}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-die-roll',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A fair die is rolled. Let $X$ be the result. Find $\\Pr(X = 6)$.',
+            answer: '1/6',
+            answerType: 'numeric',
+            hint: '6 equally likely outcomes.',
+            solution: [
+              '$\\Pr(X = 6) = 1/6$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-sum-check',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'A distribution has probabilities $0.4$ and $0.5$. What is the probability of the third value if there is one?',
+            answer: '0.1',
+            answerType: 'numeric',
+            hint: 'Probabilities in a distribution sum to $1$.',
+            solution: [
+              '$1 - 0.4 - 0.5 = 0.1$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-coins-prob-2',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Two fair coins are tossed. What is $\\Pr(\\text{both heads})$? Answer as a fraction.',
+            answer: '1/4',
+            answerType: 'numeric',
+            hint: 'Each coin has $\\tfrac12$, and the tosses are independent.',
+            solution: [
+              '$\\Pr(HH) = \\tfrac12 \\cdot \\tfrac12 = \\tfrac14$.',
+            ],
           },
         },
       ],
@@ -168,13 +263,31 @@ Match the generator to the probability. To simulate an event with probability $\
             '$= 0.65$.',
           ],
         },
+        {
+          id: 'ex-rf-table',
+          statement:
+            'For 500 die rolls, six appeared 80 times. State the relative frequency of six as a decimal.',
+          steps: [
+            'Relative frequency $= 80 / 500 = 0.16$.',
+            'Estimated probability of six: $0.16$ (true value $\\tfrac16 \\approx 0.1\\overline{6}$).',
+          ],
+        },
+        {
+          id: 'ex-design-prob-3-quarters',
+          statement:
+            'How could you simulate an event of probability $\\tfrac{3}{4}$ using a deck of 52 cards?',
+          steps: [
+            '$\\tfrac34 \\times 52 = 39$ — not a clean count of cards.',
+            'Better: use 4 equally likely outcomes (e.g. a 4-sided spinner / die), and let 3 of them be the event.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-relative-frequency',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const n = ((seed % 4) + 1) * 50 // 50,100,150,200
             const successes = Math.floor(n * (((seed % 5) + 3) / 10)) // 0.3..0.7 of n
             const g = gcd(successes, n)
@@ -203,6 +316,21 @@ Match the generator to the probability. To simulate an event with probability $\
             solution: [
               'With more trials, the relative frequency settles down.',
               'It tends towards the true probability of the event.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-die-rf',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A die is rolled 200 times and a six appears 30 times. Find the relative frequency as a decimal to 2 dp.',
+            answer: '0.15',
+            answerType: 'numeric',
+            hint: 'Relative frequency = 30 / 200.',
+            solution: [
+              'Relative frequency $= 30 / 200 = 0.15$.',
             ],
           },
         },

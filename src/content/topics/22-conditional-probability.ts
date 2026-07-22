@@ -41,13 +41,31 @@ A useful way to *think* about $\\Pr(A \\mid B)$:
             '$\\Pr(\\text{heart} \\mid \\text{red}) = \\dfrac{13}{26} = \\dfrac{1}{2}$.',
           ],
         },
+        {
+          id: 'ex-conditional-dice',
+          statement:
+            'A die is rolled. Given that the result is even, what is the probability it is divisible by 3?',
+          steps: [
+            'Even outcomes: $\\{2, 4, 6\\}$ — three outcomes.',
+            'Divisible by 3 within those: just $6$ — one outcome.',
+            '$\\Pr(\\text{div by 3} \\mid \\text{even}) = 1/3$.',
+          ],
+        },
+        {
+          id: 'ex-rearrange',
+          statement:
+            'Rearrange $\\Pr(A \\cap B) = \\Pr(A \\mid B) \\Pr(B)$ to solve for $\\Pr(A \\mid B)$.',
+          steps: [
+            'Divide both sides by $\\Pr(B)$ (assuming $> 0$): $\\Pr(A \\mid B) = \\dfrac{\\Pr(A \\cap B)}{\\Pr(B)}$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-conditional',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // Bag: a red, b blue, c green. Given red or blue, find red.
             // P(red | red or blue) = a / (a + b)
             const a = (seed % 3) + 2 // 2..4
@@ -93,6 +111,21 @@ A useful way to *think* about $\\Pr(A \\mid B)$:
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-conditional-cards',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Two cards are drawn **with replacement** from a 52-card deck. What is $\\Pr(\\text{second is a king} \\mid \\text{first is a king})$?',
+            answer: '1/13',
+            answerType: 'numeric',
+            hint: 'With replacement, the second draw is independent.',
+            solution: [
+              'With replacement, draws are independent: $\\Pr(\\text{K}) = 4/52 = 1/13$ regardless of the first draw.',
+            ],
+          },
+        },
       ],
     },
 
@@ -117,13 +150,31 @@ Each $\\Pr(A \\mid B_i)$ is often easy to compute (a "given" branch on a tree). 
             '$= 0.012 + 0.012 = 0.024$ — a $2.4\\%$ defect rate.',
           ],
         },
+        {
+          id: 'ex-total-3',
+          statement:
+            'Three suppliers provide $50$, $30$ and $20$ percent of units with defect rates $1\\%$, $2\\%$, $5\\%$ respectively. Find the overall defect probability.',
+          steps: [
+            '$\\Pr(D) = 0.5 \\cdot 0.01 + 0.3 \\cdot 0.02 + 0.2 \\cdot 0.05 = 0.005 + 0.006 + 0.010 = 0.021$.',
+            'About $2.1\\%$ overall.',
+          ],
+        },
+        {
+          id: 'ex-partition',
+          statement:
+            'Why is the total probability formula called the "total probability" formula?',
+          steps: [
+            'The $B_i$ are a partition — together they cover the whole sample space.',
+            'Their weighted combination of conditional $\\Pr(A)$ values gives the unconditional (total) $\\Pr(A)$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-total-prob',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // Two branches; each is small nice decimal.
             const branches: Array<{ p1: number; p2: number; d1: number; d2: number; ans: number }> = [
               { p1: 0.5, p2: 0.5, d1: 0.1, d2: 0.2, ans: 0.15 },
@@ -141,6 +192,36 @@ Each $\\Pr(A \\mid B_i)$ is often easy to compute (a "given" branch on a tree). 
                 `$P(D) = ${b.d1} \\cdot ${b.p1} + ${b.d2} \\cdot ${b.p2} = ${b.d1 * b.p1} + ${b.d2 * b.p2} = ${b.ans}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-total-simple',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              '$\\Pr(A \\mid B_1) = 0.1$, $\\Pr(B_1) = 0.5$, $\\Pr(A \\mid B_2) = 0.2$, $\\Pr(B_2) = 0.5$. What is $\\Pr(A)$?',
+            answer: '0.15',
+            answerType: 'numeric',
+            hint: 'Total probability.',
+            solution: [
+              '$\\Pr(A) = 0.1 \\cdot 0.5 + 0.2 \\cdot 0.5 = 0.05 + 0.10 = 0.15$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-total-clean',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              '$\\Pr(A \\mid B_1) = 0.5$, $\\Pr(B_1) = 0.4$, $\\Pr(A \\mid B_2) = 0.3$, $\\Pr(B_2) = 0.6$. What is $\\Pr(A)$?',
+            answer: '0.38',
+            answerType: 'numeric',
+            hint: 'Total probability.',
+            solution: [
+              '$\\Pr(A) = 0.5 \\cdot 0.4 + 0.3 \\cdot 0.6 = 0.2 + 0.18 = 0.38$.',
+            ],
           },
         },
       ],
@@ -171,13 +252,34 @@ The first form is the **multiplication rule** and is the easiest for calculation
             'This equals $\\Pr(A \\cap B)$, so yes — they are independent.',
           ],
         },
+        {
+          id: 'ex-coin-tosses',
+          statement:
+            'Two coin tosses — let $A$ = "first is heads" and $B$ = "second is heads". Are $A$ and $B$ independent?',
+          steps: [
+            '$\\Pr(A) = 1/2$, $\\Pr(B) = 1/2$, $\\Pr(A \\cap B) = 1/4$.',
+            '$\\Pr(A) \\Pr(B) = 1/4 = \\Pr(A \\cap B)$.',
+            'Yes — independent.',
+          ],
+        },
+        {
+          id: 'ex-not-independent',
+          statement:
+            'A bag has $2$ red and $2$ blue balls. Two are drawn without replacement. Are "first is red" and "second is red" independent?',
+          steps: [
+            '$\\Pr(\\text{1st red}) = 1/2$. $\\Pr(\\text{2nd red} \\mid \\text{1st red}) = 1/3$.',
+            '$\\Pr(\\text{1st red and 2nd red}) = 1/2 \\cdot 1/3 = 1/6$.',
+            'But $\\Pr(\\text{1st red}) \\cdot \\Pr(\\text{2nd red}) = 1/2 \\cdot 1/2 = 1/4 \\ne 1/6$.',
+            'So not independent (knowing one changed the other).',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-independence-test',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const pairs: Array<[number, number, number, boolean]> = [
               [0.5, 0.4, 0.2, true], // 0.5*0.4 = 0.2 ✓
               [0.5, 0.4, 0.3, false], // 0.5*0.4 = 0.2 ≠ 0.3
@@ -221,6 +323,21 @@ The first form is the **multiplication rule** and is the easiest for calculation
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-independent-rule',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Independent events satisfy which equation relating $\\Pr(A)$, $\\Pr(B)$ and $\\Pr(A \\cap B)$?',
+            answer: 'Pr(A∩B) = Pr(A)Pr(B)',
+            answerType: 'exact',
+            hint: 'The joint is the product.',
+            solution: [
+              'Independence: $\\Pr(A \\cap B) = \\Pr(A) \\Pr(B)$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -250,6 +367,27 @@ The second draw sees $51$ cards and $3$ aces — not the same as the first draw.
             'First ace: $\\tfrac{4}{52} = \\tfrac{1}{13}$.',
             'Second ace: $3$ aces left in $51$ cards: $\\tfrac{3}{51} = \\tfrac{1}{17}$.',
             'Multiply: $\\tfrac{1}{13} \\cdot \\tfrac{1}{17} = \\tfrac{1}{221}$.',
+          ],
+        },
+        {
+          id: 'ex-with-vs-without',
+          statement:
+            'For the same two-aces problem, **with replacement** gives what probability?',
+          steps: [
+            'With replacement, the second draw is independent of the first.',
+            '$\\Pr(\\text{both aces}) = \\tfrac{1}{13} \\cdot \\tfrac{1}{13} = \\tfrac{1}{169}$.',
+            'So with replacement gives a higher probability (independent draws are not depleted).',
+          ],
+        },
+        {
+          id: 'ex-simulation-design',
+          statement:
+            'Describe briefly how to simulate drawing 2 cards without replacement using a calculator or dice.',
+          steps: [
+            'Generate a uniform random number in $[0, 52)$.',
+            'Take the integer part (a card index in $0..51$).',
+            'To simulate the second draw, generate again but **exclude** the index already drawn.',
+            'Run many trials and tabulate the relative frequency of "both aces".',
           ],
         },
       ],
@@ -302,6 +440,21 @@ The second draw sees $51$ cards and $3$ aces — not the same as the first draw.
                 `$\\Pr(\\text{both green}) = \\left(\\dfrac{${special}}{${total}}\\right)^2 = \\dfrac{${num}}{${den}} = \\dfrac{${num / g}}{${den / g}}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-with-vs-without',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Drawing with replacement vs without: which produces **independent** draws?',
+            answer: 'with',
+            answerType: 'exact',
+            hint: 'Independence needs the probability to stay the same across draws.',
+            solution: [
+              'With replacement, the bag is unchanged for the second draw, so draws are independent.',
+            ],
           },
         },
       ],

@@ -39,6 +39,26 @@ A translation of "right $h$, up $c$" sends each point $(x, y) \\mapsto (x + h,\\
             'The image is $(5, 6)$.',
           ],
         },
+        {
+          id: 'ex-translate-y-intercept',
+          statement:
+            'A graph has its $y$-intercept at $(0, 2)$. After the translation $y = f(x + 4) - 3$, where is the $y$-intercept?',
+          steps: [
+            'The translation is left $4$ and down $3$.',
+            '$(0, 2) \\mapsto (0 - 4, 2 - 3) = (-4, -1)$.',
+            "So the new $y$-intercept is $(-4, -1)$. (The new $x$-intercept comes from the original $x$-intercept shifted the same way.)",
+          ],
+        },
+        {
+          id: 'ex-why-sign-flip',
+          statement:
+            'Why does $y = f(x + 5)$ shift the graph **left** instead of right?',
+          steps: [
+            'On $y = f(x)$, a feature (say a turning point) sits at some $x = a$.',
+            "On $y = f(x + 5)$, the same feature happens when $x + 5 = a$, i.e. at $x = a - 5$.",
+            'So it moves $5$ units **less** — to the left.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -60,6 +80,37 @@ A translation of "right $h$, up $c$" sends each point $(x, y) \\mapsto (x + h,\\
                 `$(${x}, ${y}) \\mapsto (${x} + ${h},\\ ${y} + ${c}) = (${x + h}, ${y + c})$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-direction',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'In $y = f(x + 6)$, the graph of $f$ shifts in which direction? Answer "left" or "right".',
+            answer: 'left',
+            answerType: 'exact',
+            hint: 'Compare with $f(x - h)$.',
+            solution: [
+              '$f(x + 6) = f(x - (-6))$, so the horizontal shift is $-6$ — left by $6$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-translate-by',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Under $y = f(x) - 9$, each point moves how? (Direction and amount.)',
+            answer: 'down 9',
+            answerType: 'exact',
+            hint: 'A constant subtracted at the end moves the graph vertically.',
+            solution: [
+              'A negative constant subtracts $9$ from every $y$-value.',
+              'So each point moves down by $9$.',
+            ],
           },
         },
       ],
@@ -90,6 +141,26 @@ When several transformations combine in $a\\,f(n(x + b)) + c$, apply dilations/r
             '$y = 3f(x)$ is a dilation of factor $3$ from the $x$-axis: multiply the $y$-coordinate by $3$.',
             '$(4, -2) \\mapsto (4,\\ 3 \\times -2)$.',
             'The image is $(4, -6)$.',
+          ],
+        },
+        {
+          id: 'ex-horizontal-compress',
+          statement:
+            'Under $y = f(2x)$, where does the point $(6, 5)$ move?',
+          steps: [
+            'A horizontal dilation by factor $\\tfrac{1}{2}$ compresses $x$-coordinates by dividing by $2$.',
+            '$(6, 5) \\mapsto (6/2,\\ 5) = (3, 5)$.',
+            'The point moves from $(6, 5)$ to $(3, 5)$.',
+          ],
+        },
+        {
+          id: 'ex-y-axis-reflect',
+          statement:
+            'Under $y = f(-x)$, where does the point $(2, 7)$ move?',
+          steps: [
+            '$y = f(-x)$ reflects the graph in the $y$-axis: $(x, y) \\mapsto (-x, y)$.',
+            'So $(2, 7) \\mapsto (-2, 7)$.',
+            'Image: $(-2, 7)$.',
           ],
         },
       ],
@@ -130,6 +201,22 @@ When several transformations combine in $a\\,f(n(x + b)) + c$, apply dilations/r
             ],
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-x-axis-reflect',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Which transformation does $y = -f(x)$ represent? Answer "reflection in the x-axis" or "reflection in the y-axis".',
+            answer: 'reflection in the x-axis',
+            answerType: 'exact',
+            hint: 'Replacing $f(x)$ by $-f(x)$ flips $y$ signs.',
+            solution: [
+              'Multiplying the output by $-1$ flips $y$, sending $(x, y)$ to $(x, -y)$.',
+              'That is a reflection in the $x$-axis.',
+            ],
+          },
+        },
       ],
     },
 
@@ -162,6 +249,27 @@ To pin down the parameters you need as many independent pieces of information as
             'Substitute $(0, 7)$: $7 = a(0 - 2)^2 - 1 = 4a - 1$.',
             'Solve: $4a = 8$, so $a = 2$.',
             'The rule is $y = 2(x - 2)^2 - 1$.',
+          ],
+        },
+        {
+          id: 'ex-find-c',
+          statement:
+            'A parabola has turning point $(0, 4)$ and passes through $(3, 13)$. Find $c$ in $y = ax^2 + c$.',
+          steps: [
+            'Turner at $(0, 4)$ means $c = 4$.',
+            'Substitute $(3, 13)$: $13 = a(9) + 4$.',
+            'So $9a = 9$, $a = 1$. The parabola is $y = x^2 + 4$.',
+          ],
+        },
+        {
+          id: 'ex-independent-question',
+          statement:
+            'A line passes through $(2, 0)$ and $(0, -4)$. Find its equation.',
+          steps: [
+            'Two points give two equations: the line is $y = mx + c$.',
+            '$(0, -4)$: $-4 = m \\cdot 0 + c \\Rightarrow c = -4$.',
+            '$(2, 0)$: $0 = 2m - 4 \\Rightarrow m = 2$.',
+            'So the line is $y = 2x - 4$.',
           ],
         },
       ],
@@ -203,6 +311,22 @@ To pin down the parameters you need as many independent pieces of information as
             solution: [
               '$m = \\dfrac{11 - 3}{2 - 0} = \\dfrac{8}{2} = 4$.',
               '(And $c = 3$ from the point $(0, 3)$, giving $y = 4x + 3$.)',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-curve-form',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Which general form of $y = 3(x - 1)^2 + 5$ matches the standard $ax^2 + bx + c$? State $c$.',
+            answer: '8',
+            answerType: 'numeric',
+            hint: 'Expand: $3(x - 1)^2 + 5 = 3(x^2 - 2x + 1) + 5$.',
+            solution: [
+              '$3(x^2 - 2x + 1) + 5 = 3x^2 - 6x + 3 + 5 = 3x^2 - 6x + 8$.',
+              'So $c = 8$.',
             ],
           },
         },

@@ -41,6 +41,27 @@ All of $x, x^2, x^3, x^4$ have domain $\\mathbb{R}$. Odd powers have range $\\ma
             'Its graph is symmetric about the $y$-axis.',
           ],
         },
+        {
+          id: 'ex-key-points',
+          statement:
+            'Which of these are on the graph of $y = x^3$: $(2, 8)$, $(-1, 1)$, $(0, 0)$, $(-3, -27)$?',
+          steps: [
+            '$(2, 8)$: $2^3 = 8$ ✓',
+            '$(-1, 1)$: $(-1)^3 = -1 \\ne 1$ ✗',
+            '$(0, 0)$: ✓',
+            '$(-3, -27)$: $(-3)^3 = -27$ ✓',
+          ],
+        },
+        {
+          id: 'ex-even-range',
+          statement:
+            'What is the range of $y = x^2$ and why does it differ from the range of $y = x^3$?',
+          steps: [
+            'For $y = x^2$, every value is non-negative: $y \\ge 0$. So the range is $[0, \\infty)$.',
+            'For $y = x^3$, every real number is achieved (the function is strictly increasing across $\\mathbb{R}$). So the range is $\\mathbb{R}$.',
+            'The difference comes from the odd vs. even nature of the exponent.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -80,6 +101,22 @@ All of $x, x^2, x^3, x^4$ have domain $\\mathbb{R}$. Odd powers have range $\\ma
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-graph-shape',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Which graph is U-shaped, lying entirely above the $x$-axis: $y = x^2$ or $y = x^3$?',
+            answer: 'y=x^2',
+            answerType: 'exact',
+            hint: 'U-shape means non-negative values.',
+            solution: [
+              '$y = x^3$ takes negative values for $x < 0$.',
+              '$y = x^2$ is non-negative for all $x$, so it sits entirely above the $x$-axis and is U-shaped.',
+            ],
+          },
+        },
       ],
     },
 
@@ -109,6 +146,28 @@ All of $x, x^2, x^3, x^4$ have domain $\\mathbb{R}$. Odd powers have range $\\ma
             'As $x \\to \\pm\\infty$, $y \\to 0$: the horizontal asymptote is $y = 0$.',
             'As $x \\to 0$, $|y| \\to \\infty$: the vertical asymptote is $x = 0$.',
             'Asymptotes: $x = 0$ and $y = 0$.',
+          ],
+        },
+        {
+          id: 'ex-reciprocal-square',
+          statement:
+            'Why is the range of $y = x^{-2}$ equal to $(0, \\infty)$ and not $\\mathbb{R}$?',
+          steps: [
+            '$x^{-2} = \\dfrac{1}{x^2}$.',
+            'A fraction with a real denominator is non-negative (in fact positive) for all $x \\ne 0$.',
+            'It never reaches $0$, and grows without bound as $x \\to 0$.',
+            "So the range is the open interval $(0, \\infty)$.",
+          ],
+        },
+        {
+          id: 'ex-sqrt-shape',
+          statement:
+            'Sketch the key features of $y = \\sqrt{x}$ in words: domain, range, end behaviour.',
+          steps: [
+            'Domain $x \\ge 0$ (no real square root of a negative).',
+            'Range $y \\ge 0$ (output is the non-negative root).',
+            'Starts at $(0, 0)$, increasing everywhere on its domain.',
+            'As $x \\to \\infty$, $y \\to \\infty$ but ever more slowly (concave down).',
           ],
         },
       ],
@@ -147,6 +206,22 @@ All of $x, x^2, x^3, x^4$ have domain $\\mathbb{R}$. Odd powers have range $\\ma
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-1-over-x-sign',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'For $x > 0$, is $\\dfrac{1}{x}$ positive or negative? Answer "positive" or "negative".',
+            answer: 'positive',
+            answerType: 'exact',
+            hint: 'Dividing positives by positives...',
+            solution: [
+              'For $x > 0$, both numerator and denominator are positive.',
+              'So $\\dfrac{1}{x} > 0$ — it is positive.',
+            ],
+          },
+        },
       ],
     },
 
@@ -177,6 +252,27 @@ $y = 2(x - 1)^2 + 3$ is $y = x^2$ stretched by $2$, moved right $1$ and up $3$; 
             '$b = 4$: translate left $4$.',
             '$c = -1$: translate down $1$.',
             'The turning point moves from $(0,0)$ to $(-4, -1)$, opening downward.',
+          ],
+        },
+        {
+          id: 'ex-shift-direction',
+          statement:
+            'Does the graph of $y = (x - 5)^2$ shift left or right compared to $y = x^2$, and by how much?',
+          steps: [
+            'Inside the bracket is $x - 5$, which is zero when $x = 5$.',
+            'So features of $y = x^2$ that were at $x = 0$ now occur at $x = 5$.',
+            "It's shifted **right** by $5$.",
+          ],
+        },
+        {
+          id: 'ex-stretch-factor',
+          statement:
+            'For $y = 3(x + 1)^2 - 2$, identify the dilation, the translations, and the turning point.',
+          steps: [
+            'Dilation: factor $|a| = 3$ from the $x$-axis (stretch).',
+            'Horizontal translation: left by $1$ (from $x + 1$).',
+            'Vertical translation: down by $2$.',
+            'Turning point: at $(-1, -2)$, opening upward.',
           ],
         },
       ],
@@ -220,6 +316,22 @@ $y = 2(x - 1)^2 + 3$ is $y = x^2$ stretched by $2$, moved right $1$ and up $3$; 
                 `So the graph moves ${dir} by $${Math.abs(c)}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-shift-amount',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'In $y = (x + 7)^3$, the graph of $y = x^3$ has been shifted left by how many units?',
+            answer: '7',
+            answerType: 'numeric',
+            hint: '$y = (x + 7)^3$ is zero when $x = -7$; that is the new location of features that were at $x = 0$.',
+            solution: [
+              'The bracket $x + 7 = 0$ at $x = -7$.',
+              'So features that were at $x = 0$ shift to $x = -7$ — a shift of **left 7**.',
+            ],
           },
         },
       ],

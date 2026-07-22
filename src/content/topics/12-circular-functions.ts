@@ -48,13 +48,30 @@ Multiply degrees by $\\dfrac{\\pi}{180}$ to get radians; multiply radians by $\\
             '$= \\dfrac{4\\pi}{6} = \\dfrac{2\\pi}{3}$.',
           ],
         },
+        {
+          id: 'ex-half-turn',
+          statement: 'What angle in radians corresponds to a half-turn on the unit circle?',
+          steps: [
+            'A half-turn is $180°$.',
+            '$180° = \\pi$ radians.',
+          ],
+        },
+        {
+          id: 'ex-quarter-turn',
+          statement:
+            'What angle in radians corresponds to a quarter-turn?',
+          steps: [
+            'A quarter-turn is $90°$.',
+            '$90° = \\pi/2$ radians.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-deg-to-rad',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             // Pick a degree value that is a multiple of 30 between 30 and 300.
             // Resulting radian fraction (in lowest terms, over pi) is one of 1/12 .. 5/6.
             const degIndex = seed % 10 // 0..9
@@ -78,10 +95,25 @@ Multiply degrees by $\\dfrac{\\pi}{180}$ to get radians; multiply radians by $\\
           },
         },
         {
+          kind: 'curated',
+          id: 'c-radians-quadrant',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Which is larger: $90°$ or $\\dfrac{\\pi}{2}$ radians? (Answer "90°", "π/2", or "equal".)',
+            answer: 'equal',
+            answerType: 'exact',
+            hint: '$180° = \\pi$ radians.',
+            solution: [
+              '$90° = \\pi/2$ radians by the conversion $180° = \\pi$.',
+            ],
+          },
+        },
+        {
           kind: 'param',
           id: 'p-arc-length',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // angle = (num/den) * pi where (num/den) are already in lowest terms.
             // choices give nice answers when paired with the chosen radius.
             const angles: Array<[number, number]> = [
@@ -114,6 +146,21 @@ Multiply degrees by $\\dfrac{\\pi}{180}$ to get radians; multiply radians by $\\
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-circ-rotation',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'How many radians does a point travel in one full counter-clockwise turn around the unit circle?',
+            answer: '2pi',
+            answerType: 'exact',
+            hint: 'The circumference of a unit circle is $2\\pi$.',
+            solution: [
+              'A full turn is one circumference = $2\\pi$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -143,13 +190,31 @@ Wrapping lets $\\theta$ be any real number. Negative angles go clockwise; large 
             'Therefore $\\cos\\theta < 0$ and $\\sin\\theta > 0$.',
           ],
         },
+        {
+          id: 'ex-evaluate-numeric',
+          statement:
+            'Use the unit circle to find $\\sin\\dfrac{3\\pi}{2}$ and $\\cos\\dfrac{3\\pi}{2}$.',
+          steps: [
+            '$\\dfrac{3\\pi}{2}$ is $270°$ — straight down on the unit circle, point $(0, -1)$.',
+            'So $\\sin\\dfrac{3\\pi}{2} = -1$ and $\\cos\\dfrac{3\\pi}{2} = 0$.',
+          ],
+        },
+        {
+          id: 'ex-pythagoras',
+          statement: 'Why does $\\sin^2\\theta + \\cos^2\\theta = 1$ for every real $\\theta$?',
+          steps: [
+            'The point $(\\cos\\theta, \\sin\\theta)$ lies on the unit circle.',
+            'Distance from the origin: $\\sqrt{(\\cos\\theta)^2 + (\\sin\\theta)^2} = 1$.',
+            'Squaring: $\\sin^2\\theta + \\cos^2\\theta = 1$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-sin-sign',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const q = (seed % 4) + 1
             const sinSign = q === 1 || q === 2 ? 'positive' : 'negative'
             return {
@@ -176,6 +241,22 @@ Wrapping lets $\\theta$ be any real number. Negative angles go clockwise; large 
             solution: [
               '$\\cos^2\\theta = 1 - \\left(\\tfrac{3}{5}\\right)^2 = 1 - \\tfrac{9}{25} = \\tfrac{16}{25}$.',
               '$\\cos\\theta = \\sqrt{\\tfrac{16}{25}} = \\tfrac{4}{5}$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-sin-zero',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'What is $\\sin 0$? (As a number.)',
+            answer: '0',
+            answerType: 'numeric',
+            hint: 'At $\\theta = 0$ the wrapped point is $(1, 0)$.',
+            solution: [
+              'At $\\theta = 0$, the unit-circle point is $(1, 0)$ — $y = 0$.',
+              'So $\\sin 0 = 0$.',
             ],
           },
         },
@@ -209,13 +290,31 @@ So $\\tan$ is positive in quadrants I and III, negative in II and IV.`,
             'Cancel the $\\tfrac{1}{5}$: $= \\dfrac{4}{3}$.',
           ],
         },
+        {
+          id: 'ex-tan-undefined',
+          statement: 'Why is $\\tan\\theta$ undefined at $\\theta = \\dfrac{\\pi}{2}$?',
+          steps: [
+            'At $\\theta = \\pi/2$, $\\cos\\theta = 0$.',
+            '$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}$, but dividing by $0$ is undefined.',
+            'So $\\tan(\\pi/2)$ is undefined; the graph has a vertical asymptote there.',
+          ],
+        },
+        {
+          id: 'ex-tan-quadrant',
+          statement: 'In which quadrant is $\\tan\\theta$ always positive?',
+          steps: [
+            '$\\tan\\theta$ is positive when $\\sin$ and $\\cos$ share the same sign.',
+            'Both positive in quadrant I; both negative in quadrant III.',
+            'So $\\tan\\theta > 0$ in quadrants I and III.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-tan-sign',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const q = (seed % 4) + 1
             const sign = q === 1 || q === 3 ? 'positive' : 'negative'
             return {
@@ -242,6 +341,21 @@ So $\\tan$ is positive in quadrants I and III, negative in II and IV.`,
             hint: '$\\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}$.',
             solution: [
               '$\\tan\\theta = \\dfrac{5/13}{12/13} = \\dfrac{5}{12}$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-tan-zero',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'What is $\\tan 0$? Answer "0" or "undefined".',
+            answer: '0',
+            answerType: 'exact',
+            hint: '$\\sin 0 = 0$ and $\\cos 0 = 1$.',
+            solution: [
+              '$\\tan 0 = \\dfrac{\\sin 0}{\\cos 0} = \\dfrac{0}{1} = 0$.',
             ],
           },
         },
@@ -276,13 +390,28 @@ So $\\tan$ is positive in quadrants I and III, negative in II and IV.`,
             '$\\sin\\left(\\pi - \\dfrac{\\pi}{6}\\right) = \\sin\\dfrac{\\pi}{6} = \\dfrac{1}{2}$.',
           ],
         },
+        {
+          id: 'ex-cos-special',
+          statement: 'Find $\\cos\\dfrac{\\pi}{3}$.',
+          steps: [
+            'From the special-angle table, $\\cos\\dfrac{\\pi}{3} = \\dfrac{1}{2}$.',
+          ],
+        },
+        {
+          id: 'ex-tan-special',
+          statement: 'Find $\\tan\\dfrac{\\pi}{4}$.',
+          steps: [
+            '$\\sin\\dfrac{\\pi}{4} = \\cos\\dfrac{\\pi}{4} = \\dfrac{\\sqrt{2}}{2}$.',
+            'Their ratio is $\\dfrac{\\sqrt{2}/2}{\\sqrt{2}/2} = 1$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-exact-value',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // First-quadrant angle and which trig function.
             const angles: Array<{ ang: string; sin: string; cos: string }> = [
               { ang: '0', sin: '0', cos: '1' },
@@ -304,6 +433,36 @@ So $\\tan$ is positive in quadrants I and III, negative in II and IV.`,
                 `From the table, $${fn}${a.ang} = ${v}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-exact-pi3',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'What is $\\sin\\dfrac{\\pi}{3}$? Answer "sqrt(3)/2" or "1/2".',
+            answer: 'sqrt(3)/2',
+            answerType: 'exact',
+            hint: 'From the special-angle table.',
+            solution: [
+              '$\\sin\\dfrac{\\pi}{3} = \\dfrac{\\sqrt{3}}{2}$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-exact-pi6',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'What is $\\cos\\dfrac{\\pi}{6}$? Answer "sqrt(3)/2" or "1/2".',
+            answer: 'sqrt(3)/2',
+            answerType: 'exact',
+            hint: 'From the special-angle table.',
+            solution: [
+              '$\\cos\\dfrac{\\pi}{6} = \\dfrac{\\sqrt{3}}{2}$.',
+            ],
           },
         },
       ],

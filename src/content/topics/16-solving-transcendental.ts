@@ -16,15 +16,15 @@ export const solvingTranscendental: Topic = {
   lessons: [
     {
       id: 'solving-trig',
-      heading: 'Solving $a\\,f(n(x+b)) + c = k$ (trig)',
-      summary: 'Isolate f, undo the horizontal scaling, then use an inverse trig.',
+      heading: 'Solving $a\\, f\\bigl(n(x+b)\\bigr) + c = k$ (trig)',
+      summary: 'Isolate $f$, undo the horizontal scaling, then use an inverse trig.',
       body: `The same algebraic recipe works for sine, cosine and tangent equations: undo the constants and the horizontal scaling, then invert the function.
 
 ### Recipe
-1. Isolate the function: $f(n(x+b)) = \\tfrac{k - c}{a}$.
-2. Apply the inverse function: $n(x + b) = f^{-1}\\!\\left(\\tfrac{k - c}{a}\\right)$.
-3. Undo the horizontal scaling: $x + b = \\tfrac{1}{n} f^{-1}\\!\\left(\\tfrac{k - c}{a}\\right)$.
-4. Solve for $x$: $x = \\tfrac{1}{n} f^{-1}\\!\\left(\\tfrac{k - c}{a}\\right) - b$.
+1. Isolate the function: $f(n(x+b)) = \\dfrac{k - c}{a}$.
+2. Apply the inverse function: $n(x + b) = f^{-1}\\left(\\dfrac{k - c}{a}\\right)$.
+3. Undo the horizontal scaling: $x + b = \\dfrac{1}{n}\\, f^{-1}\\left(\\dfrac{k - c}{a}\\right)$.
+4. Solve for $x$: $x = \\dfrac{1}{n}\\, f^{-1}\\left(\\dfrac{k - c}{a}\\right) - b$.
 
 ### Multiple solutions
 Inverse trig on a calculator returns a value in a restricted range (e.g. $\\sin^{-1}$ in $[-\\pi/2, \\pi/2]$). Use **periodicity** to find all solutions. Exact values come straight off the special-angle table when $\\tfrac{k - c}{a}$ matches one of them.`,
@@ -50,13 +50,24 @@ Inverse trig on a calculator returns a value in a restricted range (e.g. $\\sin^
             'Smallest positive $x$: $x = \\tfrac{1}{2}\\cos^{-1}(\\tfrac{2}{3})$ (which is approximately $0.42$ rad).',
           ],
         },
+        {
+          id: 'ex-solve-tan',
+          statement:
+            'Solve $\\tan(2x) = 1$ exactly on $[0, \\pi)$.',
+          steps: [
+            '$\\tan$ takes value $1$ at $\\pi/4 + k\\pi$.',
+            'So $2x = \\pi/4 + k\\pi$, giving $x = \\pi/8 + k\\pi/2$.',
+            'On $[0, \\pi)$: $x = \\pi/8$, $x = 5\\pi/8$, $x = 9\\pi/8$ (no — out of range).',
+            'So solutions: $x = \\pi/8$ and $x = 5\\pi/8$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-solve-sin-simple',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // Solve sin(x) = v, where v is an exact value we know.
             // Provide special values {1/2, sqrt(3)/2, sqrt(2)/2, 0, -1}.
             // Need to express answer as a clean angle string like "pi/6", "5pi/6", etc.
@@ -84,7 +95,7 @@ Inverse trig on a calculator returns a value in a restricted range (e.g. $\\sin^
           kind: 'param',
           id: 'p-isolve-constant',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // a sin(x) + c = k => sin(x) = (k - c)/a
             // Choose so (k - c)/a is one of {1/2, sqrt(3)/2, sqrt(2)/2, 0, -1, 1}.
             type Case = { v: string; a: number; k: number; c: number }
@@ -107,6 +118,21 @@ Inverse trig on a calculator returns a value in a restricted range (e.g. $\\sin^
                 `${c.a}\\sin(x)${cPart} = ${kPart} \\implies \\sin(x) = \\dfrac{${kPart}${c.c > 0 ? ` - ${c.c}` : c.c < 0 ? ` + ${Math.abs(c.c)}` : ''}}{${c.a}} = ${c.v}.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-isolate-cos',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Isolate $\\cos x$ from $4\\cos(x) = 2$.',
+            answer: '1/2',
+            answerType: 'numeric',
+            hint: 'Divide both sides by $4$.',
+            solution: [
+              '$\\cos(x) = 2/4 = 1/2$.',
+            ],
           },
         },
       ],
@@ -147,13 +173,21 @@ With any base other than $10$ or $e$, you use change of base on the log. With $b
             'Solve: $x = \\dfrac{\\ln 5}{\\ln 2}$.',
           ],
         },
+        {
+          id: 'ex-solve-decay',
+          statement:
+            'Solve $2^{x+1} = 4$ for $x$.',
+          steps: [
+            'Isolate: $2^{x+1} = 2^2$, so $x+1 = 2$, $x = 1$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-solve-exp-step',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // 2 * 2^x = 2^k -> x = k-1
             const k = (seed % 5) + 2 // 2..6
             return {
@@ -181,6 +215,22 @@ With any base other than $10$ or $e$, you use change of base on the log. With $b
             solution: [
               '$3^x = 27 = 3^3$.',
               'So $x = 3$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-solve-4x',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Solve $4^x = 16$ for $x$.',
+            answer: '2',
+            answerType: 'numeric',
+            hint: 'Match bases: $4 = 2^2$ and $16 = 2^4$.',
+            solution: [
+              '$4^x = 2^{2x} = 2^4 = 16$.',
+              'So $2x = 4$, $x = 2$.',
             ],
           },
         },

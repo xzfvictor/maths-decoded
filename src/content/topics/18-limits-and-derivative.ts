@@ -44,6 +44,26 @@ Sometimes the limit depends on which side you approach from. For the unit-deriva
             'So the limit is $4$.',
           ],
         },
+        {
+          id: 'ex-linear-limit',
+          statement:
+            'Evaluate $\\lim_{h \\to 0} \\dfrac{3h + 5h^2}{h}$.',
+          steps: [
+            'Divide through by $h$: $3 + 5h$.',
+            'As $h \\to 0$: $3 + 5h \\to 3$.',
+            'So the limit is $3$.',
+          ],
+        },
+        {
+          id: 'ex-no-cancel',
+          statement:
+            'Evaluate $\\lim_{h \\to 0} \\dfrac{h^2}{h}$ for $h \\ne 0$.',
+          steps: [
+            'Divide through: $h$.',
+            'As $h \\to 0$: $\\to 0$.',
+            'So the limit is $0$.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -83,6 +103,22 @@ Sometimes the limit depends on which side you approach from. For the unit-deriva
             ],
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-limit-h-over-sq',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Evaluate $\\lim_{h \\to 0} \\dfrac{h}{h^2}$ (for $h \\ne 0$). Answer as a number or "undefined".',
+            answer: 'undefined',
+            answerType: 'exact',
+            hint: '$\\tfrac{h}{h^2} = \\tfrac{1}{h}$, which is unbounded near $0$.',
+            solution: [
+              '$\\tfrac{h}{h^2} = \\tfrac{1}{h}$ — unbounded as $h \\to 0$.',
+              'The limit does not exist.',
+            ],
+          },
+        },
       ],
     },
 
@@ -114,6 +150,28 @@ For a polynomial $f$, you can often:
             'Numerator: $x^2 + 2xh + h^2 - x^2 = 2xh + h^2$.',
             'Ratio: $\\dfrac{2xh + h^2}{h} = 2x + h$.',
             'Limit: as $h \\to 0$, $\\to 2x$. So $f\\prime(x) = 2x$.',
+          ],
+        },
+        {
+          id: 'ex-derivative-cube',
+          statement:
+            'Use the limit definition to find $f\\prime(x)$ for $f(x) = x^3$.',
+          steps: [
+            '$f(x + h) = (x+h)^3 = x^3 + 3x^2 h + 3x h^2 + h^3$.',
+            'Numerator: $3x^2 h + 3xh^2 + h^3$.',
+            'Ratio: $\\dfrac{3x^2 h + 3x h^2 + h^3}{h} = 3x^2 + 3xh + h^2$.',
+            'Limit: $h \\to 0$ leaves $3x^2$.',
+          ],
+        },
+        {
+          id: 'ex-what-can-go-wrong',
+          statement:
+            'Why is the limit $\\lim_{h \\to 0} \\dfrac{|x + h| - |x|}{h}$ different at $x = 0$?',
+          steps: [
+            "At $x > 0$: $|x + h| = x + h$, so the quotient is $\\tfrac{h}{h} = 1$.",
+            "At $x < 0$: $|x + h| = -(x + h)$, so the quotient is $\\tfrac{-h}{h} = -1$.",
+            "At $x = 0$: the limit from each side differs ($1 \\ne -1$), so the limit does not exist.",
+            'So $|x|$ is not differentiable at $x = 0$ — a corner.',
           ],
         },
       ],
@@ -156,6 +214,21 @@ For a polynomial $f$, you can often:
             ],
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-derivative-x2',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'From the limit definition, what is $f\\prime(x)$ for $f(x) = x^2$?',
+            answer: '2x',
+            answerType: 'polynomial',
+            hint: 'After expanding $(x + h)^2$ and simplifying, you get $2x + h$.',
+            solution: [
+              '$f\\prime(x) = \\lim_{h \\to 0}(2x + h) = 2x$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -185,6 +258,25 @@ Draw a smooth curve. Pick any point $x$. Draw a chord **symmetric** about $x$ �
             'Compare with the true $f\\prime(2) = 3 \\cdot 2^2 = 12$. ✓',
           ],
         },
+        {
+          id: 'ex-one-sided',
+          statement:
+            'Estimate $f\\prime(2)$ for $f(x) = x^2$ using the **forward** difference $\\tfrac{f(2 + h) - f(2)}{h}$ with $h = 0.1$.',
+          steps: [
+            '$f(2.1) = 4.41$, $f(2) = 4$.',
+            '$(4.41 - 4)/0.1 = 0.41/0.1 = 4.1$.',
+            "True derivative is $2 \\cdot 2 = 4$. Forward-difference is $4.1$ — slightly off, but improving as $h \\to 0$.",
+          ],
+        },
+        {
+          id: 'ex-when-h-zero',
+          statement:
+            'Why can\'t we take $h = 0$ directly in the difference quotient?',
+          steps: [
+            'Because $\\tfrac{f(x + 0) - f(x)}{0} = \\tfrac{0}{0}$ — division by zero.',
+            'The limit is taken as $h$ approaches $0$ without ever being $0$.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -210,6 +302,38 @@ Draw a smooth curve. Pick any point $x$. Draw a chord **symmetric** about $x$ �
                 `Estimate $= ${est}$, the true derivative is $2${a} = ${2 * a}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-central-diff-1',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Use the central difference formula with $h = 0.1$ to estimate $f\\prime(1)$ for $f(x) = x^3$. (Give as a decimal to 1 dp.)',
+            answer: '3.0',
+            answerType: 'numeric',
+            hint: 'Numerator $= 1.1^3 - 0.9^3 = 1.331 - 0.729$.',
+            solution: [
+              'Numerator $= 1.331 - 0.729 = 0.602$.',
+              'Denominator $= 2 \\cdot 0.1 = 0.2$.',
+              'Estimate $= 0.602/0.2 = 3.01 \\approx 3.0$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-central-diff-formula',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'State the central difference formula for $f\\prime(x)$.',
+            answer: '(f(x+h)-f(x-h))/(2h)',
+            answerType: 'exact',
+            hint: 'The width of the interval is $2h$.',
+            solution: [
+              '$f\\prime(x) \\approx \\dfrac{f(x + h) - f(x - h)}{2h}$.',
+            ],
           },
         },
       ],

@@ -52,6 +52,16 @@ $$x^3 + x^2 + 3x + 3 = x^2(x+1) + 3(x+1) = (x+1)(x^2+3).$$`,
             'So $3x^3 - 12x = 3x(x-2)(x+2)$.',
           ],
         },
+        {
+          id: 'ex-grouping',
+          statement: 'Factorise $x^3 + x^2 + 3x + 3$ by grouping.',
+          steps: [
+            'Pair the terms: $(x^3 + x^2) + (3x + 3)$.',
+            'Common factors: $x^2(x + 1) + 3(x + 1)$.',
+            'Common factor in both groups: $(x + 1)$.',
+            'So $x^3 + x^2 + 3x + 3 = (x + 1)(x^2 + 3)$.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -93,6 +103,22 @@ $$x^3 + x^2 + 3x + 3 = x^2(x+1) + 3(x+1) = (x+1)(x^2+3).$$`,
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-factor-common',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Factorise $4x^3 - 16x^2$ fully. Enter one of the linear factors (e.g. x).',
+            answer: 'x',
+            answerType: 'polynomial',
+            hint: 'Take out the common factor.',
+            solution: [
+              'Common factor is $4x^2$: $4x^3 - 16x^2 = 4x^2(x - 4)$.',
+              'So $x$ is one of the linear factors.',
+            ],
+          },
+        },
       ],
     },
 
@@ -131,6 +157,16 @@ For a factor $(bx - a)$, the corresponding root is $x = \\dfrac{a}{b}$.`,
             'For $(x + 2) = (x - (-2))$, evaluate $P(-2)$.',
             '$P(-2) = (-2)^3 + 3(-2)^2 - 4 = -8 + 12 - 4 = 0$.',
             'Since $P(-2) = 0$, yes — $(x + 2)$ is a factor.',
+          ],
+        },
+        {
+          id: 'ex-bx-form',
+          statement: 'Is $(2x - 3)$ a factor of $P(x) = 4x^2 - 9$?',
+          steps: [
+            'For a factor $(bx - a)$ with $b \\ne 1$, the corresponding root is $x = \\dfrac{a}{b}$.',
+            'Here $b = 2$, $a = 3$, so the root would be $x = \\tfrac{3}{2}$.',
+            'Evaluate $P(\\tfrac{3}{2}) = 4 \\cdot \\tfrac{9}{4} - 9 = 9 - 9 = 0$.',
+            'Yes — $(2x - 3)$ is a factor. In fact $4x^2 - 9 = (2x - 3)(2x + 3)$, a difference of squares.',
           ],
         },
       ],
@@ -188,6 +224,21 @@ For a factor $(bx - a)$, the corresponding root is $x = \\dfrac{a}{b}$.`,
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-remainder-quadratic',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Find the remainder when $P(x) = x^2 + 4x + 1$ is divided by $(x - 5)$.',
+            answer: '46',
+            answerType: 'numeric',
+            hint: 'Evaluate $P(5)$.',
+            solution: [
+              '$P(5) = 5^2 + 4(5) + 1 = 25 + 20 + 1 = 46$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -217,6 +268,25 @@ $$x^3 - 7x + 6 = (x - 1)(x^2 + x - 6) = (x-1)(x-2)(x+3).$$`,
             'Divide: $x^3 - 2x^2 - 5x + 6 = (x - 1)(x^2 - x - 6)$.',
             'Factorise the quadratic: $x^2 - x - 6 = (x - 3)(x + 2)$.',
             'So $P(x) = (x - 1)(x - 3)(x + 2)$.',
+          ],
+        },
+        {
+          id: 'ex-mixed-root',
+          statement: 'Factorise $P(x) = x^3 - 3x^2 - 4x + 12$.',
+          steps: [
+            'Group: $(x^3 - 3x^2) - (4x - 12)$.',
+            'Common factor in each pair: $x^2(x - 3) - 4(x - 3) = (x - 3)(x^2 - 4)$.',
+            'Difference of squares: $x^2 - 4 = (x - 2)(x + 2)$.',
+            'So $P(x) = (x - 3)(x - 2)(x + 2)$.',
+          ],
+        },
+        {
+          id: 'ex-binomial-stem',
+          statement: 'Factorise $P(x) = x^3 - 1$.',
+          steps: [
+            '$1 = 1^3$, so use the difference of cubes $a^3 - b^3 = (a - b)(a^2 + ab + b^2)$.',
+            'Here $a = x$, $b = 1$: $x^3 - 1 = (x - 1)(x^2 + x + 1)$.',
+            "The quadratic $x^2 + x + 1$ has discriminant $1 - 4 = -3 < 0$, so it doesn't factor over the reals.",
           ],
         },
       ],
@@ -258,6 +328,23 @@ $$x^3 - 7x + 6 = (x - 1)(x^2 + x - 6) = (x-1)(x-2)(x+3).$$`,
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-factor-sum',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A monic cubic has roots $2, -3, 5$. State the constant term of the cubic.',
+            answer: '-30',
+            answerType: 'numeric',
+            hint: 'For a monic cubic with roots $p, q, r$ the constant term is $-pqr$.',
+            solution: [
+              'For a monic cubic $P(x) = (x - p)(x - q)(x - r) = x^3 - (p+q+r)x^2 + (pq + qr + pr) x - pqr$.',
+              'The constant term is $-pqr = -(2)(-3)(5) = 30 \\cdot (-1) = -30$.',
+              'So the constant term is $-30$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -287,6 +374,25 @@ The roots of $P$, the linear factors of $P$, and the **$x$-intercepts** of $y = 
             'From $2x - 1 = 0$: $x = \\tfrac{1}{2}$.',
             'From $x + 4 = 0$: $x = -4$.',
             'Solutions: $x = \\tfrac{1}{2}$ or $x = -4$.',
+          ],
+        },
+        {
+          id: 'ex-cubic-roots',
+          statement: 'Solve $(x - 1)^2(x + 3) = 0$.',
+          steps: [
+            'By the null factor law, $x - 1 = 0$ or $x + 3 = 0$.',
+            '$(x - 1)^2 = 0$ gives the single (repeated) root $x = 1$.',
+            '$(x + 3) = 0$ gives $x = -3$.',
+            'Solutions: $x = 1$ (double) and $x = -3$.',
+          ],
+        },
+        {
+          id: 'ex-quartic',
+          statement: 'Solve $x(x - 2)(x + 1)^2 = 0$.',
+          steps: [
+            'Set each factor to zero: $x = 0$, or $x - 2 = 0$, or $x + 1 = 0$.',
+            'Roots: $x = 0$, $x = 2$, $x = -1$ (double).',
+            'Distinct roots: $x = -1, 0, 2$.',
           ],
         },
       ],
@@ -333,6 +439,23 @@ The roots of $P$, the linear factors of $P$, and the **$x$-intercepts** of $y = 
             ],
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-two-equations',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Solve $(x - 4)(x + 2) = 0$. State the larger of the two roots.',
+            answer: '4',
+            answerType: 'numeric',
+            hint: 'Set each factor to zero.',
+            solution: [
+              '$(x - 4) = 0 \\Rightarrow x = 4$.',
+              '$(x + 2) = 0 \\Rightarrow x = -2$.',
+              'The larger of the two is $x = 4$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -367,6 +490,26 @@ Draw a smooth curve through the intercepts respecting the end behaviour and the 
             '$y$-intercept: $y = (2)(-1)^2 = 2$, so $(0, 2)$.',
             '$x$-intercepts: $x = -2$ (single factor → crosses) and $x = 1$ (squared → touches).',
             'Sketch: comes up from bottom-left, crosses at $x = -2$, turns, touches the axis at $x = 1$, then rises.',
+          ],
+        },
+        {
+          id: 'ex-sketch-quartic',
+          statement: 'Describe the key features of $y = (x - 1)^2(x + 3)^2$.',
+          steps: [
+            'A positive quartic: both ends go up.',
+            '$x$-intercepts: $x = 1$ (touches) and $x = -3$ (touches).',
+            "$y$-intercept: $y = (1)^2 \\cdot (-3)^2 = 9$.",
+            'Symmetric-ish quartic with two touch points on the $x$-axis and a maximum between them.',
+          ],
+        },
+        {
+          id: 'ex-end-down',
+          statement:
+            'Without sketching, identify the end behaviour of $y = -2x^3 + 5x$. As $x \\to +\\infty$, what happens?',
+          steps: [
+            'Leading term: $-2x^3$.',
+            'For large positive $x$, $-2x^3 \\to -\\infty$.',
+            'So $y \\to -\\infty$ as $x \\to +\\infty$ (and $y \\to +\\infty$ as $x \\to -\\infty$).',
           ],
         },
       ],
@@ -408,6 +551,22 @@ Draw a smooth curve through the intercepts respecting the end behaviour and the 
                 `$= ${yInt}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-touch-or-cross',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'In $y = (x + 1)^2(x - 4)$, does the graph cross or touch the $x$-axis at $x = -1$? (Answer "cross" or "touch".)',
+            answer: 'touch',
+            answerType: 'exact',
+            hint: 'A squared factor produces a touch-point.',
+            solution: [
+              '$(x + 1)^2$ is a squared factor — the graph touches the axis (turning point sits on it).',
+              'So at $x = -1$ the graph touches the axis.',
+            ],
           },
         },
       ],

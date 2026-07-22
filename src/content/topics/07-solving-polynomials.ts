@@ -41,13 +41,31 @@ Find one root by testing factors of the constant term (rational-root theorem), d
             'Null factor law: $x = 0$, $x = 2$, or $x = -2$.',
           ],
         },
+        {
+          id: 'ex-solve-by-formula',
+          statement: 'Solve $x^2 - 5x + 3 = 0$ exactly (use the formula).',
+          steps: [
+            '$a = 1$, $b = -5$, $c = 3$. Discriminant: $25 - 12 = 13$.',
+            '$x = \\dfrac{5 \\pm \\sqrt{13}}{2}$.',
+            'Two real irrational solutions.',
+          ],
+        },
+        {
+          id: 'ex-non-monic-cubic',
+          statement: 'Solve $x^3 - 3x^2 + 2x = 0$.',
+          steps: [
+            'Common factor $x$: $x(x^2 - 3x + 2) = 0$.',
+            'Factorise the quadratic: $x^2 - 3x + 2 = (x - 1)(x - 2)$.',
+            'So $x(x - 1)(x - 2) = 0$, giving $x = 0, 1, 2$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-solve-quadratic',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const r1 = ((seed % 6) - 3) || 3 // -3..2, avoid 0 root
             let r2 = ((Math.floor(seed / 7) % 6) - 3) || -3 // avoid 0 root
             if (r2 === r1) r2 = r1 === 3 ? 2 : r1 + 1
@@ -65,6 +83,38 @@ Find one root by testing factors of the constant term (rational-root theorem), d
                 `Solutions: $${roots.join(',\\ ')}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-solve-cubic-simple',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Solve $x^3 - 9x = 0$. State the largest root.',
+            answer: '3',
+            answerType: 'numeric',
+            hint: 'Common factor $x$; the rest is a difference of squares.',
+            solution: [
+              '$x(x^2 - 9) = x(x - 3)(x + 3) = 0$.',
+              'Roots $x = 0, 3, -3$.',
+              'The largest is $3$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-step-one',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'First step in solving $x^2 + 5x = 6$: bring everything to one side. What is the resulting equation? Type "x^2+5x-6=0".',
+            answer: 'x^2+5x-6=0',
+            answerType: 'exact',
+            hint: 'Subtract $6$ from both sides.',
+            solution: [
+              'Move $6$ to the left: $x^2 + 5x - 6 = 0$.',
+            ],
           },
         },
       ],
@@ -94,13 +144,33 @@ $$P(1) = -2 < 0, \\quad P(2) = 3 > 0 \\ \\Rightarrow\\ \\text{a root lies betwee
             'The sign changes from negative to positive, so a root lies between $1$ and $2$.',
           ],
         },
+        {
+          id: 'ex-graphical-intersection',
+          statement:
+            'Explain in words how to solve $\\sqrt{x} = x - 2$ graphically.',
+          steps: [
+            'Sketch $y = \\sqrt{x}$ and $y = x - 2$.',
+            'Find their intersection points.',
+            'The $x$-coordinate of each intersection is a solution.',
+          ],
+        },
+        {
+          id: 'ex-no-sign-change',
+          statement:
+            'Show that $P(x) = x^2 + 1$ has no real root using the sign-change idea.',
+          steps: [
+            'For any $x$, $x^2 \\ge 0$, so $x^2 + 1 \\ge 1 > 0$.',
+            'No $x$ makes $P(x) = 0$, so no sign change is possible.',
+            'Therefore there is no real root.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-bracket-root',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // P(x) = x^3 + x + d, monotonic increasing, single real root.
             const d = -(((seed % 5) + 1) * 2 + 1) // negative odd-ish constants
             const P = (x: number) => x * x * x + x + d
@@ -123,6 +193,37 @@ $$P(1) = -2 < 0, \\quad P(2) = 3 > 0 \\ \\Rightarrow\\ \\text{a root lies betwee
                 `The sign change means the root lies between $${n}$ and $${n + 1}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-read-intercept',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'A graph of $y = x^2 - 4$ crosses the $x$-axis at $-2$ and $+2$. How many real solutions does $x^2 - 4 = 0$ have?',
+            answer: '2',
+            answerType: 'numeric',
+            hint: 'Each crossing of the $x$-axis is a solution.',
+            solution: [
+              'Two crossings → two real solutions.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-sign-change-no',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Does the equation $x^2 + 1 = 0$ have a real solution? Answer "yes" or "no".',
+            answer: 'no',
+            answerType: 'exact',
+            hint: 'For real $x$, $x^2 \\ge 0$.',
+            solution: [
+              '$x^2 + 1 \\ge 1$ for all real $x$, never zero.',
+              'No real solution exists.',
+            ],
           },
         },
       ],
@@ -158,6 +259,26 @@ Because a sign change is preserved in whichever half you keep, the root stays tr
             'Set $b = 1.5$: the new interval is $[1, 1.5]$.',
           ],
         },
+        {
+          id: 'ex-bisection-table',
+          statement:
+            'After 3 halvings of the interval $[0, 4]$, how wide is it?',
+          steps: [
+            'Width starts at $4$.',
+            'After $k$ halvings, width is $4 / 2^k$.',
+            'After $3$ halvings: $4 / 8 = 0.5$.',
+          ],
+        },
+        {
+          id: 'ex-when-to-stop',
+          statement:
+            'A bisection is to give an estimate accurate to $3$ decimal places. Why is this a poor stopping condition when the bracketing interval is just below $0.001$?',
+          steps: [
+            'The midpoint estimate is accurate only to about half the interval width.',
+            'When the width is $\\sim 0.0005$, the midpoint is accurate only to roughly $3$ decimal places.',
+            'It is reliable — but the condition can be misleading because the truth might be exactly at the boundary, in which case extra iterations still help.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -177,7 +298,7 @@ Because a sign change is preserved in whichever half you keep, the root stays tr
           kind: 'param',
           id: 'p-bisection-choose-half',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const a = (seed % 4) + 1 // 1..4
             const b = a + 2 // width 2, midpoint a+1 integer
             const m = (a + b) / 2
@@ -198,6 +319,22 @@ Because a sign change is preserved in whichever half you keep, the root stays tr
                 `New interval: $${newInterval}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-half-width',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'After $4$ bisection steps, the original interval of width $1$ is what width? As a fraction (e.g. 1/8).',
+            answer: '1/16',
+            answerType: 'numeric',
+            hint: 'Each step halves the width.',
+            solution: [
+              'Width after $k$ steps: $1 / 2^k$.',
+              '$k = 4$: width $= 1/16$.',
+            ],
           },
         },
       ],

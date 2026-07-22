@@ -40,13 +40,31 @@ $y = 2^x$ at $x = 0, 1, 2, 3, 4, \\ldots$ gives $y = 1, 2, 4, 8, 16, \\ldots$ �
             'So the $y$-intercept is $(0, 1)$.',
           ],
         },
+        {
+          id: 'ex-table',
+          statement: 'Build a small table of $y = 2^x$ for $x = -1, 0, 1, 2$.',
+          steps: [
+            '$2^{-1} = 1/2$, $2^0 = 1$, $2^1 = 2$, $2^2 = 4$.',
+            'Each step multiplies by $2$ — characteristic of exponential growth.',
+          ],
+        },
+        {
+          id: 'ex-decay-shape',
+          statement:
+            'Describe in words the shape of $y = (1/2)^x$.',
+          steps: [
+            'For $x \\to +\\infty$, $(1/2)^x \\to 0$ (the curve approaches the $x$-axis from above).',
+            'For $x \\to -\\infty$, $(1/2)^x \\to +\\infty$ (shoots upward to the left).',
+            'It is a decaying exponential — strictly decreasing, always positive.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-y-intercept',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const bases = [2, 3, 5, 7, 10]
             const b = bases[seed % bases.length]
             return {
@@ -62,10 +80,25 @@ $y = 2^x$ at $x = 0, 1, 2, 3, 4, \\ldots$ gives $y = 1, 2, 4, 8, 16, \\ldots$ �
           },
         },
         {
+          kind: 'curated',
+          id: 'c-y-intercept-fixed',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'What is the $y$-intercept of every exponential function $y = b^x$ (for $b > 0, b \\ne 1$)?',
+            answer: '1',
+            answerType: 'numeric',
+            hint: 'All exponentials pass through the same point.',
+            solution: [
+              'All $b^x$ satisfy $b^0 = 1$, so every exponential graph crosses the $y$-axis at $(0, 1)$.',
+            ],
+          },
+        },
+        {
           kind: 'param',
           id: 'p-growth-or-decay',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const grow = [2, 3, 5]
             const decay = [0.5, 0.25]
             const useGrow = seed % 2 === 0
@@ -113,13 +146,33 @@ For $0 < b < 1$, $y \\to c$ as $x \\to \\infty$. For $b > 1$, the same constant 
             'As $x \\to -\\infty$, $2^x \\to 0$, so $y \\to 5$. Horizontal asymptote: $y = 5$.',
           ],
         },
+        {
+          id: 'ex-translate',
+          statement:
+            'How does $y = 2^{x+1}$ differ from $y = 2^x$?',
+          steps: [
+            'Adding $1$ to the exponent shifts the graph left by $1$.',
+            'Equivalent: $y = 2 \\cdot 2^x$ — a vertical dilation by $2$ (no shift).',
+            'Both rules agree at $x = -1$: $y = 2^0 = 1$ vs. $y = 2^{-1+1} = 2^0 = 1$.',
+          ],
+        },
+        {
+          id: 'ex-compress',
+          statement:
+            'Compare $y = 2^{2x}$ and $y = 2^x$ — are they the same?',
+          steps: [
+            '$2^{2x} = (2^x)^2$ — not the same.',
+            '$2^{2x}$ grows much faster: at $x = 1$, $2^{2} = 4$ vs. $2^1 = 2$.',
+            'Effectively a horizontal compression by factor $1/2$ (period-like change for exponentials).',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-asymptote',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const cVals = [3, 5, 7, -2]
             const c = cVals[seed % cVals.length]
             const aVals = [2, 3, 4]
@@ -151,6 +204,21 @@ For $0 < b < 1$, $y \\to c$ as $x \\to \\infty$. For $b > 1$, the same constant 
             solution: [
               '$y = 3 \\cdot 2^0 - 1 = 3 \\cdot 1 - 1$.',
               '$y = 2$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-eval-2',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Evaluate $y = 5 \\cdot 3^x$ at $x = 2$.',
+            answer: '45',
+            answerType: 'numeric',
+            hint: '$3^2 = 9$.',
+            solution: [
+              '$y = 5 \\cdot 3^2 = 5 \\cdot 9 = 45$.',
             ],
           },
         },
@@ -188,13 +256,28 @@ Writing $b^{2x} = (b^x)^2 = (b^2)^x$ is the heart of rewriting $y = a \\cdot b^{
             'Use $\\dfrac{a^m}{a^n} = a^{m - n}$: $2^{(5x - 3) - 3x} = 2^{2x - 3}$.',
           ],
         },
+        {
+          id: 'ex-multiply',
+          statement:
+            'Multiply $2^5 \\cdot 2^3$ and give the result.',
+          steps: [
+            'Same base: add exponents. $2^5 \\cdot 2^3 = 2^{5+3} = 2^8 = 256$.',
+          ],
+        },
+        {
+          id: 'ex-power-of-power',
+          statement: 'Simplify $(3^2)^4$.',
+          steps: [
+            'Power-of-power: multiply exponents. $(3^2)^4 = 3^{2 \\cdot 4} = 3^8 = 6561$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-exponent-multiply',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const e1 = (seed % 4) + 1 // 1..4
             const e2 = (Math.floor(seed / 4) % 4) + 1 // 1..4
             const total = e1 + e2
@@ -214,7 +297,7 @@ Writing $b^{2x} = (b^x)^2 = (b^2)^x$ is the heart of rewriting $y = a \\cdot b^{
           kind: 'param',
           id: 'p-exponent-divide',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const n = (seed % 4) + 1
             const diff = (Math.floor(seed / 4) % 5) + 1 // 1..5
             const m = n + diff
@@ -242,6 +325,21 @@ Writing $b^{2x} = (b^x)^2 = (b^2)^x$ is the heart of rewriting $y = a \\cdot b^{
             hint: '$a^{-n} = \\dfrac{1}{a^n}$.',
             solution: [
               '$a^{-3} = \\dfrac{1}{a^3}$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-simplify-two',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Simplify $x^3 \\cdot x^5$. Type the result as x^k.',
+            answer: 'x^8',
+            answerType: 'polynomial',
+            hint: 'Same base: add exponents.',
+            solution: [
+              '$x^3 \\cdot x^5 = x^{3+5} = x^8$.',
             ],
           },
         },
@@ -276,13 +374,32 @@ For $0 < b < 1$ (decay):
             'Half-life is $8$ units.',
           ],
         },
+        {
+          id: 'ex-doubling',
+          statement:
+            'A population grows according to $P(t) = 500 \\cdot 1.07^t$. Estimate the doubling time (to 2 dp).',
+          steps: [
+            'Want $1.07^t = 2$, so $t = \\dfrac{\\ln 2}{\\ln 1.07}$.',
+            '$\\ln 2 \\approx 0.693$, $\\ln 1.07 \\approx 0.0677$.',
+            'So $t \\approx 10.24$ years.',
+          ],
+        },
+        {
+          id: 'ex-long-run',
+          statement:
+            'A model $y = 5 - 3 \\cdot (0.8)^t$ approaches what long-run value?',
+          steps: [
+            'As $t \\to \\infty$, $(0.8)^t \\to 0$.',
+            'So $y \\to 5 - 0 = 5$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-initial-value',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             const a = (seed % 4) + 2 // 2..5
             const c = ((Math.floor(seed / 4) % 4) + 1) * 5 // 5,10,15,20
             const cPart = c >= 0 ? `+ ${c}` : `- ${Math.abs(c)}`
@@ -302,7 +419,7 @@ For $0 < b < 1$ (decay):
           kind: 'param',
           id: 'p-doubling-time',
           difficulty: 'challenge',
-          build: (seed) => {
+          build: (seed: number) => {
             // y = 2^(x/n). doubling time = n.
             const n = (seed % 4) + 2 // 2..5
             return {
@@ -314,6 +431,21 @@ For $0 < b < 1$ (decay):
                 `Doubling time: solve $2^{t/${n}} = 2$, so $t/${n} = 1$, giving $t = ${n}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-half-life-1',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'After one half-life, the amount remaining is what fraction of the initial amount?',
+            answer: '1/2',
+            answerType: 'numeric',
+            hint: '"Half-life" = halves the amount.',
+            solution: [
+              'After one half-life, the amount remaining is $\\tfrac12$ of the initial amount.',
+            ],
           },
         },
       ],

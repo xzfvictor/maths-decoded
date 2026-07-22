@@ -45,6 +45,25 @@ Where $f'$ is **largest** (most positive), $f$ is **steepest uphill**.
             'So the slope is $4$.',
           ],
         },
+        {
+          id: 'ex-three-views',
+          statement:
+            'A ball\'s height $h(t)$ (m, t in s) has $h\\prime(2) = 3$. Interpret this geometrically, symbolically and physically.',
+          steps: [
+            'Geometric: the tangent at $t = 2$ has slope $3$.',
+            'Symbolic: $h\\prime$ takes the value $3$ at $t = 2$.',
+            'Physical: at $t = 2$, the ball is rising at $3$ m/s.',
+          ],
+        },
+        {
+          id: 'ex-zero-derivative',
+          statement:
+            'If $f\\prime(2) = 0$, what does that tell you about the graph at $x = 2$?',
+          steps: [
+            'The tangent at $x = 2$ is horizontal.',
+            'That is a stationary point (turning point or horizontal point of inflection).',
+          ],
+        },
       ],
       exercises: [
         {
@@ -67,7 +86,7 @@ Where $f'$ is **largest** (most positive), $f$ is **steepest uphill**.
           kind: 'param',
           id: 'p-stationary-meaning',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             const descs = [
               'a local maximum',
               'a local minimum',
@@ -85,6 +104,21 @@ Where $f'$ is **largest** (most positive), $f$ is **steepest uphill**.
                 'Distinguishing between a local max, local min, and an inflection point needs more information (the second derivative or values nearby).',
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-f-prime-physical',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A water tank\'s depth $D(t)$ (m, t in hours) satisfies $D\\prime(0) = 0.05$. What does this mean physically? Answer in a sentence.',
+            answer: 'depth rising at 0.05 m/hr',
+            answerType: 'exact',
+            hint: 'The derivative is an instantaneous rate of change.',
+            solution: [
+              'At $t = 0$, the depth is rising at $0.05$ metres per hour.',
+            ],
           },
         },
       ],
@@ -123,13 +157,30 @@ A polynomial of degree $n$ always has a derivative of degree $n - 1$ (when $n \\
             '$f\\prime(x) = 15x^2 - 1$.',
           ],
         },
+        {
+          id: 'ex-quadratic-derivative',
+          statement: "Differentiate $f(x) = 3x^2 - 6x + 1$.",
+          steps: [
+            '$\\dfrac{d}{dx}(3x^2) = 6x$.',
+            '$\\dfrac{d}{dx}(-6x) = -6$.',
+            '$\\dfrac{d}{dx}(1) = 0$.',
+            '$f\\prime(x) = 6x - 6$.',
+          ],
+        },
+        {
+          id: 'ex-quartic-derivative',
+          statement: "Differentiate $f(x) = x^4$.",
+          steps: [
+            'Power rule: $\\dfrac{d}{dx}(x^4) = 4x^3$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-power-rule',
           difficulty: 'intro',
-          build: (seed) => {
+          build: (seed: number) => {
             // d/dx (a*x^n) = a*n*x^(n-1). Choose a in [2..5], n in [3..5]
             const a = (seed % 4) + 2 // 2..5
             const n = ((Math.floor(seed / 4)) % 3) + 3 // 3..5
@@ -160,6 +211,21 @@ A polynomial of degree $n$ always has a derivative of degree $n - 1$ (when $n \\
             hint: 'A constant never changes.',
             solution: [
               '$\\dfrac{d}{dx}(7) = 0$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-derivative-cubic',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Differentiate $f(x) = x^3$. Type the result.',
+            answer: '3x^2',
+            answerType: 'polynomial',
+            hint: 'Power rule: bring down the $3$, drop the exponent to $2$.',
+            solution: [
+              '$\\dfrac{d}{dx}(x^3) = 3x^2$.',
             ],
           },
         },
@@ -196,13 +262,33 @@ $f''(x) = 0$ **and** $f''$ changes sign — the curvature changes from concave u
             "$f''(x) = 2 > 0$, so it's a local minimum.",
           ],
         },
+        {
+          id: 'ex-cubic-stationary',
+          statement:
+            'Find the stationary points of $f(x) = x^3 - 3x$.',
+          steps: [
+            "$f'(x) = 3x^2 - 3 = 3(x^2 - 1) = 3(x - 1)(x + 1)$.",
+            "Stationary points at $x = 1$ and $x = -1$.",
+            '$f\\prime\\prime(1) = 6 > 0$, so $x = 1$ is a local minimum.',
+            '$f\\prime\\prime(-1) = -6 < 0$, so $x = -1$ is a local maximum.',
+          ],
+        },
+        {
+          id: 'ex-second-derivative-test',
+          statement:
+            'When is the second-derivative test inconclusive? Give one reason.',
+          steps: [
+            'When $f\\prime\\prime(c) = 0$ — the second derivative alone cannot classify the point.',
+            'Need to look at $f\\prime$ sign change (max/min) or higher derivatives (inflection).',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-stationary-x',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // f(x) = x^2 - 2 a x  => f'(x) = 2 x - 2 a ; f'(x)=0 at x=a.
             const a = ((seed % 5) + 1) // 1..5
             return {
@@ -221,7 +307,7 @@ $f''(x) = 0$ **and** $f''$ changes sign — the curvature changes from concave u
           kind: 'param',
           id: 'p-classify',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // f(x) = -x^2 + 2 b x => max at x = b
             // f(x) = x^2 - 2 c x => min at x = c
             const useMax = seed % 2 === 0
@@ -237,6 +323,21 @@ $f''(x) = 0$ **and** $f''$ changes sign — the curvature changes from concave u
                 `The stationary point is a ${kind}.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-second-derivative-sign',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'At a stationary point, $f\\prime\\prime(c) > 0$. What kind of point is it? Answer "local maximum", "local minimum", or "point of inflection".',
+            answer: 'local minimum',
+            answerType: 'exact',
+            hint: 'Positive second derivative means concave up.',
+            solution: [
+              'Concave up at the stationary point → local minimum.',
+            ],
           },
         },
       ],
@@ -270,13 +371,34 @@ A polynomial can have its maximum/minimum at the boundary of the domain, not nec
             'Maximum area $= 50 \\cdot 100 = 5000$ m².',
           ],
         },
+        {
+          id: 'ex-min-perimeter',
+          statement:
+            'A rectangular field has area $100$ m². Minimise the perimeter if the side parallel to a wall needs no fence.',
+          steps: [
+            'Let width $= x$, length $= L$, with $xL = 100 \\Rightarrow L = 100/x$.',
+            'Paddock fencing (three sides) $= 2x + L = 2x + 100/x$.',
+            'Differentiate: $P\\prime(x) = 2 - 100/x^2 = 0 \\Rightarrow x^2 = 50$, $x = \\sqrt{50}$.',
+            'Then $L = 100/\\sqrt{50} = \\sqrt{50} \\cdot 2$. So square side: $L = 2x$ (twice the width).',
+          ],
+        },
+        {
+          id: 'ex-endpoints-matter',
+          statement:
+            'Why check endpoints when finding a global max/min?',
+          steps: [
+            'A stationary point might be a local, not global, extremum.',
+            'The true max/min can occur at a domain endpoint.',
+            'Compare $f$ at every stationary point AND every endpoint.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-paddock',
           difficulty: 'challenge',
-          build: (seed) => {
+          build: (seed: number) => {
             // Open-top box.  Volume = V = L W H, with L,W material from a fixed L,W sheet.
             // Simpler: rectangular strip problem — perimeter problem.
             // P = 2L + W, A = L*W.
@@ -298,6 +420,36 @@ A polynomial can have its maximum/minimum at the boundary of the domain, not nec
                 `Max area $= ${L} \\cdot ${W} = ${area}$ m².`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-check-endpoints',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'When finding the maximum of $f$ on a closed interval $[a, b]$, you should compare $f$ at stationary points and at the endpoints. True or false? Answer "true" or "false".',
+            answer: 'true',
+            answerType: 'exact',
+            hint: 'A global max can occur at an endpoint.',
+            solution: [
+              'True — the max can be at a stationary point or an endpoint, and you must check both.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-paddock-quick',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A rectangular paddock with 3 sides uses 60 m of fencing. The area is maximised when the length parallel to the wall is (in m):',
+            answer: '30',
+            answerType: 'numeric',
+            hint: 'Optimal: $L = 2x$ where $2x + L = 60$.',
+            solution: [
+              'Optimum is at $L = 2x$, so $2x + 2x = 60 \\Rightarrow x = 15, L = 30$.',
+            ],
           },
         },
       ],
@@ -330,13 +482,33 @@ $s'(t) = 0$ gives moments where the object is instantaneously stationary — tur
             '$v(2) = 3(4) - 3 = 9$ m/s.',
           ],
         },
+        {
+          id: 'ex-accel',
+          statement:
+            "For $s(t) = 4t^2 + t$, find the acceleration at $t = 3$.",
+          steps: [
+            "$v(t) = s'(t) = 8t + 1$.",
+            "$a(t) = v'(t) = 8$.",
+            "Acceleration is constant $8$ m/s².",
+          ],
+        },
+        {
+          id: 'ex-direction-change',
+          statement:
+            "Find when the direction of motion changes for $s(t) = t^2 - 4t + 1$.",
+          steps: [
+            "$v(t) = 2t - 4 = 0 \\Rightarrow t = 2$.",
+            "At $t = 2$, velocity is zero — direction reverses.",
+            "This is a turning point on the displacement graph.",
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-velocity',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // s(t) = a*t^2 + b (or similar). Pick something that makes v(t0) clean.
             const a = (seed % 3) + 2 // 2..4
             const t0 = (Math.floor(seed / 3) % 4) + 1 // 1..4
@@ -358,7 +530,7 @@ $s'(t) = 0$ gives moments where the object is instantaneously stationary — tur
           kind: 'param',
           id: 'p-stationary-s',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // s(t) = t^2 - 2 a t => v(t) = 2t - 2 a ; stationary at t = a
             const a = ((seed % 5)) + 1 // 1..5
             return {
@@ -371,6 +543,21 @@ $s'(t) = 0$ gives moments where the object is instantaneously stationary — tur
                 `Set $v(t) = 0$: $2t = ${2 * a}$, so $t = ${a}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-direction-reversal',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'An object has $s(t) = t^3 - 12t$. At what $t$ does it change direction?',
+            answer: '2',
+            answerType: 'numeric',
+            hint: 'Direction changes when $v(t) = s\\prime(t) = 0$.',
+            solution: [
+              '$v(t) = 3t^2 - 12 = 0 \\Rightarrow t^2 = 4 \\Rightarrow t = 2$.',
+            ],
           },
         },
       ],
@@ -402,13 +589,32 @@ Inflections are where the **rate of change is itself changing in nature** — th
             'Point of inflection at $x = 0$.',
           ],
         },
+        {
+          id: 'ex-quartic-inflection',
+          statement:
+            "Locate any inflection points of $f(x) = x^4 - 6x^2$.",
+          steps: [
+            "$f'(x) = 4x^3 - 12x$, $f''(x) = 12x^2 - 12 = 12(x^2 - 1)$.",
+            "$f''(x) = 0 \\Rightarrow x = \\pm 1$.",
+            "Sign of $f''$: positive for $|x| > 1$, negative for $|x| < 1$ — changes at both, so both are inflection points.",
+          ],
+        },
+        {
+          id: 'ex-inflection-not-stationary',
+          statement:
+            'Is a point of inflection always a stationary point? Give a one-sentence reason.',
+          steps: [
+            'No — a point of inflection needs $f\\prime\\prime = 0$ and a sign change of $f\\prime\\prime$, but $f\\prime$ need not be $0$.',
+            'E.g. $y = x^3 + x$ has $f\\prime\\prime(0) = 0$ and is an inflection at $0$, but $f\\prime(0) = 1 \\ne 0$.',
+          ],
+        },
       ],
       exercises: [
         {
           kind: 'param',
           id: 'p-inflection-cubic',
           difficulty: 'core',
-          build: (seed) => {
+          build: (seed: number) => {
             // f(x) = a x^3 + b ; inflection at x = 0 (always).
             // To make it non-trivial: f(x) = (x - a)^3 + c, inflection at x = a.
             const a = ((seed % 5) - 2) || 2 // -2..2 (skip 0)
@@ -422,6 +628,37 @@ Inflections are where the **rate of change is itself changing in nature** — th
                 `The inflection is at $x = ${a}$.`,
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-quartic-inflection-x',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'For $f(x) = x^4 - 6x^2$, state the smallest positive $x$-value of an inflection point.',
+            answer: '1',
+            answerType: 'numeric',
+            hint: '$f\\prime\\prime(x) = 12x^2 - 12 = 12(x - 1)(x + 1)$.',
+            solution: [
+              '$f\\prime\\prime(x) = 0 \\Rightarrow x = \\pm 1$.',
+              'Smallest positive is $1$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-inflection-conditions',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'A point of inflection requires $f\\prime\\prime = 0$ **and** what else?',
+            answer: 'f sign changes',
+            answerType: 'exact',
+            hint: 'The curvature has to flip.',
+            solution: [
+              '$f\\prime\\prime$ must change sign at the candidate — the curvature must flip.',
+            ],
           },
         },
       ],

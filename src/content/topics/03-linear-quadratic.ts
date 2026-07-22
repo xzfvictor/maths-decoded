@@ -1,5 +1,5 @@
 import type { Topic } from '../types'
-import { signed, frac, quadratic } from '../../exercises/format'
+import { signed, quadratic } from '../../exercises/format'
 
 // Fully authored exemplar topic (Unit 1). Linear & quadratic functions, split into
 // bite-sized lessons: each lesson is one study session with its own theory,
@@ -35,6 +35,26 @@ Two lines are **parallel** when they have equal gradients, and **perpendicular**
           steps: [
             'Use $m = \\dfrac{y_2 - y_1}{x_2 - x_1}$.',
             '$m = \\dfrac{7 - (-2)}{4 - 1} = \\dfrac{9}{3} = 3$.',
+          ],
+        },
+        {
+          id: 'ex-x-intercept',
+          statement: 'Find the $x$-intercept of $y = 2x - 8$.',
+          steps: [
+            'Set $y = 0$: $2x - 8 = 0$.',
+            '$2x = 8$, so $x = 4$.',
+            'The line crosses the $x$-axis at $(4, 0)$.',
+          ],
+        },
+        {
+          id: 'ex-parallel',
+          statement:
+            'A line passes through $(0, 3)$ with gradient $2$. Write its rule and state the rule of a parallel line through $(-1, 0)$.',
+          steps: [
+            'The first line is $y = 2x + 3$.',
+            'A parallel line has the same gradient $2$ and the form $y = 2x + b$.',
+            'Passing through $(-1, 0)$: $0 = 2(-1) + b \\Rightarrow b = 2$.',
+            'So the parallel line is $y = 2x + 2$.',
           ],
         },
       ],
@@ -80,6 +100,22 @@ Two lines are **parallel** when they have equal gradients, and **perpendicular**
             }
           },
         },
+        {
+          kind: 'curated',
+          id: 'c-y-intercept',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'What is the $y$-intercept of $y = 5 - 3x$? (Type the integer $y$-value.)',
+            answer: '5',
+            answerType: 'numeric',
+            hint: 'Set $x = 0$.',
+            solution: [
+              'Set $x = 0$: $y = 5 - 3(0) = 5$.',
+              'The $y$-intercept is $(0, 5)$.',
+            ],
+          },
+        },
       ],
     },
 
@@ -111,6 +147,27 @@ Reveals the **$x$-intercepts** $x = p$ and $x = q$. By symmetry, the axis of sym
             'Axis of symmetry is $x = 3$.',
           ],
         },
+        {
+          id: 'ex-factored',
+          statement:
+            'For $y = 3(x - 1)(x + 5)$, state the $x$-intercepts and the axis of symmetry.',
+          steps: [
+            'The factors are zero at $x = 1$ and $x = -5$.',
+            '$x$-intercepts: $(1, 0)$ and $(-5, 0)$.',
+            'Axis of symmetry is the midpoint $x = \\dfrac{1 + (-5)}{2} = -2$.',
+          ],
+        },
+        {
+          id: 'ex-three-forms',
+          statement:
+            'Identify the three forms (general, turning-point, factored) of $y = 2(x - 3)^2 - 8$.',
+          steps: [
+            'Factored form: expand $2(x-3)(x-3) = 2(x^2 - 6x + 9) = 2x^2 - 12x + 18$.',
+            'General form: $y = 2x^2 - 12x + 18$ — so $a = 2$, $b = -12$, $c = 18$.',
+            'Turning-point form: $y = 2(x - 3)^2 - 8$ — turning point $(3, -8)$.',
+            'All three describe the same parabola.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -127,6 +184,39 @@ Reveals the **$x$-intercepts** $x = p$ and $x = q$. By symmetry, the axis of sym
               'Compare $y = (x+2)^2 - 5$ with $y = (x-h)^2 + k$.',
               'Then $x - h = x + 2$, so $h = -2$, and $k = -5$.',
               'The turning point is $(-2, -5)$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-factored-x-intercepts',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'For $y = (x - 2)(x + 6)$, give the larger $x$-intercept.',
+            answer: '2',
+            answerType: 'numeric',
+            hint: 'Each factor equals zero at the corresponding $x$-intercept.',
+            solution: [
+              '$(x - 2)(x + 6) = 0$ has solutions $x = 2$ and $x = -6$.',
+              'The larger is $x = 2$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-axis-of-symmetry',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'For $y = -3(x - 2)(x + 8)$, state the axis of symmetry.',
+            answer: 'x=-3',
+            answerType: 'exact',
+            hint: 'Axis of symmetry is at the average of the two roots.',
+            solution: [
+              'Roots: $x = 2$ and $x = -8$.',
+              'Axis of symmetry $x = \\dfrac{2 + (-8)}{2} = -3$.',
+              'So the axis is $x = -3$.',
             ],
           },
         },
@@ -155,6 +245,26 @@ then complete the square inside the bracket.`,
             'So $x^2 - 6x + 11 = (x-3)^2 + 2$, and the turning point is $(3, 2)$ — a minimum since $a = 1 > 0$.',
           ],
         },
+        {
+          id: 'ex-complete-square-non-monic',
+          statement: 'Complete the square for $2x^2 - 8x + 5$.',
+          steps: [
+            'Factor $2$ from the first two terms: $2(x^2 - 4x) + 5$.',
+            'Halve $-4$: $-2$. Square it: $4$. Add and subtract inside the bracket: $2(x^2 - 4x + 4 - 4) + 5$.',
+            'Group: $2((x-2)^2 - 4) + 5 = 2(x-2)^2 - 8 + 5$.',
+            'So $2x^2 - 8x + 5 = 2(x-2)^2 - 3$, with turning point $(2, -3)$.',
+          ],
+        },
+        {
+          id: 'ex-cs-read-off',
+          statement:
+            'Given $f(x) = (x + 4)^2 + 1$, state the minimum value of $f(x)$.',
+          steps: [
+            'The squared term is non-negative; minimum is $0$, attained at $x = -4$.',
+            'So the minimum value of $f$ is $1$ (since $0 + 1 = 1$).',
+            'This matches the turning-point rule $k = 1$.',
+          ],
+        },
       ],
       exercises: [
         {
@@ -176,6 +286,41 @@ then complete the square inside the bracket.`,
                 `Half of $${b}$ is $${half}$, so $p = ${half}$.`,
                 `Then $k = c - p^2 = ${c} - (${half})^2 = ${c} - ${half * half} = ${k}$.`,
                 `So $${quadratic(1, b, c)} = (x ${signed(half)})^2 ${signed(k)}$.`,
+              ],
+            }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-cs-p',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'For $f(x) = x^2 + 8x + 7$, what is the $x$-coordinate of the turning point in the form $(x + p)^2 + k$? (State as a single integer, the value of $p$.)',
+            answer: '4',
+            answerType: 'numeric',
+            hint: '$p = \\tfrac{b}{2}$.',
+            solution: [
+              'Half the coefficient of $x$: $\\tfrac{8}{2} = 4$.',
+              'So $p = 4$ — turning point at $x = -p = -4$.',
+            ],
+          },
+        },
+        {
+          kind: 'param',
+          id: 'p-cs-min-value',
+          difficulty: 'core',
+          build: (seed) => {
+            // f(x) = (x - a)^2 + k. Minimum value is k.
+            const a = (seed % 4) + 1 // 1..4
+            const k = (Math.floor(seed / 4) % 7) - 3 // -3..3
+            return {
+              prompt: `The minimum value of $f(x) = (x - ${a})^2 ${signed(k)}$ is which integer?`,
+              answer: String(k),
+              answerType: 'numeric',
+              hint: '$(x - a)^2 \\ge 0$; the minimum is at the constant $k$.',
+              solution: [
+                `$(x - ${a})^2 \\ge 0$, so the smallest value of $f(x)$ is $0 + ${k} = ${k}$.`,
               ],
             }
           },
@@ -206,6 +351,25 @@ The discriminant lets you answer "how many solutions?" *without* solving the equ
             'Here $a = 1$, $b = k$, $c = 4$, so $\\Delta = k^2 - 4(1)(4) = k^2 - 16$.',
             'Set $\\Delta = 0$: $k^2 - 16 = 0$, so $k^2 = 16$.',
             'Therefore $k = 4$ or $k = -4$.',
+          ],
+        },
+        {
+          id: 'ex-disc-pos-neg',
+          statement: 'How many real solutions does $-3x^2 + 5x - 1 = 0$ have?',
+          steps: [
+            'Compute $\\Delta = 5^2 - 4(-3)(-1) = 25 - 12 = 13$.',
+            '$\\Delta > 0$, so the parabola crosses the $x$-axis at two points.',
+            'So the equation has two real solutions.',
+          ],
+        },
+        {
+          id: 'ex-disc-tangent-graph',
+          statement:
+            'A parabola touches the $x$-axis at exactly one point. What does this tell you about $\\Delta$?',
+          steps: [
+            'A parabola touches the $x$-axis at exactly one point when its turning point sits on the axis.',
+            'The corresponding equation $ax^2 + bx + c = 0$ has a single (repeated) root.',
+            "That's exactly $\\Delta = 0$.",
           ],
         },
       ],
@@ -253,6 +417,25 @@ The discriminant lets you answer "how many solutions?" *without* solving the equ
             }
           },
         },
+        {
+          kind: 'param',
+          id: 'p-disc-repeated',
+          difficulty: 'challenge',
+          build: (seed) => {
+            // Build x^2 + bx + c = 0 with D = 0. Take root r, then b = -2r, c = r^2.
+            const r = ((seed % 4) + 1) // 1..4
+            return {
+              prompt: `The equation $x^2 - ${2 * r}x + ${r * r} = 0$ has a repeated root. State the value of that root.`,
+              answer: String(r),
+              answerType: 'numeric',
+              hint: 'A repeated root means the equation factors as $(x - r)^2 = 0$.',
+              solution: [
+                `Discriminant is $\\Delta = (${-2 * r})^2 - 4 \\cdot 1 \\cdot ${r * r} = ${4 * r * r} - ${4 * r * r} = 0$.`,
+                `So the only root is $x = ${r}$ (double).`,
+              ],
+            }
+          },
+        },
       ],
     },
 
@@ -277,6 +460,26 @@ If a product equals zero, at least one factor is zero: if $(x-p)(x-q) = 0$ then 
             'Discriminant: $\\Delta = 3^2 - 4(2)(-5) = 9 + 40 = 49$. Since $\\Delta > 0$ there are two real solutions.',
             'Apply the formula: $x = \\dfrac{-3 \\pm \\sqrt{49}}{2(2)} = \\dfrac{-3 \\pm 7}{4}$.',
             'So $x = \\dfrac{4}{4} = 1$ or $x = \\dfrac{-10}{4} = -\\dfrac{5}{2}$.',
+          ],
+        },
+        {
+          id: 'ex-factorise-monic',
+          statement: 'Solve $x^2 - 7x + 12 = 0$ by factorising.',
+          steps: [
+            'Look for two numbers that multiply to $+12$ and add to $-7$.',
+            'They are $-3$ and $-4$ (product $12$, sum $-7$).',
+            'Factorise: $(x - 3)(x - 4) = 0$.',
+            'Null Factor Law: $x = 3$ or $x = 4$.',
+          ],
+        },
+        {
+          id: 'ex-formula-no-integer',
+          statement: 'Solve $x^2 - 5x + 1 = 0$ using the formula.',
+          steps: [
+            'Here $a = 1$, $b = -5$, $c = 1$.',
+            'Discriminant: $25 - 4 = 21$.',
+            'Apply: $x = \\dfrac{5 \\pm \\sqrt{21}}{2}$.',
+            'Two real solutions; the formula is needed because $\\sqrt{21}$ is irrational.',
           ],
         },
       ],
@@ -323,11 +526,25 @@ If a product equals zero, at least one factor is zero: if $(x-p)(x-q) = 0$ then 
               hint: 'Compute $\\Delta = b^2 - 4ac$, then $x = \\dfrac{-b \\pm \\sqrt{\\Delta}}{2a}$.',
               solution: [
                 `$a = ${a}$, $b = ${b}$, $c = ${c}$.`,
-                `$\\Delta = (${b})^2 - 4(${a})(${c}) = ${b * b - 4 * a * c}$.`,
-                `$x = \\dfrac{${-b} \\pm \\sqrt{${b * b - 4 * a * c}}}{${2 * a}} = ${frac(-b, 2 * a)} \\pm \\dfrac{${Math.sqrt(b * b - 4 * a * c)}}{${2 * a}}$.`,
-                `So $x = ${p}$ or $x = ${q}$.`,
+                '$\\Delta = (' + String(b) + ')^2 - 4(' + String(a) + ')(' + String(c) + ') = ' + String(b * b - 4 * a * c) + '$.',
+                'So $x = ' + String(p) + '$ or $x = ' + String(q) + '$. (The two real solutions come from the plus-or-minus in the formula.)',
               ],
             }
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-formula-choice',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Compute $\\Delta = b^2 - 4ac$ for $x^2 + 6x + 9 = 0$. State as an integer.',
+            answer: '0',
+            answerType: 'numeric',
+            hint: '$a = 1$, $b = 6$, $c = 9$.',
+            solution: [
+              '$\\Delta = 6^2 - 4(1)(9) = 36 - 36 = 0$.',
+            ],
           },
         },
       ],
