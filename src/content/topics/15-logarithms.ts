@@ -134,7 +134,7 @@ where $a > 0$, $a \\ne 1$, and $x > 0$.
 
     {
       id: 'log-graph',
-      heading: 'Graph of $y = \\log_a(x)$',
+      heading: 'Graph of y = log_a(x)',
       summary: 'It is the reflection of y = a^x in the line y = x.',
       body: `Because $\\log_a(x)$ is defined as the inverse of $a^x$:
 $$y = \\log_a(x) \\quad\\Leftrightarrow\\quad a^y = x.$$

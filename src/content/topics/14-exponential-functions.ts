@@ -121,7 +121,7 @@ $y = 2^x$ at $x = 0, 1, 2, 3, 4, \\ldots$ gives $y = 1, 2, 4, 8, 16, \\ldots$ â€
 
     {
       id: 'transformed-exponential',
-      heading: 'Graphs of $y = a\\cdot b^{\\bigl(n(x+k)\\bigr)} + c$',
+      heading: 'Graphs of y = aÂ·b^(n(x+k)) + c',
       summary: 'Effects of $a$, $n$, the inner shift and the outer shift on an exponential.',
       body: `The general transformed form is
 $$y = a \\cdot b^{\\bigl(n(x+k)\\bigr)} + c,$$

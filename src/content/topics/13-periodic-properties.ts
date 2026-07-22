@@ -368,7 +368,7 @@ Use the approximation when $x$ is small enough that the gap is negligible **for 
 
     {
       id: 'transformations',
-      heading: 'Graphs of $y = a\\,f\\bigl(n(x + b)\\bigr) + c$',
+      heading: 'Graphs of y = a·f(n(x + b)) + c',
       summary: 'How the parameters change amplitude, period, phase and mean value.',
       body: `The general form for a transformed sine, cosine or tangent is
 $$y = a\\,f\\bigl(n(x + b)\\bigr) + c,$$

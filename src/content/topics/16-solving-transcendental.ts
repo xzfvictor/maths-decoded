@@ -16,8 +16,8 @@ export const solvingTranscendental: Topic = {
   lessons: [
     {
       id: 'solving-trig',
-      heading: 'Solving $a\\, f\\bigl(n(x+b)\\bigr) + c = k$ (trig)',
-      summary: 'Isolate $f$, undo the horizontal scaling, then use an inverse trig.',
+      heading: 'Solving transformed trig equations',
+      summary: 'Isolate the function, undo the horizontal scaling, then use an inverse trig.',
       body: `The same algebraic recipe works for sine, cosine and tangent equations: undo the constants and the horizontal scaling, then invert the function.
 
 ### Recipe
@@ -140,7 +140,7 @@ Inverse trig on a calculator returns a value in a restricted range (e.g. $\\sin^
 
     {
       id: 'solving-exponential',
-      heading: 'Solving $a \\cdot b^{n(x+k)} + c = k$ (exp)',
+      heading: 'Solving transformed exponential equations',
       summary: 'Same recipe; in place of inverse trig we use the inverse of b^x — i.e. logs.',
       body: `The algebraic recipe for an exponential equation $A \\cdot B^{n(x+k)} + c = d$ is identical in shape to the trig one. In place of an inverse trig function we use **logs** — the inverse of $b^x$.
 
