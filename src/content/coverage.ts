@@ -8,7 +8,7 @@
 
 export interface DotPoint {
   id: string
-  unit: 1 | 2
+  unit: 1 | 2 | 10
   /** Area of study number 1–4. */
   aos: number
   aosName: string
@@ -331,6 +331,220 @@ export const DOT_POINTS: DotPoint[] = [
     aos: 4,
     aosName: 'Data analysis, probability and statistics',
     text: 'simulation to estimate probabilities involving selection with and without replacement',
+  },
+
+  // ---------------- Foundation (Year 10 Mathematics) ----------------
+  // Victorian Curriculum F-10 Version 2.0 — Level 10 Mathematics.
+  // Six strands: Number, Algebra, Measurement, Space, Statistics, Probability.
+  {
+    id: 'm10-n-1',
+    unit: 10,
+    aos: 1,
+    aosName: 'Number',
+    text: 'recognise the effect of using approximations of real numbers in repeated calculations',
+  },
+  {
+    id: 'm10-a-1',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'factorise algebraic expressions by taking out a common algebraic factor',
+  },
+  {
+    id: 'm10-a-2',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'simplify algebraic products and quotients using exponent laws',
+  },
+  {
+    id: 'm10-a-3',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'apply the 4 operations to simple algebraic fractions with numerical or single variable denominators',
+  },
+  {
+    id: 'm10-a-4',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'expand binomial products and factorise monic quadratic expressions using a variety of strategies',
+  },
+  {
+    id: 'm10-a-5',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'substitute values into formulas to determine an unknown and rearrange formulas to solve for a particular term',
+  },
+  {
+    id: 'm10-a-6',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'implement algorithms that use data structures using pseudocode or a general purpose programming language',
+  },
+  {
+    id: 'm10-a-7',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve problems involving linear equations, including those derived from formulas',
+  },
+  {
+    id: 'm10-a-8',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve linear inequalities and graph their solutions on a number line',
+  },
+  {
+    id: 'm10-a-9',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve simultaneous linear equations, using algebraic and graphical techniques including using digital tools',
+  },
+  {
+    id: 'm10-a-10',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve problems involving gradients of parallel and perpendicular lines',
+  },
+  {
+    id: 'm10-a-11',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'explore the connection between algebraic and graphical representations of relations such as simple quadratic, reciprocal, circle and exponential, using digital tools as appropriate',
+  },
+  {
+    id: 'm10-a-12',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve linear equations involving simple algebraic fractions',
+  },
+  {
+    id: 'm10-a-13',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve simple quadratic equations using a range of strategies, including null factor law',
+  },
+  {
+    id: 'm10-a-14',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve simple exponential equations',
+  },
+  {
+    id: 'm10-a-15',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'use mathematical modelling to solve applied problems involving inverse proportion, growth and decay, including in financial contexts to establish the compound interest formula as repeated applications of simple interest; formulate problems, choosing to apply linear, quadratic or exponential models; interpret solutions in terms of the situation; evaluate and modify models as necessary and report assumptions, methods and findings',
+  },
+  {
+    id: 'm10-a-16',
+    unit: 10,
+    aos: 2,
+    aosName: 'Algebra',
+    text: 'solve equations graphically or using systematic numerical guess-check-and-refine with digital tools, with consideration of whether all solutions have been found',
+  },
+  {
+    id: 'm10-m-1',
+    unit: 10,
+    aos: 3,
+    aosName: 'Measurement',
+    text: 'solve problems involving the surface area and volume of composite objects using appropriate units',
+  },
+  {
+    id: 'm10-m-2',
+    unit: 10,
+    aos: 3,
+    aosName: 'Measurement',
+    text: 'interpret and use logarithmic scales in applied contexts involving small and large quantities and change',
+  },
+  {
+    id: 'm10-m-3',
+    unit: 10,
+    aos: 3,
+    aosName: 'Measurement',
+    text: 'solve practical problems by applying Pythagoras’ theorem and trigonometry to right-angled triangles, including problems involving direction and angles of elevation and depression',
+  },
+  {
+    id: 'm10-m-4',
+    unit: 10,
+    aos: 3,
+    aosName: 'Measurement',
+    text: 'use mathematical modelling to solve practical problems involving direct and inverse proportion and scaling of objects; formulate problems and interpret solutions in terms of the situation, including the impact of measurement errors on the accuracy of results; evaluate and modify models as necessary, and report assumptions, methods and findings',
+  },
+  {
+    id: 'm10-sp-1',
+    unit: 10,
+    aos: 4,
+    aosName: 'Space',
+    text: 'apply deductive reasoning to formulate proofs involving shapes in the plane and use theorems to solve spatial problems',
+  },
+  {
+    id: 'm10-sp-2',
+    unit: 10,
+    aos: 4,
+    aosName: 'Space',
+    text: 'interpret networks and network diagrams used to represent relationships in practical situations and describe connectedness',
+  },
+  {
+    id: 'm10-st-1',
+    unit: 10,
+    aos: 5,
+    aosName: 'Statistics',
+    text: 'compare data distributions for continuous numerical variables using quartiles and interquartile range and appropriate data displays including boxplots, histograms and dot plots; discuss data in terms of centre, spread, shape and outliers in the context of the data',
+  },
+  {
+    id: 'm10-st-2',
+    unit: 10,
+    aos: 5,
+    aosName: 'Statistics',
+    text: 'construct scatterplots and consider a line of good fit; comment on the association between the 2 numerical variables in terms of strength, direction and linearity informally using a line of good fit by eye and using digital tools to compare and discuss the reliability of any predictions',
+  },
+  {
+    id: 'm10-st-3',
+    unit: 10,
+    aos: 5,
+    aosName: 'Statistics',
+    text: 'construct two-way tables and discuss possible relationship between categorical variables',
+  },
+  {
+    id: 'm10-st-4',
+    unit: 10,
+    aos: 5,
+    aosName: 'Statistics',
+    text: 'analyse claims, inferences and conclusions of statistical reports in the media and other places, by linking claims to displays, statistics and representative data, including ethical considerations and identification of potential sources of bias',
+  },
+  {
+    id: 'm10-st-5',
+    unit: 10,
+    aos: 5,
+    aosName: 'Statistics',
+    text: 'plan and conduct statistical investigations of situations that involve bivariate data, including where the independent variable is time; evaluate and report findings of any inferences',
+  },
+  {
+    id: 'm10-p-1',
+    unit: 10,
+    aos: 6,
+    aosName: 'Probability',
+    text: 'use the language of ‘if … then …’, ‘given’, ‘of’ and ‘knowing that’ to investigate conditional statements and identify common mistakes in interpreting such language, and involving conditional probability; design and conduct simulations using digital tools to model conditional probability and interpret results',
+  },
+  {
+    id: 'm10-p-2',
+    unit: 10,
+    aos: 6,
+    aosName: 'Probability',
+    text: 'describe the results of two- and three-step chance experiments, both with and without replacements, assign probabilities to outcomes and determine probabilities of events; investigate the concept of independence',
   },
 ]
 

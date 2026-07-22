@@ -14,6 +14,12 @@ import { simultaneousEquations } from './08-simultaneous-equations'
 import { ratesOfChange } from './09-rates-of-change'
 import { probabilityFoundations } from './10-probability-foundations'
 import { countingTechniques } from './11-counting'
+import { numberApproximations } from './23-number-approximations'
+import { algebraQuadratics } from './24-algebra-quadratics'
+import { measurementTrig } from './25-measurement-trig'
+import { spaceProofs } from './26-space-proofs'
+import { statisticsBoxplots } from './27-statistics-boxplots'
+import { probabilityConditional } from './28-probability-conditional'
 import { circularFunctions } from './12-circular-functions'
 import { periodicProperties } from './13-periodic-properties'
 import { exponentialFunctions } from './14-exponential-functions'
@@ -52,6 +58,12 @@ export const TOPICS: Topic[] = [
   antidifferentiation,
   probabilityCompound,
   conditionalProbability,
+  numberApproximations,
+  algebraQuadratics,
+  measurementTrig,
+  spaceProofs,
+  statisticsBoxplots,
+  probabilityConditional,
 ]
 
 export function topicById(id: string): Topic | undefined {
@@ -65,4 +77,5 @@ export function topicsForUnit(unit: Unit): Topic[] {
 export const UNIT_TITLES: Record<Unit, string> = {
   1: 'Unit 1 — Functions, algebra, calculus & probability',
   2: 'Unit 2 — Transcendental functions, calculus & probability',
+  10: 'Pre-VCE — Year 10 Mathematics',
 }
