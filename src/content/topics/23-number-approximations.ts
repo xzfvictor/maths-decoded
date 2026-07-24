@@ -15,27 +15,23 @@ export const numberApproximations: Topic = {
 
   lessons: [
     {
-      id: 'rounding-effect',
-      heading: 'How approximations compound over repeated calculations',
-      summary: 'Rounding once is harmless; rounding many times can shift the final answer.',
-      body: `A calculator or a quick mental estimate gives you an **approximation** of a number — usually the result of **truncation** (dropping later digits) or **rounding** (to the nearest place). A single approximation is rarely a problem, but the same approximation fed into a chain of calculations can produce a final answer that's noticeably off.
+      id: 'rounding-truncation',
+      heading: 'Rounding vs. truncation',
+      summary: 'Truncation drops digits; rounding bumps the last kept digit when the next is ≥5.',
+      body: `A calculator or a quick mental estimate gives you an **approximation** of a number — usually the result of **truncation** (dropping later digits) or **rounding** (to the nearest place).
 
 ### Rounding rules
-
 To round to a given place value:
 1. Look at the digit immediately to the right of that place.
 2. If it's **5 or more**, round **up** (add 1 to the target digit).
 3. If it's **4 or less**, round **down** (leave the target digit alone).
 
-Truncation is harsher: drop every digit beyond the target without rounding.
+### Truncation
+Drop every digit beyond the target **without** rounding. Truncation is harsher and consistently biases the result downward (or upward, for negatives).
 
-### Why it matters in chains
-- Money: rounding off a few cents per transaction becomes dollars after a thousand transactions.
-- Geometry: truncating intermediate values in a surface-area or volume calculation can shift the final answer by a few percent.
-- Recursion: many algorithms (Newton's method, simulation) feed the previous answer back in. Errors accumulate.
-
-### Rule of thumb
-If the exact answer is required, **carry extra decimal places** through intermediate steps and only round at the end. If the final answer is a measurement or estimate, round to the precision of the input data.`,
+### Comparing the two
+- Rounding a number that's exactly halfway is a tie-break convention; many systems round to the nearest even digit ("banker's rounding").
+- For most classroom work, the simple "round half up" rule is used.`,
       examples: [
         {
           id: 'ex-round-1-decimal',
@@ -91,6 +87,76 @@ If the exact answer is required, **carry extra decimal places** through intermed
               'Truncate $4.567$ at $1$ dp: $4.5$.',
               'Round $4.567$ to $1$ dp: $4.6$ (next digit $6 \\ge 5$, round up).',
               "So the rounded value $4.6$ is larger than the truncated value $4.5$.",
+            ],
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'compound-errors',
+      heading: 'How errors compound over repeated calculations',
+      summary: 'Round once: harmless. Round many times: the final answer can drift.',
+      body: `A single approximation is rarely a problem, but the same approximation fed into a chain of calculations can produce a final answer that's noticeably off.
+
+### Why it matters in chains
+- **Money**: rounding off a few cents per transaction becomes dollars after a thousand transactions.
+- **Geometry**: truncating intermediate values in a surface-area or volume calculation can shift the final answer by a few percent.
+- **Recursion**: many algorithms (Newton's method, simulation) feed the previous answer back in. Errors accumulate.
+- **Simple interest**: rounding a few cents per day means the running total never matches the closed-form answer exactly.
+
+### Rule of thumb
+If the exact answer is required, **carry extra decimal places** through intermediate steps and only round at the end. If the final answer is a measurement or estimate, round to the precision of the input data.`,
+      examples: [
+        {
+          id: 'ex-money',
+          statement:
+            'You earn $\\$1.005$ per item (rounded to the cent as $\$1.01$). Over $1000$ items, how much does the rounding cost or gain you vs. using the exact rate?',
+          steps: [
+            'Exact total: $1000 \\times 1.005 = 1005$.',
+            'Rounded total: $1000 \\times 1.01 = 1010$.',
+            'Difference: $1010 - 1005 = 5$ extra dollars earned by rounding up.',
+          ],
+        },
+        {
+          id: 'ex-geometry',
+          statement:
+            'A circle has radius measured as $3.0$ m (truncated from $3.04$ m). Find the area difference between using $3.0$ and $3.04$.',
+          steps: [
+            'Using $3.0$: $A = \\pi \\times 9 = 9\\pi \\approx 28.27$ m².',
+            'Using $3.04$: $A = \\pi \\times 9.2416 \\approx 29.03$ m².',
+            'Difference: about $0.76$ m² — a noticeable error from a tiny truncation.',
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-compound',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'You multiply $0.333$ (an approximation of $1/3$) by $3$. What value do you get? Answer as a decimal.',
+            answer: '0.999',
+            answerType: 'numeric',
+            hint: 'Just compute $3 \\times 0.333$.',
+            solution: [
+              '$3 \\times 0.333 = 0.999$, which is short of the true $1$ by $0.001$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-compound-2',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'You take $2.5$ (rounded from $2.46$) and square it. Compared with the exact $2.46^2$, is your squared value too high or too low? Answer "too high" or "too low".',
+            answer: 'too high',
+            answerType: 'exact',
+            hint: 'Rounding $2.46$ up to $2.5$ and then squaring amplifies the error.',
+            solution: [
+              '$2.5^2 = 6.25$. Exact: $2.46^2 = 6.0516$. The rounded value gives a result **too high** by about $0.20$.',
             ],
           },
         },

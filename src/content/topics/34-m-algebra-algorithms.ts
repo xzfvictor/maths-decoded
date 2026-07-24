@@ -156,5 +156,77 @@ To follow an algorithm, keep a table of variables' values as each line runs. Upd
         },
       ],
     },
+
+    {
+      id: 'pointers',
+      heading: 'Pointers',
+      summary: 'A pointer stores the address of another element; read or write through it to change that element.',
+      body: `A **pointer** is a variable that stores the **address** of another element (a slot in an array, a node in a linked list, a cell in a matrix), rather than a direct value.
+
+### Why pointers
+- **Linked lists, trees, graphs**: each node holds data *and* a pointer to the next node.
+- **Pass-by-reference**: changes through a pointer change the underlying object.
+- **Dynamic memory**: a pointer references memory allocated at runtime.
+
+### Reading and writing
+- **Read** through a pointer $\\to$ look at the value the pointer points to.
+- **Write** through a pointer $\\to$ change the value the pointer points to.
+
+At this level, the key idea is the *indirection*: a pointer is one step removed from the value itself.`,
+      examples: [
+        {
+          id: 'ex-pointer-traverse',
+          statement:
+            'A linked list has nodes $A \\to B \\to C \\to \\text{NULL}$. Starting from $A$, how many steps to reach NULL?',
+          steps: [
+            'Step 1: $A$ (pointer to $B$).',
+            'Step 2: $B$ (pointer to $C$).',
+            'Step 3: $C$ (pointer to NULL).',
+            'Step 4: NULL. So 3 steps to reach NULL.',
+          ],
+        },
+        {
+          id: 'ex-pointer-write',
+          statement:
+            "A pointer \`p\` points to the variable \`x = 5\`. If you run \`SET x via p TO 10\`, what is the new value of \`x\`?",
+          steps: [
+            "Writing through the pointer changes the underlying variable.",
+            "So $x$ becomes $10$.",
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-null',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              "A linked list has $4$ nodes, each pointing to the next. How many pointers need to be followed to reach the end from the first node? (As an integer.)",
+            answer: '3',
+            answerType: 'numeric',
+            hint: 'You follow the pointer at each node — one less than the count of nodes.',
+            solution: [
+              '4 nodes → 3 pointers between them → 3 steps to reach the end.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-pointer-indirect',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              "What is the term for a variable that stores the address of another variable?",
+            answer: 'pointer',
+            answerType: 'exact',
+            hint: 'It points to the other variable rather than holding its value directly.',
+            solution: [
+              'A **pointer**.',
+            ],
+          },
+        },
+      ],
+    },
   ],
 }
