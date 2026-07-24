@@ -9,9 +9,9 @@ export const measurementTrig: Topic = {
   id: 'm10-measurement-trig',
   unit: 10,
   order: 3,
-  title: 'Pythagoras & right-angled trigonometry',
+  title: 'Trigonometry & Pythagoras',
   blurb:
-    'Apply $a^2 + b^2 = c^2$ and the sine/cosine/tangent ratios to real-world bearing, elevation and depression problems.',
+    'Apply Pythagoras\' theorem and the sine/cosine/tangent ratios to real-world bearing, elevation and depression problems.',
   dotPoints: ['m10-m-3'],
 
   lessons: [
