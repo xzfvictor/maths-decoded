@@ -1,18 +1,30 @@
-// The coverage contract. Every VCAA study-design "this area of study includes" content
-// point for Mathematical Methods Units 1 & 2 is listed here with a stable id and the
-// verbatim (lightly abbreviated) text. Each topic declares which dot-point ids it covers,
-// and scripts/check-coverage.ts asserts that every id below is claimed by >= 1 topic.
+// The coverage contract. Every study-design content point is listed here with a
+// stable id and the verbatim (lightly abbreviated) text. Each topic declares which
+// dot-point ids it covers, and scripts/check-coverage.ts asserts that every id below
+// is claimed by >= 1 topic.
 //
-// Source: VCAA VCE Mathematics Study Design 2023–2027, Mathematical Methods Units 1 & 2,
-// Areas of Study 1–4 for each unit (the "this area of study includes" content lists).
+// Sources:
+//   - VCE Mathematics Study Design 2023–2027, Mathematical Methods Units 1 & 2
+//     (Areas of Study 1–4 for each unit).
+//   - Victorian Curriculum F-10 Version 2.0, Level 10 Mathematics
+//     (Strands: Number, Algebra, Measurement, Space, Statistics, Probability).
 
 export interface DotPoint {
   id: string
   unit: 1 | 2 | 10
-  /** Area of study number 1–4. */
+  /** Area of study / strand number 1–6. For VCE units 1–2 this is AoS 1–4; for Pre-VCE this is the strand number. */
   aos: number
   aosName: string
   text: string
+}
+
+/** A Foundation/Year 10 "Strand" (high-level area of mathematics). Only Pre-VCE has strands. */
+export interface Strand {
+  /** 1 = Number, 2 = Algebra, 3 = Measurement, 4 = Space, 5 = Statistics, 6 = Probability. */
+  id: 1 | 2 | 3 | 4 | 5 | 6
+  name: string
+  /** A short blurb shown on the strand header / card. */
+  description: string
 }
 
 export const DOT_POINTS: DotPoint[] = [
@@ -547,5 +559,48 @@ export const DOT_POINTS: DotPoint[] = [
     text: 'describe the results of two- and three-step chance experiments, both with and without replacements, assign probabilities to outcomes and determine probabilities of events; investigate the concept of independence',
   },
 ]
+
+/** The 6 Pre-VCE strands, in canonical order. */
+export const STRANDS: Strand[] = [
+  {
+    id: 1,
+    name: 'Number',
+    description:
+      'Real numbers, approximations, and the effect of repeated calculations on final results.',
+  },
+  {
+    id: 2,
+    name: 'Algebra',
+    description:
+      'Factorisation, exponent laws, equations, inequalities, functions, and modelling.',
+  },
+  {
+    id: 3,
+    name: 'Measurement',
+    description:
+      'Surface area, volume, logarithmic scales, Pythagoras and right-angled trigonometry.',
+  },
+  {
+    id: 4,
+    name: 'Space',
+    description:
+      'Geometric proofs in the plane and network diagrams of practical situations.',
+  },
+  {
+    id: 5,
+    name: 'Statistics',
+    description:
+      'Distributions, boxplots, scatterplots, two-way tables, and statistical investigations.',
+  },
+  {
+    id: 6,
+    name: 'Probability',
+    description:
+      'Conditional probability, multi-step chance experiments, and independence.',
+  },
+]
+
+/** All strand ids, in order. Useful for iteration. */
+export const STRAND_IDS: Strand['id'][] = STRANDS.map((s) => s.id)
 
 export const DOT_POINT_IDS = DOT_POINTS.map((d) => d.id)

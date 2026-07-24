@@ -1,4 +1,5 @@
 import type { Topic, Unit } from '../types'
+import { DOT_POINTS, STRANDS, type Strand } from '../coverage'
 
 // Import each authored topic. Stubs (skeleton with dotPoints only) and fully
 // authored topics share the same Topic shape, so this list is the single source
@@ -120,6 +121,21 @@ export function topicById(id: string): Topic | undefined {
 
 export function topicsForUnit(unit: Unit): Topic[] {
   return TOPICS.filter((t) => t.unit === unit).sort((a, b) => a.order - b.order)
+}
+
+/** Group Pre-VCE topics by strand. Returns an empty array for non-Pre-VCE units. */
+export function topicsForStrand(unit: Unit, strandId: Strand['id']): Topic[] {
+  return topicsForUnit(unit).filter((t) => strandForTopic(t)?.id === strandId)
+}
+
+/** Look up a Pre-VCE topic's strand via its first dot point. Returns undefined for VCE topics. */
+export function strandForTopic(topic: Topic): Strand | undefined {
+  if (topic.unit !== 10) return undefined
+  const first = topic.dotPoints[0]
+  if (!first) return undefined
+  const dp = DOT_POINTS.find((d) => d.id === first)
+  if (!dp) return undefined
+  return STRANDS.find((s) => s.id === dp.aos)
 }
 
 export const UNIT_TITLES: Record<Unit, string> = {
