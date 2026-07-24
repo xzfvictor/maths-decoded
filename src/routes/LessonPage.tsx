@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { topicById } from '../content/topics'
 import { Prose } from '../components/Prose'
@@ -12,6 +13,13 @@ export function LessonPage() {
   const topic = id ? topicById(id) : undefined
   const lessonIdx = topic ? topic.lessons.findIndex((l) => l.id === lessonId) : -1
   const lesson = topic && lessonIdx >= 0 ? topic.lessons[lessonIdx] : undefined
+
+  // Scroll the right pane to the top whenever the topic or lesson changes.
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+  }, [id, lessonId])
 
   if (!topic || !lesson) {
     return (

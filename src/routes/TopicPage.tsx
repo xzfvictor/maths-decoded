@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { topicById } from '../content/topics'
 import { DOT_POINTS } from '../content/coverage'
@@ -9,6 +10,13 @@ export function TopicPage() {
   const { id } = useParams<{ id: string }>()
   useProgress()
   const topic = id ? topicById(id) : undefined
+
+  // Scroll the right pane to the top whenever the topic changes.
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+  }, [id])
 
   if (!topic) {
     return (
