@@ -16,7 +16,7 @@ export const statisticsInvestigations: Topic = {
 
   lessons: [
     {
-      id: 'investigation-cycle',
+      id: 'cycle',
       heading: 'The statistical investigation cycle',
       summary: 'Pose a question, collect data, represent, analyse, conclude, reflect.',
       body: `A complete statistical investigation follows a clear cycle:
@@ -26,13 +26,7 @@ export const statisticsInvestigations: Topic = {
 3. **Represent** — scatterplot, two-way table, time-series plot.
 4. **Analyse** — describe the distribution; fit a model (linear, exponential, etc.); check residuals.
 5. **Conclude** — answer the original question; report assumptions, methods, and findings.
-6. **Reflect** — discuss limitations: sample size, bias, generalisability, lurking variables.
-
-### Time as an explanatory variable
-A very common setting: track a quantity over time (e.g. monthly rainfall, share price, population). The independent variable is **time**. Watch for:
-- Trends (linear, exponential, periodic).
-- Seasonal patterns.
-- Outliers or sudden changes (often an event worth investigating).`,
+6. **Reflect** — discuss limitations: sample size, bias, generalisability, lurking variables.`,
       examples: [
         {
           id: 'ex-design',
@@ -82,6 +76,65 @@ A very common setting: track a quantity over time (e.g. monthly rainfall, share 
             hint: 'You start with a question before doing anything else.',
             solution: [
               "First you **pose** the question — without it the rest of the cycle has no direction.",
+            ],
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'time-series',
+      heading: 'Time as an explanatory variable',
+      summary: 'Time-series plots show how a quantity changes; watch for trend, seasonality, outliers.',
+      body: `A very common setting: track a quantity over time (e.g. monthly rainfall, share price, population). The independent variable is **time**.
+
+### Things to look for
+- **Trends** (linear, exponential, periodic).
+- **Seasonal patterns** (regular within-year cycles).
+- **Outliers or sudden changes** (often an event worth investigating).
+
+### Modelling
+For a linear trend, fit a line by least squares (or by eye). For exponential, work on a log scale. For periodic data, decompose into trend + seasonal + noise.`,
+      examples: [
+        {
+          id: 'ex-trend',
+          statement:
+            "A city's population grows roughly linearly from $50\\,000$ in 2000 to $80\\,000$ in 2020. Estimate the population in 2010.",
+          steps: [
+            'Linear trend: slope $= (80 - 50)/20 = 1.5$ thousand per year.',
+            'Population in year $t$: $P = 50 + 1.5 (t - 2000)$.',
+            'At $t = 2010$: $P = 50 + 15 = 65$ thousand.',
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-trend',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              "Sales grow linearly from $\\$200$ in 2015 to $\\$260$ in 2020 (in thousands). Estimate sales in 2018 (in thousands).",
+            answer: '236',
+            answerType: 'numeric',
+            hint: 'Slope $= (260 - 200)/5 = 12$ per year. Add to 2015 value: $200 + 12 \\cdot 3 = 236$.',
+            solution: [
+              '$P = 200 + 12 \\cdot (t - 2015)$. At $t = 2018$: $P = 200 + 36 = 236$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-seasonal',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Ice-cream sales show a peak every December and a trough every July. What pattern is this? Answer "trend" or "seasonal".',
+            answer: 'seasonal',
+            answerType: 'exact',
+            hint: 'It repeats every year.',
+            solution: [
+              'A within-year repeating pattern is **seasonal**.',
             ],
           },
         },

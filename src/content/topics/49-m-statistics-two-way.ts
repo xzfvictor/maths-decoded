@@ -15,23 +15,15 @@ export const statisticsTwoWay: Topic = {
 
   lessons: [
     {
-      id: 'two-way',
-      heading: 'Reading and building two-way tables',
-      summary: 'Rows × columns; percentages along a row or column reveal association.',
+      id: 'build-read',
+      heading: 'Building & reading two-way tables',
+      summary: 'Rows × columns; read counts, totals and grand totals.',
       body: `A **two-way table** cross-tabulates two categorical variables. Rows = one variable, columns = the other, cells = counts.
 
 ### How to read
 - **Joint count**: the number in a specific row + column.
 - **Row total** / **column total**: sum across a row / down a column.
-- **Grand total**: sum of every cell.
-
-### Percentages — your key tool
-- **Row percentage** = (cell) / (row total). Tells you the breakdown **within that row**.
-- **Column percentage** = (cell) / (column total). Tells you the breakdown **within that column**.
-
-### Spotting association
-- If the row percentages are **roughly the same** across all rows → no association between the variables.
-- If the row percentages **vary noticeably** between rows → there is an association (the variables are related).`,
+- **Grand total**: sum of every cell (all observations).`,
       examples: [
         {
           id: 'ex-twoway-build',
@@ -45,6 +37,42 @@ export const statisticsTwoWay: Topic = {
             '| Total        |   50  |    50     |  100  |',
           ],
         },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-cell',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              "In a two-way table, a row sums to $60$ and contains cells $22$ and $18$ and a third value $x$. What is $x$?",
+            answer: '20',
+            answerType: 'numeric',
+            hint: 'Row total = sum of cells.',
+            solution: [
+              '$22 + 18 + x = 60 \\Rightarrow x = 20$.',
+            ],
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'percentages-association',
+      heading: 'Percentages & association',
+      summary: 'Row/column percentages reveal association between categorical variables.',
+      body: `Percentages turn counts into comparable rates.
+
+### Row percentage
+$($cell$) / ($row total$)$. Tells you the breakdown **within that row**.
+
+### Column percentage
+$($cell$) / ($column total$)$. Tells you the breakdown **within that column**.
+
+### Spotting association
+- If the row percentages are **roughly the same** across all rows → no association between the variables.
+- If the row percentages **vary noticeably** between rows → there is an association (the variables are related).`,
+      examples: [
         {
           id: 'ex-row-pct',
           statement:
@@ -52,6 +80,15 @@ export const statisticsTwoWay: Topic = {
           steps: [
             'Row total for sport: $40$.',
             "Happy sport: $30$. Percentage: $30/40 = 0.75 = 75\\%$.",
+          ],
+        },
+        {
+          id: 'ex-association',
+          statement:
+            "In a $2 \\times 2$ table, row percentages are $30\\%$ and $70\\%$ for column \"yes\" across the two rows. Is there an association?",
+          steps: [
+            'Row percentages differ noticeably → the row variable changes the column distribution.',
+            'Yes — there is an association.',
           ],
         },
       ],

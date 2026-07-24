@@ -16,10 +16,10 @@ export const algebraRelations: Topic = {
 
   lessons: [
     {
-      id: 'shape-and-rule',
-      heading: 'Reading shape from rule, reading rule from shape',
-      summary: 'Each family has a signature shape and a signature rule.',
-      body: `Each family of relations has both a **characteristic shape** and a **characteristic algebraic form**. Reading either helps you understand the other.
+      id: 'shape-signature',
+      heading: 'Recognising the family from the rule',
+      summary: 'Each family has a signature rule and a signature shape.',
+      body: `Each family of relations has both a **characteristic shape** and a **characteristic algebraic form**.
 
 ### Signatures
 
@@ -31,8 +31,7 @@ export const algebraRelations: Topic = {
 | Exponential | $y = a \\cdot b^x$ | Always positive, grows or decays rapidly |
 | Circle (centre origin) | $x^2 + y^2 = r^2$ | Radius $r$, symmetric about both axes |
 
-### Transformations apply across families
-A vertical shift $y = f(x) + c$ moves the whole graph up by $c$. A horizontal shift $y = f(x - h)$ moves it right by $h$. A stretch $y = a \\cdot f(x)$ scales $y$-coordinates. The same rules work for every family above.`,
+Reading either the rule or the shape tells you the family.`,
       examples: [
         {
           id: 'ex-exp-feature',
@@ -81,6 +80,80 @@ A vertical shift $y = f(x) + c$ moves the whole graph up by $c$. A horizontal sh
             hint: 'Compare with $x^2 + y^2 = r^2$.',
             solution: [
               '$r^2 = 49 \\Rightarrow r = 7$.',
+            ],
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'transformations',
+      heading: 'Transformations across families',
+      summary: 'Vertical/horizontal shifts and stretches work the same way for every family.',
+      body: `The same transformation rules apply across **every** family.
+
+### Vertical shift
+$y = f(x) + c$ moves the graph up by $c$ (or down if $c$ is negative).
+
+### Horizontal shift
+$y = f(x - h)$ moves the graph to the right by $h$.
+
+### Vertical stretch
+$y = a \\cdot f(x)$ multiplies every $y$-value by $a$ (a "taller" or "shorter" version of the graph).
+
+### Reflection
+$y = -f(x)$ flips the graph upside down (reflects in the $x$-axis).
+
+### Why this matters
+Once you know the graph of $y = f(x)$, you can sketch any transformed version without re-plotting every point.`,
+      examples: [
+        {
+          id: 'ex-shift-up',
+          statement:
+            'Compare the graph of $y = x^2$ to $y = x^2 + 3$. Where does the vertex end up?',
+          steps: [
+            'Original vertex: $(0, 0)$.',
+            'Add $3$ to every $y$ — vertex moves to $(0, 3)$.',
+          ],
+        },
+        {
+          id: 'ex-reflect',
+          statement:
+            'Compare $y = 2^x$ to $y = -2^x$. Where does the graph end up?',
+          steps: [
+            'Each $y$-value flips sign.',
+            'The graph is reflected in the $x$-axis — entirely below the $x$-axis.',
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-shift',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'The vertex of $y = x^2$ is at $(0, 0)$. What is the vertex of $y = (x - 4)^2$?',
+            answer: '(4,0)',
+            answerType: 'exact',
+            hint: 'The graph shifts right by $4$.',
+            solution: [
+              'The substitution $x - 4$ moves the graph $4$ units right. Vertex at $(4, 0)$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-reflect-axis',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'The graph of $y = x^2$ opens upward. Which way does $y = -x^2$ open? Answer "up" or "down".',
+            answer: 'down',
+            answerType: 'exact',
+            hint: 'A leading negative sign flips the graph vertically.',
+            solution: [
+              '$-x^2 \\le 0$ for all $x$ — the parabola opens **down**.',
             ],
           },
         },

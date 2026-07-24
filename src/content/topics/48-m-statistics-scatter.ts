@@ -18,9 +18,9 @@ export const statisticsScatter: Topic = {
 
   lessons: [
     {
-      id: 'scatter-and-fit',
-      heading: 'Scatterplots and lines of best fit',
-      summary: 'Pair the variables; plot points; eyeball a line; describe the association by strength, direction and shape.',
+      id: 'scatter-fit',
+      heading: 'Drawing scatterplots & lines of best fit',
+      summary: 'Pair the variables; plot points; eyeball a line; describe by strength, direction and shape.',
       body: `A **scatterplot** shows two numerical variables — one on each axis — with each observation plotted as a single point.
 
 ### Drawing one
@@ -31,15 +31,7 @@ export const statisticsScatter: Topic = {
 ### Line of best fit
 - A **line of best fit** (or "line of good fit") passes as close as possible to all the points, with roughly equal numbers above and below.
 - Use the line to **interpolate** (estimate between data points) — fairly reliable.
-- Be careful with **extrapolation** (estimate outside the data range) — the model may not hold.
-
-### Describing the association
-- **Direction**: positive (upward) or negative (downward).
-- **Strength**: how tightly the points hug the line.
-- **Shape**: linear, curved, clustered, no pattern.
-
-### Correlation ≠ causation
-A strong correlation between $A$ and $B$ doesn't prove $A$ causes $B$ — there may be a lurking variable $C$ that drives both.`,
+- Be careful with **extrapolation** (estimate outside the data range) — the model may not hold.`,
       examples: [
         {
           id: 'ex-direction',
@@ -63,6 +55,77 @@ A strong correlation between $A$ and $B$ doesn't prove $A$ causes $B$ — there 
       exercises: [
         {
           kind: 'curated',
+          id: 'c-direction',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              "A scatterplot of car age vs resale price has points going down-right. What kind of association is this? Answer \"positive\" or \"negative\".",
+            answer: 'negative',
+            answerType: 'exact',
+            hint: 'Higher $x$ → lower $y$ means negative correlation.',
+            solution: [
+              'Older cars are worth less → negative association.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-positive',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              "A scatterplot of study hours vs exam score shows points going up-right. What kind of association is this? Answer \"positive\" or \"negative\".",
+            answer: 'positive',
+            answerType: 'exact',
+            hint: 'Higher $x$ → higher $y$ means positive correlation.',
+            solution: [
+              'More study → higher score → positive association.',
+            ],
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'interpolation-causation',
+      heading: 'Interpolation, extrapolation & causation',
+      summary: 'Interpolation is reliable; extrapolation is risky. Correlation is not causation.',
+      body: `Once you have a line of best fit, you can use it to **predict** values of $y$ from values of $x$.
+
+### Interpolation
+Predicting **between** data points. The model is well-tested there — usually reliable.
+
+### Extrapolation
+Predicting **outside** the data range. Risky — the relationship may not hold far from where it was measured.
+
+### Correlation ≠ causation
+A strong correlation between $A$ and $B$ doesn't prove $A$ causes $B$ — there may be a lurking variable $C$ that drives both.
+
+### Ice-cream / drownings example
+Ice-cream sales and drownings both rise in summer — but ice-cream doesn't cause drownings. Heat is the lurking variable.`,
+      examples: [
+        {
+          id: 'ex-causation',
+          statement:
+            'A study finds a strong positive correlation between a country\'s chocolate consumption and its number of Nobel laureates. Does eating chocolate cause Nobel prizes?',
+          steps: [
+            'No — likely a lurking variable like national wealth drives both.',
+            'Correlation is real; causation is not established.',
+          ],
+        },
+        {
+          id: 'ex-extrap',
+          statement:
+            "A line of best fit has equation $y = 2x + 1$, fit on data with $x$ in $[0, 5]$. Predict $y$ at $x = 100$.",
+          steps: [
+            'Plug in: $y = 2(100) + 1 = 201$.',
+            "But $x = 100$ is far outside $[0, 5]$ — extrapolation. The linear relationship may not hold, so the prediction is unreliable.",
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
           id: 'c-extrapolation',
           difficulty: 'intro',
           instance: {
@@ -79,16 +142,16 @@ A strong correlation between $A$ and $B$ doesn't prove $A$ causes $B$ — there 
         },
         {
           kind: 'curated',
-          id: 'c-direction',
+          id: 'c-lurking',
           difficulty: 'core',
           instance: {
             prompt:
-              "A scatterplot of car age vs resale price has points going down-right. What kind of association is this? Answer \"positive\" or \"negative\".",
-            answer: 'negative',
+              'A study finds ice-cream sales and sunburn rates are strongly positively correlated. Does ice-cream cause sunburn? Answer "yes" or "no".',
+            answer: 'no',
             answerType: 'exact',
-            hint: 'Higher $x$ → lower $y$ means negative correlation.',
+            hint: 'A lurking variable (sunny weather) likely drives both.',
             solution: [
-              'Older cars are worth less → negative association.',
+              'Sunny/hot weather drives both — ice-cream sales and sunburn go up together, but one does not cause the other.',
             ],
           },
         },

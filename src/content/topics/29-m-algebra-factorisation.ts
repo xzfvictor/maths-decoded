@@ -15,8 +15,8 @@ export const algebraFactorisation: Topic = {
   lessons: [
     {
       id: 'common-factor',
-      heading: 'Common algebraic factors',
-      summary: 'Identify the GCF across all terms, then factor it out.',
+      heading: 'Numerical & variable common factors',
+      summary: 'Find the GCF of every term, factor it out, then expand back to check.',
       body: `To **factorise by a common factor**, look at every term and find the **greatest** expression that divides each one.
 
 ### Steps
@@ -25,13 +25,12 @@ export const algebraFactorisation: Topic = {
 3. Combine those into the GCF; factor it out; bracket the remaining sum.
 4. **Expand back** to check: it should reproduce the original.
 
+### Why it works
+Factorisation is the reverse of expansion: $a(b + c) = ab + ac$. So dividing every term by $a$ and then multiplying back gives the original.
+
 ### Examples by shape
 - Numerical common factor: $6x^2 + 9x = 3x(2x + 3)$.
-- Common variable: $4x^2 + 6x^3 = 2x^2(2 + 3x)$.
-- Common binomial: $x(x+1) + 2(x+1) = (x+1)(x+2)$ — this is the **grouping in pairs** technique.
-
-### Why it works
-Factorisation is the reverse of expansion: $a(b + c) = ab + ac$. So dividing every term by $a$ and then multiplying back gives the original.`,
+- Common variable: $4x^2 + 6x^3 = 2x^2(2 + 3x)$.`,
       examples: [
         {
           id: 'ex-common-numerical',
@@ -44,13 +43,14 @@ Factorisation is the reverse of expansion: $a(b + c) = ab + ac$. So dividing eve
           ],
         },
         {
-          id: 'ex-grouping',
+          id: 'ex-variable-only',
           statement:
-            'Factorise $x^2 + 3x + xy + 3y$ by grouping.',
+            'Factorise $4x^2 + 6x^3$.',
           steps: [
-            'Group in pairs: $(x^2 + 3x) + (xy + 3y)$.',
-            'Common factors: $x(x + 3) + y(x + 3)$.',
-            'Common bracket factor: $(x + 3)(x + y)$.',
+            'Coefficients: $4$ and $6$, GCF $= 2$.',
+            'Variables: $x^2$ and $x^3$, lowest common power $= x^2$.',
+            'Overall GCF $= 2x^2$. Divide: $4x^2 / 2x^2 = 2$, $6x^3 / 2x^2 = 3x$.',
+            'Result: $2x^2(2 + 3x)$.',
           ],
         },
       ],
@@ -82,6 +82,75 @@ Factorisation is the reverse of expansion: $a(b + c) = ab + ac$. So dividing eve
             hint: 'Common factor: $2x$.',
             solution: [
               '$2x^2 / 2x = x$, $6x / 2x = 3$. So $2x^2 + 6x = 2x(x + 3)$.',
+            ],
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'grouping-in-pairs',
+      heading: 'Grouping in pairs (common binomial factor)',
+      summary: 'Group terms so a common bracket appears, then factor out the bracket itself.',
+      body: `When every term does **not** share a single common factor, try **grouping in pairs**: regroup the terms so that each pair has a common factor, and those factors should match.
+
+### Recipe
+1. Re-arrange the terms into pairs that share something.
+2. Factor each pair.
+3. The two pair-factors share a common **bracket** — factor that bracket out.
+
+### Example shape
+$x(x + 1) + 2(x + 1) = (x + 1)(x + 2)$ — here the common bracket $(x + 1)$ is the key.`,
+      examples: [
+        {
+          id: 'ex-grouping',
+          statement:
+            'Factorise $x^2 + 3x + xy + 3y$ by grouping.',
+          steps: [
+            'Group in pairs: $(x^2 + 3x) + (xy + 3y)$.',
+            'Common factors: $x(x + 3) + y(x + 3)$.',
+            'Common bracket factor: $(x + 3)(x + y)$.',
+          ],
+        },
+        {
+          id: 'ex-grouping-2',
+          statement:
+            'Factorise $ab + 2a + 3b + 6$.',
+          steps: [
+            'Group: $(ab + 2a) + (3b + 6)$.',
+            'Common factors: $a(b + 2) + 3(b + 2)$.',
+            'Result: $(b + 2)(a + 3)$.',
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-grouping',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'Factorise $xy + 4x + 3y + 12$ by grouping. Type in the form "(x+A)(y+B)".',
+            answer: '(x+3)(y+4)',
+            answerType: 'polynomial',
+            hint: 'Group $(xy + 4x)$ and $(3y + 12)$, then look for the common bracket.',
+            solution: [
+              '$(xy + 4x) + (3y + 12) = x(y + 4) + 3(y + 4) = (y + 4)(x + 3)$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-binomial-common',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'Factorise $5(x + 2) + x(x + 2)$.',
+            answer: '(x+2)(x+5)',
+            answerType: 'polynomial',
+            hint: 'The common binomial is $(x + 2)$.',
+            solution: [
+              '$5(x + 2) + x(x + 2) = (x + 2)(5 + x) = (x + 2)(x + 5)$.',
             ],
           },
         },

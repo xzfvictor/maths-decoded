@@ -15,7 +15,7 @@ export const measurementLogScales: Topic = {
 
   lessons: [
     {
-      id: 'reading-log-scale',
+      id: 'reading-scale',
       heading: 'Reading a logarithmic scale',
       summary: 'Each gridline is a power of 10; equal visual spacing, very unequal numerical spacing.',
       body: `A **logarithmic scale** plots $\\log_{10}(\\text{quantity})$ instead of the quantity itself. Each gridline corresponds to a **power of 10**.
@@ -27,12 +27,69 @@ export const measurementLogScales: Topic = {
 ### When to use it
 - A **wide range** of values: $1$ to $10\\,000\\,000$ all fit comfortably.
 - A quantity that **grows exponentially** (epidemics, investment growth) — a log plot turns the curve into a straight line.
-- Comparing **ratios** rather than differences (pH, decibels, Richter scale).
+- Comparing **ratios** rather than differences (pH, decibels, Richter scale).`,
+      examples: [
+        {
+          id: 'ex-midpoint',
+          statement:
+            'On a log scale with gridlines at $10^2, 10^3, 10^4$, what value sits visually halfway between $10^2$ and $10^3$?',
+          steps: [
+            'Visual midpoint = geometric mean: $\\sqrt{10^2 \\cdot 10^3} = \\sqrt{10^5}$.',
+            '= $10^{2.5} \\approx 316$.',
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-log-axes',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'On a log scale plot, the gridlines are at $10^1, 10^2, 10^3, 10^4$. Between $10^2$ and $10^3$, the midpoint is what? (As a power of $10$.) Answer like "10^k".',
+            answer: '10^2.5',
+            answerType: 'exact',
+            hint: 'Linear spacing in the log means halfway between two powers is the geometric mean.',
+            solution: [
+              'Midpoint $= \\sqrt{10^2 \\cdot 10^3} = \\sqrt{10^5} = 10^{2.5}$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-gridline',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'On a log scale, what number sits at the gridline $10^5$?',
+            answer: '100000',
+            answerType: 'numeric',
+            hint: '$10^5 = 1$ followed by $5$ zeros.',
+            solution: [
+              '$10^5 = 100\\,000$.',
+            ],
+          },
+        },
+      ],
+    },
 
-### Examples of log scales
-- pH: each step of $1$ is a 10-fold change in $[H^+]$.
-- Richter: each step of $1$ is a $10\\times$ bigger earthquake amplitude.
-- Decibels: $10$ dB more = $10\\times$ the sound intensity.`,
+    {
+      id: 'real-world',
+      heading: 'Real-world log scales',
+      summary: 'pH, Richter, decibels — each step is a ten-fold change in the underlying quantity.',
+      body: `Real-world log scales compress a huge dynamic range into readable numbers.
+
+### pH (acidity)
+$\\text{pH} = -\\log_{10}[H^+]$. Each unit drop is a $10\\times$ increase in hydrogen-ion concentration. Pure water has $\\text{pH} = 7$.
+
+### Richter (earthquake amplitude)
+Each unit step on Richter is a $10\\times$ bigger amplitude. (The energy released scales by about $31\\times$.)
+
+### Decibels (sound)
+$10$ dB more = $10\\times$ the sound intensity. A $20$ dB jump = $100\\times$ the intensity.
+
+### Working with them
+A difference of $k$ on any log scale means a ratio of $10^k$.`,
       examples: [
         {
           id: 'ex-pH',
@@ -44,7 +101,7 @@ export const measurementLogScales: Topic = {
           ],
         },
         {
-          id: 'ex-richtter',
+          id: 'ex-richter',
           statement:
             'An earthquake measures $7$ on the Richter scale; another measures $5$. How many times larger is the first in amplitude?',
           steps: [
@@ -71,16 +128,16 @@ export const measurementLogScales: Topic = {
         },
         {
           kind: 'curated',
-          id: 'c-log-axes',
+          id: 'c-richter',
           difficulty: 'core',
           instance: {
             prompt:
-              'On a log scale plot, the gridlines are at $10^1, 10^2, 10^3, 10^4$. Between $10^2$ and $10^3$, the midpoint is what? (As a power of $10$.) Answer like "10^k".',
-            answer: '10^2.5',
-            answerType: 'exact',
-            hint: 'Linear spacing in the log means halfway between two powers is the geometric mean.',
+              'An earthquake measures $6$ on the Richter scale; another measures $4$. How many times larger is the amplitude of the first?',
+            answer: '100',
+            answerType: 'numeric',
+            hint: 'Each unit step is a $10\\times$ amplitude increase.',
             solution: [
-              'Midpoint $= \\sqrt{10^2 \\cdot 10^3} = \\sqrt{10^5} = 10^{2.5}$.',
+              'Difference of $2$ units → $10^2 = 100$ times larger amplitude.',
             ],
           },
         },

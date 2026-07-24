@@ -14,8 +14,8 @@ export const algebraInequalities: Topic = {
 
   lessons: [
     {
-      id: 'solve-and-graph',
-      heading: 'Solving & graphing linear inequalities',
+      id: 'solve',
+      heading: 'Solving linear inequalities',
       summary: 'Solve like an equation, but flip the inequality if you divide by a negative.',
       body: `An **inequality** compares two expressions with $<$, $>$, $\\le$, $\\ge$. To solve, isolate the variable using inverse operations — almost the same as solving an equation, with one **critical rule**.
 
@@ -25,19 +25,15 @@ If you multiply or divide both sides by a **negative** number, the inequality **
 - $3x < 12$ → divide by $3$: $x < 4$.
 - $-3x < 12$ → divide by $-3$ (and flip): $x > -4$.
 
-### Graphing the solution set
-On a number line:
-- $\\le$ or $\\ge$ → **closed** circle at the endpoint (the endpoint is included).
-- $<$ or $>$ → **open** circle at the endpoint (the endpoint is NOT included).
-- The solution set is a **half-line**: a ray extending from the endpoint to the right (or left).`,
+### Multiplying by negatives
+Same rule: $-2x > 6 \\Rightarrow x < -3$.`,
       examples: [
         {
           id: 'ex-positive-coeff',
-          statement: 'Solve $4x - 5 < 11$ and graph on a number line.',
+          statement: 'Solve $4x - 5 < 11$.',
           steps: [
             'Add $5$: $4x < 16$.',
             'Divide by $4$ (positive, no flip): $x < 5$.',
-            'Open circle at $5$, ray extending to the left.',
           ],
         },
         {
@@ -46,7 +42,6 @@ On a number line:
           steps: [
             'Subtract $6$: $-2x \\ge 4$.',
             'Divide by $-2$ (negative, **flip**): $x \\le -2$.',
-            'Closed circle at $-2$, ray to the left.',
           ],
         },
       ],
@@ -78,6 +73,74 @@ On a number line:
             hint: '$-5x \\le 20 \\Rightarrow x \\ge -4$.',
             solution: [
               '$-5x \\le 20 \\Rightarrow x \\ge -4$. Largest integer is $-4$.',
+            ],
+          },
+        },
+      ],
+    },
+
+    {
+      id: 'graph',
+      heading: 'Graphing on a number line',
+      summary: 'Open or closed circle at the boundary; a ray extending in the solution direction.',
+      body: `Once you've solved, draw the **solution set** on a number line.
+
+### Open vs. closed circle
+- $\\le$ or $\\ge$ → **closed** circle at the endpoint (the endpoint is included).
+- $<$ or $>$ → **open** circle at the endpoint (the endpoint is NOT included).
+
+### Direction of the ray
+- $x < 5$ → open circle at $5$, ray extending to the **left**.
+- $x \\ge -2$ → closed circle at $-2$, ray extending to the **right**.
+
+### Why a ray?
+The inequality defines an infinite set of $x$-values — every value past the boundary satisfies it.`,
+      examples: [
+        {
+          id: 'ex-graph-1',
+          statement: 'Describe the graph of $x \\le 3$.',
+          steps: [
+            'Closed circle at $x = 3$ (endpoint included).',
+            'Ray extending to the left (every value less than $3$ is allowed).',
+          ],
+        },
+        {
+          id: 'ex-graph-2',
+          statement: 'Describe the graph of $-2 < x \\le 4$.',
+          steps: [
+            'Open circle at $-2$, closed circle at $4$.',
+            'Shade the segment between them — the **interval** $(-2, 4]$.',
+          ],
+        },
+      ],
+      exercises: [
+        {
+          kind: 'curated',
+          id: 'c-graph-direction',
+          difficulty: 'intro',
+          instance: {
+            prompt:
+              'For $x > -1$, which way does the ray extend on a number line? Answer "left" or "right".',
+            answer: 'right',
+            answerType: 'exact',
+            hint: 'Numbers greater than $-1$ lie to the right on a number line.',
+            solution: [
+              '$x > -1$ includes $-0.5, 0, 5, 100, \\dots$ — all to the right of $-1$.',
+            ],
+          },
+        },
+        {
+          kind: 'curated',
+          id: 'c-graph-open',
+          difficulty: 'core',
+          instance: {
+            prompt:
+              'For $x \\le 6$, is the circle at $6$ open or closed? Answer "open" or "closed".',
+            answer: 'closed',
+            answerType: 'exact',
+            hint: '$\\le$ means the endpoint is included.',
+            solution: [
+              '$\\le$ includes the endpoint — draw a closed circle at $6$.',
             ],
           },
         },
