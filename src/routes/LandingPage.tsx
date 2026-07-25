@@ -19,8 +19,11 @@ export function LandingPage() {
     <div className="mx-auto max-w-5xl">
       <header className="mb-10">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
-          What would you like to learn?
+          MathsDecoded
         </h1>
+        <p className="mt-2 text-lg text-slate-600 dark:text-slate-300">
+          What would you like to learn?
+        </p>
         <p className="mt-3 max-w-2xl text-base text-slate-600 dark:text-slate-300">
           Pick the module that matches what you're studying. Each one covers
           the full syllabus with short lessons, worked examples, and exercises.

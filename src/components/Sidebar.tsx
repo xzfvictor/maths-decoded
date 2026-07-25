@@ -269,7 +269,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           onClick={onNavigate}
           className="text-lg font-bold text-slate-900 dark:text-white"
         >
-          {m?.title ?? 'VCE Maths Methods'}
+          {m?.title ?? 'MathsDecoded'}
           <span className="block text-xs font-normal text-slate-500">{m?.tagline}</span>
         </NavLink>
       </div>

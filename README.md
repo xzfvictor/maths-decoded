@@ -1,17 +1,21 @@
-# VCE Maths Methods
+# MathsDecoded
 
-A study web app covering **all of VCE Mathematical Methods Units 1 & 2**, plus the
-**Victorian Curriculum Level 10 (Pre-VCE) Mathematics** syllabus as a foundation
-module. Navigate to a topic, work through short lessons of theory and worked
-examples, then practise with exercises that give full worked solutions. Every
-question is mapped to the official syllabus, so the app covers the whole course —
-not just a sample.
+A self-study platform that breaks down a syllabus into short lessons, walks you
+through worked examples, and tests you with exercises that give full worked
+solutions. The landing page lets you pick a **module** — currently **VCE
+Mathematical Methods Units 1 & 2** plus a **Pre-VCE Year 10** foundation
+module — and the rest of the app narrows to that module so the student isn't
+distracted by material outside their course.
 
-- **Three modules, one app.** Pick VCE Unit 1, VCE Unit 2, or Pre-VCE Year 10
-  on the landing page; the rest of the app narrows to that module so the
-  student isn't distracted by material outside their course.
-- **Learn in small sessions.** Each topic is split into lessons that fit a single
-  sitting, each with its own theory, worked examples, and exercises.
+The app is named **MathsDecoded** because the core promise is the same for any
+subject: take the syllabus, demystify it, and meet a beginner where they are.
+More subjects (Physics, Chemistry, …) can be plugged in as new modules without
+touching the rest of the codebase.
+
+- **Module-aware.** Pick a module on the landing page; the sidebar, home page,
+  and progress tracking all scope themselves to that module until you switch.
+- **Learn in small sessions.** Each topic is split into lessons that fit a
+  single sitting, each with its own theory, worked examples, and exercises.
 - **Built for first-time learners.** Every lesson opens with a "What you'll
   learn" summary and closes with a "Key takeaways" recap, so a student with no
   prior knowledge knows where the lesson is going and what to walk away knowing.
@@ -25,14 +29,16 @@ not just a sample.
 - **Complete coverage, guaranteed.** A build-time check asserts that every
   syllabus dot point is covered by a topic.
 
-> **Status:** Both modules are fully authored. **52 topics, 157 lessons, 383
-> exercises** (281 curated + 102 randomised) covering **73/73 syllabus dot
-> points** (43 VCE + 30 Pre-VCE). The `check:coverage` script asserts every dot
-> point is claimed and stays green.
+> **Status:** The Mathematics module is fully authored — **52 topics, 157
+> lessons, 383 exercises** (281 curated + 102 randomised) covering **73/73
+> syllabus dot points** (43 VCE + 30 Pre-VCE). The `check:coverage` script
+> asserts every dot point is claimed and stays green.
 
 ## Modules
 
-The landing page (`/`) asks the student to choose between three modules:
+The landing page (`/`) asks the student to choose between the current
+modules. New modules (other subjects) plug into the same picker with no
+code changes outside `src/content/topics/index.ts`.
 
 - **VCE Mathematical Methods — Unit 1** — `/unit-1`. Functions, algebra,
   calculus and probability. Eleven topics covering all Unit 1 dot points.
@@ -51,6 +57,20 @@ Topic and lesson URLs (`/topic/:id`, `/topic/:id/:lessonId`) are shared across
 modules — a bookmarked lesson opens in whichever module the sidebar thinks you
 came from. A `← Switch module` link is always pinned to the top of the sidebar
 for a one-click return to the landing page.
+
+### Adding a new module
+
+Adding another subject (e.g. Physics) is mostly a content exercise:
+
+1. Add a `ModuleId` entry to `MODULES` in `src/content/topics/index.ts` and
+   wire it into `moduleForUnit` / `topicsForModule`.
+2. Add a route for the module's home page in `src/App.tsx`.
+3. Add a syllabus catalog (dot points + strands) to `src/content/coverage.ts`
+   and write the topics.
+
+The sidebar, lesson framing, AI audio, progress storage, and checkers all
+work as-is for the new module. See `CLAUDE.md` for the full register-a-new-
+topic walkthrough.
 
 ## Tech stack
 
@@ -105,7 +125,7 @@ reachable, only the JSON scripts are written and the UI degrades to a
 clear "audio not generated yet" hint. See `CLAUDE.md` for the full
 flow.
 
-## Course map
+## Course map — VCE Mathematical Methods
 
 ### Unit 1 — Functions, algebra, calculus & probability
 1. Functions, relations, domain & range
@@ -163,9 +183,9 @@ Module → Topic → Lessons → Worked examples + Exercises
 ```
 
 - **Modules** are defined in [`src/content/topics/index.ts`](./src/content/topics/index.ts)
-  (`MODULES`). The three modules are `unit-1`, `unit-2`, and `pre-vce` —
-  each VCE unit is its own module, plus the Pre-VCE Year 10 strand; the rest
-  of the code is module-aware.
+  (`MODULES`). The current modules are `unit-1`, `unit-2`, and `pre-vce`. New
+  modules (other subjects) are added by appending to `MODULES` and wiring
+  their home route.
 - **Topics** live in [`src/content/topics/`](./src/content/topics/) and are
   registered in the `TOPICS` array.
 - **Coverage** is defined in [`src/content/coverage.ts`](./src/content/coverage.ts):

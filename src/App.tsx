@@ -50,7 +50,7 @@ export default function App() {
               ☰
             </button>
             <span className="text-sm font-semibold text-slate-700 lg:hidden dark:text-slate-200">
-              VCE Maths Methods
+              MathsDecoded
             </span>
             <div className="ml-auto flex items-center gap-2">
               <a

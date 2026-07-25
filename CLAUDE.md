@@ -4,12 +4,17 @@ Guidance for working in this repository.
 
 ## What this is
 
-A static web app that helps a student study **all of VCE Mathematical Methods
-Units 1 & 2**, covering every VCAA study-design dot point, plus the
-**Victorian Curriculum Level 10 (Pre-VCE) Mathematics** syllabus as a
-foundation module. A student picks a module on the landing page, navigates
-to a topic, works through short lessons (theory + worked examples), and does
-exercises with worked solutions. No backend; progress is stored in the browser.
+**MathsDecoded** — a static, fully client-side self-study platform that
+demystifies a syllabus through short lessons, worked examples, and exercises.
+A student picks a module on the landing page, navigates to a topic, works
+through theory + worked examples, then practises with exercises that reveal
+full worked solutions. No backend; progress is stored in the browser.
+
+The app is named after the core promise — *decode the syllabus, meet a
+beginner where they are* — and is designed to scale to new subjects by
+adding modules. The Mathematics module (the only one currently shipped)
+covers **all of VCE Mathematical Methods Units 1 & 2** plus the
+**Victorian Curriculum Level 10 (Pre-VCE) Mathematics** syllabus.
 
 **Status:** Both modules are fully authored. **52 topics, 157 lessons, 383
 exercises** (281 curated + 102 randomised) covering **73/73 syllabus dot
