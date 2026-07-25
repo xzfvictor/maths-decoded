@@ -39,8 +39,9 @@ stay green — that means no dot point, in any module, is ever unmapped.
 ## App structure
 
 ```
-/                LandingPage — pick VCE or Pre-VCE
-/vce             VceHome — Units 1 & 2 topics
+/                LandingPage — pick Unit 1, Unit 2, or Pre-VCE
+/unit-1          UnitHome — Unit 1 topics
+/unit-2          UnitHome — Unit 2 topics
 /pre-vce         PreVceHome — Year 10 topics grouped by strand
 /topic/:id       TopicPage — lessons in a single topic
 /topic/:id/:lessonId
@@ -53,6 +54,9 @@ topic). The sidebar always shows a `← Switch module` link that returns to the
 landing page. Topic and lesson URLs are unchanged across modules, so a
 bookmarked lesson keeps working.
 
+Unit 1's home page shows a "Continue to Unit 2" card once the student has
+finished it, making the natural VCE progression one click away.
+
 ## Content model (`src/content/types.ts`)
 
 Content is authored as plain data, not JSX, so the whole site is static and the
@@ -64,8 +68,9 @@ Exercise = CuratedExercise (fixed) | ParamExercise (build(seed) => ExerciseInsta
 ```
 
 - **Modules** are defined in `src/content/topics/index.ts` (`MODULES`). The
-  two modules map `vce` to units 1+2 and `pre-vce` to unit 10. Helpers
-  `moduleForUnit`, `moduleForTopic`, `topicsForModule` resolve the mapping.
+  three modules are `unit-1` (unit 1), `unit-2` (unit 2), and `pre-vce`
+  (unit 10). Helpers `moduleForUnit`, `moduleForTopic`, `topicsForModule`,
+  `homePathForModule` resolve the mapping.
 - A **Lesson** is one short study session. Keep its theory, examples, and
   exercises self-contained.
 - `body` and all solution/example strings are lightweight markdown + TeX.

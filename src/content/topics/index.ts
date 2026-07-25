@@ -145,18 +145,24 @@ export const UNIT_TITLES: Record<Unit, string> = {
 }
 
 /**
- * A "module" is the top-level choice the student makes on the landing page —
- * VCE Mathematical Methods (Units 1 & 2) or Pre-VCE Year 10 Maths. Once chosen,
- * the rest of the app scopes itself to that module.
+ * A "module" is the top-level choice the student makes on the landing page.
+ * Each VCE unit is its own module so a student studying Unit 1 doesn't have
+ * Unit 2 topics crowding the sidebar; Pre-VCE Year 10 is its own module.
  */
-export type ModuleId = 'vce' | 'pre-vce'
+export type ModuleId = 'unit-1' | 'unit-2' | 'pre-vce'
 
 export const MODULES: { id: ModuleId; title: string; tagline: string; units: Unit[] }[] = [
   {
-    id: 'vce',
-    title: 'VCE Mathematical Methods',
-    tagline: 'Units 1 & 2',
-    units: [1, 2],
+    id: 'unit-1',
+    title: 'VCE Mathematical Methods — Unit 1',
+    tagline: 'Functions, algebra, calculus & probability',
+    units: [1],
+  },
+  {
+    id: 'unit-2',
+    title: 'VCE Mathematical Methods — Unit 2',
+    tagline: 'Transcendental functions, calculus & probability',
+    units: [2],
   },
   {
     id: 'pre-vce',
@@ -172,7 +178,8 @@ export function moduleById(id: ModuleId) {
 
 /** Map a unit number to its parent module. */
 export function moduleForUnit(unit: Unit): ModuleId | undefined {
-  if (unit === 1 || unit === 2) return 'vce'
+  if (unit === 1) return 'unit-1'
+  if (unit === 2) return 'unit-2'
   if (unit === 10) return 'pre-vce'
   return undefined
 }
@@ -187,4 +194,9 @@ export function topicsForModule(id: ModuleId): Topic[] {
   const m = moduleById(id)
   if (!m) return []
   return m.units.flatMap((u) => topicsForUnit(u))
+}
+
+/** The route path that opens the given module's home page. */
+export function homePathForModule(id: ModuleId): string {
+  return `/${id}`
 }

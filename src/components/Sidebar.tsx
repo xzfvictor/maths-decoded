@@ -62,67 +62,63 @@ function ActiveTopicLessons({
 }
 
 /**
- * Render the VCE module's two units (1 and 2) as a flat list of topics.
+ * Render a single VCE unit's topics as a flat list. Each VCE unit is its
+ * own module, so the sidebar for Unit 1 only shows Unit 1 topics, etc.
  */
-function VceSidebarSection({
+function UnitSidebarSection({
+  unit,
   activeTopicId,
   onNavigate,
 }: {
+  unit: Unit
   activeTopicId?: string
   onNavigate?: () => void
 }) {
-  const units: Unit[] = [1, 2]
+  const topics = topicsForUnit(unit)
   return (
-    <div className="space-y-4">
-      {units.map((unit) => {
-        const topics = topicsForUnit(unit)
-        return (
-          <div key={unit}>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-              {UNIT_TITLES[unit]}
-            </p>
-            <ul className="space-y-1">
-              {topics.map((t) => {
-                const ratio = topicLessonRatio(t.id, t.lessons.length)
-                const done = ratio >= 1 && t.lessons.length > 0
-                const isActive = t.id === activeTopicId
-                return (
-                  <li key={t.id}>
-                    <NavLink
-                      to={`/topic/${t.id}`}
-                      onClick={onNavigate}
-                      className={({ isActive: linkActive }) =>
-                        `flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
-                          linkActive
-                            ? 'bg-brand-100 font-semibold text-brand-800 dark:bg-brand-900/50 dark:text-brand-100'
-                            : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                        }`
-                      }
-                    >
-                      <span
-                        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border text-[10px] ${
-                          done
-                            ? 'border-emerald-500 bg-emerald-500 text-white'
-                            : 'border-slate-300 dark:border-slate-600'
-                        }`}
-                      >
-                        {done ? '✓' : ''}
-                      </span>
-                      <span className="flex-1">
-                        <span className="mr-1 text-[10px] text-slate-400">#{t.order}</span>
-                        {t.title}
-                      </span>
-                    </NavLink>
-                    {isActive && (
-                      <ActiveTopicLessons topicId={t.id} onNavigate={onNavigate} />
-                    )}
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        )
-      })}
+    <div>
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+        {UNIT_TITLES[unit]}
+      </p>
+      <ul className="space-y-1">
+        {topics.map((t) => {
+          const ratio = topicLessonRatio(t.id, t.lessons.length)
+          const done = ratio >= 1 && t.lessons.length > 0
+          const isActive = t.id === activeTopicId
+          return (
+            <li key={t.id}>
+              <NavLink
+                to={`/topic/${t.id}`}
+                onClick={onNavigate}
+                className={({ isActive: linkActive }) =>
+                  `flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition ${
+                    linkActive
+                      ? 'bg-brand-100 font-semibold text-brand-800 dark:bg-brand-900/50 dark:text-brand-100'
+                      : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                  }`
+                }
+              >
+                <span
+                  className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border text-[10px] ${
+                    done
+                      ? 'border-emerald-500 bg-emerald-500 text-white'
+                      : 'border-slate-300 dark:border-slate-600'
+                  }`}
+                >
+                  {done ? '✓' : ''}
+                </span>
+                <span className="flex-1">
+                  <span className="mr-1 text-[10px] text-slate-400">#{t.order}</span>
+                  {t.title}
+                </span>
+              </NavLink>
+              {isActive && (
+                <ActiveTopicLessons topicId={t.id} onNavigate={onNavigate} />
+              )}
+            </li>
+          )
+        })}
+      </ul>
     </div>
   )
 }
@@ -238,21 +234,25 @@ function PreVceSidebarSection({
 
 /**
  * Derive which module to show in the sidebar from the current route.
- * - /vce* → VCE topics
+ * - /unit-1* → Unit 1 topics
+ * - /unit-2* → Unit 2 topics
  * - /pre-vce* → Pre-VCE topics
  * - /topic/:id → look up the topic and pick the module that contains it
- * - / (landing) → default to VCE
+ * - / (landing) → default to Unit 1
  */
 function useActiveModule(): ModuleId {
   const location = useLocation()
   const params = useParams<{ id: string }>()
   if (location.pathname.startsWith('/pre-vce')) return 'pre-vce'
-  if (location.pathname.startsWith('/vce')) return 'vce'
+  if (location.pathname.startsWith('/unit-2')) return 'unit-2'
+  if (location.pathname.startsWith('/unit-1')) return 'unit-1'
   if (location.pathname.startsWith('/topic/') && params.id) {
     const t = topicById(params.id)
+    if (t?.unit === 1) return 'unit-1'
+    if (t?.unit === 2) return 'unit-2'
     if (t?.unit === 10) return 'pre-vce'
   }
-  return 'vce'
+  return 'unit-1'
 }
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
@@ -285,9 +285,13 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         ← Switch module
       </NavLink>
 
-      {activeModule === 'vce' ? (
-        <VceSidebarSection activeTopicId={activeTopicId} onNavigate={onNavigate} />
-      ) : (
+      {activeModule === 'unit-1' && (
+        <UnitSidebarSection unit={1} activeTopicId={activeTopicId} onNavigate={onNavigate} />
+      )}
+      {activeModule === 'unit-2' && (
+        <UnitSidebarSection unit={2} activeTopicId={activeTopicId} onNavigate={onNavigate} />
+      )}
+      {activeModule === 'pre-vce' && (
         <PreVceSidebarSection activeTopicId={activeTopicId} onNavigate={onNavigate} />
       )}
     </nav>

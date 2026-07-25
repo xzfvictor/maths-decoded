@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { topicById, topicsForUnit, moduleForUnit } from '../content/topics'
+import { topicById, topicsForUnit, moduleForUnit, UNIT_TITLES } from '../content/topics'
 import { DOT_POINTS } from '../content/coverage'
 import { ProgressBar } from '../components/ProgressBar'
 import { isLessonDone, topicLessonRatio } from '../lib/storage'
@@ -20,8 +20,8 @@ export function TopicPage() {
 
   // The "back" link goes to the student's current module home, not the
   // landing page — they came in via a module, that's where they're working.
-  const moduleHome = topic ? moduleForUnit(topic.unit) : undefined
-  const moduleHomeHref = moduleHome === 'pre-vce' ? '/pre-vce' : '/vce'
+  const moduleId = topic ? moduleForUnit(topic.unit) : undefined
+  const moduleHomeHref = moduleId ? `/${moduleId}` : '/'
 
   if (!topic) {
     return (
@@ -49,11 +49,16 @@ export function TopicPage() {
   const nextTopic = idx >= 0 && idx < unitTopics.length - 1 ? unitTopics[idx + 1] : undefined
   const firstTopic = unitTopics[0]
 
+  // Human label for the current module, used in the "back" link and the
+  // first-topic callout.
+  const moduleLabel =
+    topic.unit === 10 ? 'Pre-VCE' : topic.unit === 1 ? 'Unit 1' : 'Unit 2'
+
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-6">
         <Link to={moduleHomeHref} className="text-sm text-brand-600 hover:underline">
-          ← Back to {moduleHome === 'pre-vce' ? 'Pre-VCE' : 'VCE'} topics
+          ← Back to {moduleLabel} topics
         </Link>
         <h1 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">{topic.title}</h1>
         <p className="mt-1 text-slate-600 dark:text-slate-300">{topic.blurb}</p>
@@ -89,8 +94,8 @@ export function TopicPage() {
             <span className="font-semibold text-slate-800 dark:text-slate-100">
               No prior VCE Maths Methods assumed:
             </span>{' '}
-            this is the first topic of the unit. If Year 10 foundations feel
-            shaky, the{' '}
+            this is the first topic of {UNIT_TITLES[topic.unit]}. If Year 10
+            foundations feel shaky, the{' '}
             <Link
               to="/pre-vce"
               className="font-medium text-brand-700 underline hover:no-underline dark:text-brand-300"

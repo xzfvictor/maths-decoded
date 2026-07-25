@@ -7,9 +7,9 @@ examples, then practise with exercises that give full worked solutions. Every
 question is mapped to the official syllabus, so the app covers the whole course —
 not just a sample.
 
-- **Two modules, one app.** Pick VCE (Units 1 & 2) or Pre-VCE (Year 10) on the
-  landing page; the rest of the app narrows to that module so the student isn't
-  distracted by material outside their course.
+- **Three modules, one app.** Pick VCE Unit 1, VCE Unit 2, or Pre-VCE Year 10
+  on the landing page; the rest of the app narrows to that module so the
+  student isn't distracted by material outside their course.
 - **Learn in small sessions.** Each topic is split into lessons that fit a single
   sitting, each with its own theory, worked examples, and exercises.
 - **Built for first-time learners.** Every lesson opens with a "What you'll
@@ -30,13 +30,20 @@ not just a sample.
 
 ## Modules
 
-The landing page (`/`) asks the student to choose:
+The landing page (`/`) asks the student to choose between three modules:
 
-- **VCE Mathematical Methods** — `/vce`. Units 1 & 2, fully mapped to the 2023–2027
-  study design. The sidebar only shows VCE topics; switch back any time.
+- **VCE Mathematical Methods — Unit 1** — `/unit-1`. Functions, algebra,
+  calculus and probability. Eleven topics covering all Unit 1 dot points.
+- **VCE Mathematical Methods — Unit 2** — `/unit-2`. Transcendental functions,
+  calculus and probability. Eleven topics covering all Unit 2 dot points.
 - **Pre-VCE Year 10 Maths** — `/pre-vce`. Year 10 foundations organised into the
   six Victorian Curriculum strands (Number, Algebra, Measurement, Space,
   Statistics, Probability). Use as a refresher before VCE, or on its own.
+
+Once a module is picked, the sidebar narrows to that module's topics and the
+app keeps that focus until the student returns to the landing page. Unit 1's
+home page offers a "Continue to Unit 2" card so the natural progression is
+one click away when Unit 1 is finished.
 
 Topic and lesson URLs (`/topic/:id`, `/topic/:id/:lessonId`) are shared across
 modules — a bookmarked lesson opens in whichever module the sidebar thinks you
@@ -129,8 +136,9 @@ Module → Topic → Lessons → Worked examples + Exercises
 ```
 
 - **Modules** are defined in [`src/content/topics/index.ts`](./src/content/topics/index.ts)
-  (`MODULES`). The two modules map to units 1+2 (`vce`) and unit 10
-  (`pre-vce`); the rest of the code is module-aware.
+  (`MODULES`). The three modules are `unit-1`, `unit-2`, and `pre-vce` —
+  each VCE unit is its own module, plus the Pre-VCE Year 10 strand; the rest
+  of the code is module-aware.
 - **Topics** live in [`src/content/topics/`](./src/content/topics/) and are
   registered in the `TOPICS` array.
 - **Coverage** is defined in [`src/content/coverage.ts`](./src/content/coverage.ts):

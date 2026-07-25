@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { Sidebar } from './components/Sidebar'
 import { LandingPage } from './routes/LandingPage'
-import { VceHome } from './routes/VceHome'
+import { UnitHome } from './routes/UnitHome'
 import { PreVceHome } from './routes/PreVceHome'
 import { TopicPage } from './routes/TopicPage'
 import { LessonPage } from './routes/LessonPage'
@@ -81,7 +81,8 @@ export default function App() {
         <main className={`flex-1 px-4 py-8 sm:px-8 ${onLanding ? '' : ''}`}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/vce" element={<VceHome />} />
+            <Route path="/unit-1" element={<UnitHome unit={1} moduleId="unit-1" />} />
+            <Route path="/unit-2" element={<UnitHome unit={2} moduleId="unit-2" />} />
             <Route path="/pre-vce" element={<PreVceHome />} />
             <Route path="/topic/:id" element={<TopicPage />} />
             <Route path="/topic/:id/:lessonId" element={<LessonPage />} />
