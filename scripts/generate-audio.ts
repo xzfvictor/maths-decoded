@@ -143,33 +143,90 @@ async function callM3(prompt: string): Promise<string> {
 
 // --- TTS probe ------------------------------------------------------------
 
-const TTS_CANDIDATES = [
-  '/v1/audio/speech',
-  '/v1/tts',
-  '/v1/t2a_v2',
-  '/v1/text_to_speech',
-  '/api/v1/audio/speech',
-]
-
 interface TTSEndpoint {
   url: string
   /** Acceptable audio content-type prefixes (lowercased). */
   accepts: string[]
-  /** Body shape to send — we try the OpenAI-compatible one first. */
+  /** Body shape to send. */
   buildBody: (text: string) => unknown
+  /** Decode the raw response (or JSON wrapper) into a binary audio buffer. */
+  decode: (res: Response) => Promise<Buffer>
+}
+
+/**
+ * Build the T2A v2 (synchronous TTS) request body used by minimax's
+ * `/v1/t2a_v2` route. Returns hex-encoded MP3 inside `data.audio`,
+ * decoded by `decodeHexAudio`.
+ */
+function t2aV2Body(text: string) {
+  return {
+    model: 'speech-2.6-turbo',
+    text,
+    stream: false,
+    voice_setting: {
+      voice_id: 'English_Graceful_Lady',
+      speed: 1,
+      vol: 1,
+      pitch: 0,
+    },
+    audio_setting: {
+      sample_rate: 32000,
+      bitrate: 128000,
+      format: 'mp3',
+      channel: 1,
+    },
+    output_format: 'hex',
+  }
+}
+
+async function decodeHexAudio(res: Response): Promise<Buffer> {
+  const j = (await res.json()) as {
+    data?: { audio?: string }
+    base_resp?: { status_code?: number; status_msg?: string }
+  }
+  if (j.base_resp && j.base_resp.status_code && j.base_resp.status_code !== 0) {
+    throw new Error(`TTS base_resp ${j.base_resp.status_code}: ${j.base_resp.status_msg ?? 'unknown'}`)
+  }
+  const hex = j.data?.audio
+  if (!hex) throw new Error('TTS response missing data.audio')
+  return Buffer.from(hex, 'hex')
+}
+
+/** OpenAI-compatible `/v1/audio/speech` body — fallback for other providers. */
+function openAITTSBody(text: string) {
+  return { model: 'speech-1', input: text, voice: 'alloy' }
+}
+
+async function decodeRawAudio(res: Response): Promise<Buffer> {
+  const ab = await res.arrayBuffer()
+  return Buffer.from(ab)
 }
 
 function candidateEndpoints(): TTSEndpoint[] {
   const root = new URL(BASE_URL).origin
-  return TTS_CANDIDATES.map((p) => ({
-    url: `${root}${p}`,
-    accepts: ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/octet-stream'],
-    buildBody: (text: string) => ({
-      model: 'speech-1',
-      input: text,
-      voice: 'alloy',
-    }),
-  }))
+  return [
+    // minimax T2A v2 — JSON response with hex-encoded MP3 in data.audio.
+    {
+      url: `${root}/v1/t2a_v2`,
+      accepts: ['application/json'],
+      buildBody: t2aV2Body,
+      decode: decodeHexAudio,
+    },
+    // OpenAI-compatible /v1/audio/speech — raw audio body.
+    {
+      url: `${root}/v1/audio/speech`,
+      accepts: ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/octet-stream'],
+      buildBody: openAITTSBody,
+      decode: decodeRawAudio,
+    },
+    // Other plausible TTS paths.
+    ...['/v1/tts', '/v1/text_to_speech', '/api/v1/audio/speech'].map((p) => ({
+      url: `${root}${p}`,
+      accepts: ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav', 'audio/octet-stream'],
+      buildBody: openAITTSBody,
+      decode: decodeRawAudio,
+    })),
+  ]
 }
 
 async function probeTTS(): Promise<TTSEndpoint | null> {
@@ -186,8 +243,13 @@ async function probeTTS(): Promise<TTSEndpoint | null> {
         },
         body: JSON.stringify(ep.buildBody('ping')),
       })
-      if (res.ok && (ep.accepts.some((p) => (res.headers.get('content-type') ?? '').toLowerCase().startsWith(p)))) {
-        return ep
+      if (res.ok) {
+        try {
+          await ep.decode(res.clone())
+          return ep
+        } catch {
+          /* cached endpoint no longer decodes correctly — re-probe */
+        }
       }
     } catch {
       /* fall through and re-probe */
@@ -204,11 +266,16 @@ async function probeTTS(): Promise<TTSEndpoint | null> {
         },
         body: JSON.stringify(ep.buildBody(testText)),
       })
+      if (!res.ok) continue
       const ct = (res.headers.get('content-type') ?? '').toLowerCase()
-      if (res.ok && ep.accepts.some((p) => ct.startsWith(p))) {
-        await fs.writeFile(ENDPOINT_CACHE, JSON.stringify(ep, null, 2))
-        return ep
+      if (!ep.accepts.some((p) => ct.startsWith(p))) continue
+      try {
+        await ep.decode(res.clone())
+      } catch {
+        continue
       }
+      await fs.writeFile(ENDPOINT_CACHE, JSON.stringify(ep, null, 2))
+      return ep
     } catch {
       /* try next */
     }
@@ -226,8 +293,7 @@ async function callTTS(ep: TTSEndpoint, text: string): Promise<Buffer> {
     body: JSON.stringify(ep.buildBody(text)),
   })
   if (!res.ok) throw new Error(`TTS ${res.status}: ${(await res.text()).slice(0, 200)}`)
-  const ab = await res.arrayBuffer()
-  return Buffer.from(ab)
+  return ep.decode(res)
 }
 
 // --- Main loop ------------------------------------------------------------
