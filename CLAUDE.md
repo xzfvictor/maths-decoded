@@ -148,8 +148,8 @@ VCE to Pre-VCE keeps their completion ticks.
 ## AI "Explain to me" audio (`scripts/generate-audio.ts`, `src/components/LessonAudio.tsx`)
 
 Every lesson page renders an **Explain to me** audio card between the
-"What you'll learn" panel and the theory block. The card plays a
-30–60-second narration of the lesson and shows a collapsible transcript.
+"What you'll learn" panel and the theory block. The card plays a short
+spoken narration of the lesson and shows a collapsible transcript.
 
 The audio is **pre-generated offline** by `scripts/generate-audio.ts` and
 committed to `public/audio/lessons/{topic-id}/{lesson-id}.mp3` (plus a
@@ -178,7 +178,7 @@ Required env:
 The generator does, in order:
 
 1. For each lesson, build a prompt that asks minimax M3 to write a
-   30–60s spoken script (markdown/TeX stripped to plain text, math
+   a spoken script (markdown/TeX stripped to plain text, math
    described in words). The script is persisted to
    `public/audio/lessons/{topic}/{lesson}.json`.
 2. Probe common TTS routes on the same host (`/v1/audio/speech`,

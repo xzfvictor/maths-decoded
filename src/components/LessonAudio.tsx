@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * "Explain to me" audio card. Plays a pre-generated 30–60 second narration
+ * "Explain to me" audio card. Plays a pre-generated spoken narration
  * of the lesson theory. The MP3 is generated offline by
  * `scripts/generate-audio.ts` and shipped in `public/audio/lessons/`.
  *
@@ -107,8 +107,8 @@ export function LessonAudio({
             Explain to me
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            A 30–60 second spoken overview of this lesson — useful if you want
-            to listen before reading.
+            A short spoken overview of this lesson — useful if you want to listen
+            before reading.
           </p>
         </div>
       </div>

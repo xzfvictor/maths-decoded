@@ -19,8 +19,7 @@ not just a sample.
   reveal a step-by-step solution. Many are randomised, so you get a fresh
   question each time.
 - **Listen before you read.** Each lesson has an "Explain to me" button that
-  plays a 30–60 second AI-narrated overview, with a transcript you can read
-  along to.
+  plays a short AI-narrated overview, with a transcript you can read along to.
 - **Track your progress.** Completed lessons and exercise scores are saved
   locally in your browser — no account, no server.
 - **Complete coverage, guaranteed.** A build-time check asserts that every
@@ -84,8 +83,8 @@ npm run dev       # start the dev server (http://localhost:5173)
 
 ## AI lesson audio
 
-Each lesson page includes an **Explain to me** card that plays a 30–60
-second spoken overview of the theory. Audio is **pre-generated offline**
+Each lesson page includes an **Explain to me** card that plays a short
+spoken overview of the theory. Audio is **pre-generated offline**
 by `npm run generate:audio` and committed to the repo at
 `public/audio/lessons/{topic}/{lesson}.mp3` (with a matching `.json`
 transcript). The browser plays the MP3 with a native `<audio>` element
