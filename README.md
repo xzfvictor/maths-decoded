@@ -1,23 +1,47 @@
 # VCE Maths Methods
 
-A study web app for **VCE Mathematical Methods Units 1 & 2**. Navigate to a topic,
-work through short lessons of theory and worked examples, then practise with
-exercises that give full worked solutions. Every question is mapped to the official
-VCAA study-design content, so the app covers the whole course — not just a sample.
+A study web app covering **all of VCE Mathematical Methods Units 1 & 2**, plus the
+**Victorian Curriculum Level 10 (Pre-VCE) Mathematics** syllabus as a foundation
+module. Navigate to a topic, work through short lessons of theory and worked
+examples, then practise with exercises that give full worked solutions. Every
+question is mapped to the official syllabus, so the app covers the whole course —
+not just a sample.
 
+- **Two modules, one app.** Pick VCE (Units 1 & 2) or Pre-VCE (Year 10) on the
+  landing page; the rest of the app narrows to that module so the student isn't
+  distracted by material outside their course.
 - **Learn in small sessions.** Each topic is split into lessons that fit a single
   sitting, each with its own theory, worked examples, and exercises.
-- **Practise with feedback.** Exercises check your answer, offer a hint, and reveal a
-  step-by-step solution. Many are randomised, so you get a fresh question each time.
-- **Track your progress.** Completed lessons and exercise scores are saved locally in
-  your browser — no account, no server.
-- **Complete coverage, guaranteed.** A build-time check asserts that every VCAA
-  study-design dot point is covered by a topic.
+- **Built for first-time learners.** Every lesson opens with a "What you'll
+  learn" summary and closes with a "Key takeaways" recap, so a student with no
+  prior knowledge knows where the lesson is going and what to walk away knowing.
+- **Practise with feedback.** Exercises check your answer, offer a hint, and
+  reveal a step-by-step solution. Many are randomised, so you get a fresh
+  question each time.
+- **Track your progress.** Completed lessons and exercise scores are saved
+  locally in your browser — no account, no server.
+- **Complete coverage, guaranteed.** A build-time check asserts that every
+  syllabus dot point is covered by a topic.
 
-> **Status:** Both units are fully authored. **22 topics, 80 lessons, 140
-> exercises**, covering every study-design dot point. The
-> `check:coverage` script asserts that 43/43 dot points are claimed and
-> stays green.
+> **Status:** Both modules are fully authored. **52 topics, 157 lessons, 383
+> exercises** (281 curated + 102 randomised) covering **73/73 syllabus dot
+> points** (43 VCE + 30 Pre-VCE). The `check:coverage` script asserts every dot
+> point is claimed and stays green.
+
+## Modules
+
+The landing page (`/`) asks the student to choose:
+
+- **VCE Mathematical Methods** — `/vce`. Units 1 & 2, fully mapped to the 2023–2027
+  study design. The sidebar only shows VCE topics; switch back any time.
+- **Pre-VCE Year 10 Maths** — `/pre-vce`. Year 10 foundations organised into the
+  six Victorian Curriculum strands (Number, Algebra, Measurement, Space,
+  Statistics, Probability). Use as a refresher before VCE, or on its own.
+
+Topic and lesson URLs (`/topic/:id`, `/topic/:id/:lessonId`) are shared across
+modules — a bookmarked lesson opens in whichever module the sidebar thinks you
+came from. A `← Switch module` link is always pinned to the top of the sidebar
+for a one-click return to the landing page.
 
 ## Tech stack
 
@@ -44,7 +68,7 @@ npm run dev       # start the dev server (http://localhost:5173)
 | `npm run dev` | Start the local development server. |
 | `npm run build` | Type-check and build the production site into `dist/`. |
 | `npm run preview` | Serve the built site locally. |
-| `npm run check:coverage` | Verify every VCAA dot point is claimed by a topic. |
+| `npm run check:coverage` | Verify every syllabus dot point is claimed by a topic. |
 | `npm run check:exercises` | Validate every randomised exercise across 300 seeds. |
 
 ## Course map
@@ -75,27 +99,49 @@ npm run dev       # start the dev server (http://localhost:5173)
 21. Probability of compound events
 22. Conditional probability & independence
 
-See [`src/content/coverage.ts`](./src/content/coverage.ts) for the full dot-point
-catalog and which topics cover each one.
+### Pre-VCE — Year 10 Mathematics
+
+Organised into the six curriculum strands:
+
+- **Number** — real numbers, approximations, and the effect of repeated
+  calculations on final results.
+- **Algebra** — factorisation, exponent laws, equations, inequalities,
+  functions, and modelling.
+- **Measurement** — surface area, volume, logarithmic scales, Pythagoras and
+  right-angled trigonometry.
+- **Space** — geometric proofs in the plane and network diagrams of practical
+  situations.
+- **Statistics** — distributions, boxplots, scatterplots, two-way tables, and
+  statistical investigations.
+- **Probability** — conditional probability, multi-step chance experiments, and
+  independence.
+
+See [`src/content/coverage.ts`](./src/content/coverage.ts) for the full
+dot-point catalog and which topics cover each one.
 
 ## How content is organised
 
-Lessons and exercises are authored as plain data (not markup), which keeps the site
-static and lets the app verify its own coverage and correctness.
+Lessons and exercises are authored as plain data (not markup), which keeps the
+site static and lets the app verify its own coverage and correctness.
 
 ```
-Topic  →  Lessons  →  Worked examples  +  Exercises
+Module → Topic → Lessons → Worked examples + Exercises
 ```
 
-- **Topics** live in `src/content/topics/` and are registered in
-  `src/content/topics/index.ts`.
-- **Coverage** is defined in `src/content/coverage.ts`: every VCAA study-design dot
-  point has a stable id, and each topic declares which ids it covers.
-- **Exercises** are either hand-written or randomised. Randomised exercises are pure
-  functions of a seed, so a given question always has the same answer and solution —
-  which is what `check:exercises` verifies.
+- **Modules** are defined in [`src/content/topics/index.ts`](./src/content/topics/index.ts)
+  (`MODULES`). The two modules map to units 1+2 (`vce`) and unit 10
+  (`pre-vce`); the rest of the code is module-aware.
+- **Topics** live in [`src/content/topics/`](./src/content/topics/) and are
+  registered in the `TOPICS` array.
+- **Coverage** is defined in [`src/content/coverage.ts`](./src/content/coverage.ts):
+  every syllabus dot point has a stable id, and each topic declares which ids
+  it covers.
+- **Exercises** are either hand-written or randomised. Randomised exercises
+  are pure functions of a seed, so a given question always has the same answer
+  and solution — which is what `check:exercises` verifies.
 
-Contributor guidance and authoring conventions are in [`CLAUDE.md`](./CLAUDE.md).
+Contributor guidance and authoring conventions are in
+[`CLAUDE.md`](./CLAUDE.md).
 
 ## Building for deployment
 
@@ -103,12 +149,12 @@ Contributor guidance and authoring conventions are in [`CLAUDE.md`](./CLAUDE.md)
 npm run build     # outputs a static site to dist/
 ```
 
-The `dist/` folder can be served by any static host (GitHub Pages, Netlify, Vercel,
-or a plain file server). Because routing uses hash URLs and asset paths are relative,
-no special server configuration is needed.
+The `dist/` folder can be served by any static host (GitHub Pages, Netlify,
+Vercel, or a plain file server). Because routing uses hash URLs and asset
+paths are relative, no special server configuration is needed.
 
 ## Disclaimer
 
-This is an independent study resource and is not affiliated with or endorsed by the
-VCAA. Study-design content points are referenced for the purpose of curriculum
-alignment.
+This is an independent study resource and is not affiliated with or endorsed by
+the VCAA. Study-design content points are referenced for the purpose of
+curriculum alignment.

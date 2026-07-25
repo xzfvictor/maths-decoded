@@ -4,15 +4,19 @@ Guidance for working in this repository.
 
 ## What this is
 
-A static web app that helps a student study **all** of VCE Mathematical Methods
-Units 1 & 2, covering every VCAA study-design dot point. A student navigates to a
-topic, works through short lessons (theory + worked examples), and does exercises
-with worked solutions. No backend; progress is stored in the browser.
+A static web app that helps a student study **all of VCE Mathematical Methods
+Units 1 & 2**, covering every VCAA study-design dot point, plus the
+**Victorian Curriculum Level 10 (Pre-VCE) Mathematics** syllabus as a
+foundation module. A student picks a module on the landing page, navigates
+to a topic, works through short lessons (theory + worked examples), and does
+exercises with worked solutions. No backend; progress is stored in the browser.
 
-**Status:** Both units are fully authored. **22 topics, 80 lessons, 140
-exercises** covering every study-design dot point (43/43 claimed). Unit 1 has
-11 topics; Unit 2 has 11 topics in the same shape (each one is a separate file
-in `src/content/topics/` registered in the `TOPICS` array).
+**Status:** Both modules are fully authored. **52 topics, 157 lessons, 383
+exercises** (281 curated + 102 randomised) covering **73/73 syllabus dot
+points** — 19 in Unit 1, 24 in Unit 2, and 30 in Pre-VCE Year 10. Unit 1 has
+11 topics; Unit 2 has 11 topics (each one is a separate file in
+`src/content/topics/` registered in the `TOPICS` array). Pre-VCE adds 30 more
+topics grouped into 6 strands.
 
 ## Stack
 
@@ -25,12 +29,29 @@ KaTeX 0.16 for maths. Routing is `react-router-dom` 6 with **HashRouter** and Vi
 ```
 npm run dev              # local dev server
 npm run build            # tsc -b && vite build (must pass before committing)
-npm run check:coverage   # assert every VCAA dot point is claimed by >=1 topic
+npm run check:coverage   # assert every syllabus dot point is claimed by >=1 topic
 npm run check:exercises  # instantiate every param exercise over 300 seeds and validate
 ```
 
 Always run all three before considering content work done. `check:coverage` must
-stay green — that means no dot point, in either unit, is ever unmapped.
+stay green — that means no dot point, in any module, is ever unmapped.
+
+## App structure
+
+```
+/                LandingPage — pick VCE or Pre-VCE
+/vce             VceHome — Units 1 & 2 topics
+/pre-vce         PreVceHome — Year 10 topics grouped by strand
+/topic/:id       TopicPage — lessons in a single topic
+/topic/:id/:lessonId
+                 LessonPage — theory, worked examples, exercises
+```
+
+Once a student picks a module on `/`, the sidebar narrows to that module's
+topics (it can resolve `/topic/:id` to the right module by looking up the
+topic). The sidebar always shows a `← Switch module` link that returns to the
+landing page. Topic and lesson URLs are unchanged across modules, so a
+bookmarked lesson keeps working.
 
 ## Content model (`src/content/types.ts`)
 
@@ -38,17 +59,35 @@ Content is authored as plain data, not JSX, so the whole site is static and the
 checkers can reason about it.
 
 ```
-Topic → lessons: Lesson[]
-Lesson → examples: WorkedExample[] + exercises: Exercise[]
+Module → Topic → Lessons → WorkedExamples + Exercises
 Exercise = CuratedExercise (fixed) | ParamExercise (build(seed) => ExerciseInstance)
 ```
 
-- A **Lesson** is one short study session. Keep its theory, examples, and exercises
-  self-contained.
-- `body` and all solution/example strings are lightweight markdown + TeX. Supported
-  markdown (see `src/components/Prose.tsx`): `$...$` / `$$...$$`, `**bold**`,
-  `*italic*`, `` `code` ``, `###` headings, `-`/`*` and `1.` lists, `>` blockquotes,
-  and `| pipe | tables |`. Don't use markdown Prose doesn't support — it renders literally.
+- **Modules** are defined in `src/content/topics/index.ts` (`MODULES`). The
+  two modules map `vce` to units 1+2 and `pre-vce` to unit 10. Helpers
+  `moduleForUnit`, `moduleForTopic`, `topicsForModule` resolve the mapping.
+- A **Lesson** is one short study session. Keep its theory, examples, and
+  exercises self-contained.
+- `body` and all solution/example strings are lightweight markdown + TeX.
+  Supported markdown (see `src/components/Prose.tsx`): `$...$` / `$$...$$`,
+  `**bold**`, `*italic*`, `` `code` ``, `###` headings, `-`/`*` and `1.`
+  lists, `>` blockquotes (optionally tagged `> [!definition]` /
+  `> [!warning]` for coloured left-rail callouts), and `| pipe | tables |`.
+  Don't use markdown Prose doesn't support — it renders literally.
+
+### Lesson UI conventions
+
+Lessons are framed for first-time learners. `LessonPage`:
+
+- Opens with a **"What you'll learn"** panel showing the `summary` plus the
+  list of `###` headings extracted from the theory.
+- Inline encouragement under Worked Examples ("predict the next line") and
+  Exercises ("have a go on paper first").
+- Closes with a **"Key takeaways"** recap, also derived from the `###`
+  headings.
+
+TopicPage surfaces prerequisites ("Before you start") and the next topic
+("Up next") so a beginner always knows where they are in the syllabus.
 
 ### Answer checking (`src/lib/answer.ts`)
 
@@ -75,29 +114,35 @@ write `"1/3"`, never `"\\dfrac{1}{3}"`.
 
 ## Coverage contract
 
-`src/content/coverage.ts` lists all 43 VCAA dot points (19 Unit 1, 24 Unit 2) with
-stable ids like `u1-al-6`. Each `Topic` declares the dot-point ids it covers in its
-`dotPoints` array. `scripts/check-coverage.ts` asserts every id is claimed by at
-least one topic. This is what makes "covers all study requirements" verifiable
-rather than a promise.
+`src/content/coverage.ts` lists all 73 syllabus dot points (19 Unit 1, 24 Unit 2,
+30 Pre-VCE Year 10) with stable ids like `u1-al-6` and `m10-a-3`. Each `Topic`
+declares the dot-point ids it covers in its `dotPoints` array.
+`scripts/check-coverage.ts` asserts every id is claimed by at least one topic.
+This is what makes "covers all study requirements" verifiable rather than a
+promise.
 
 ## Registering a new topic
 
-1. Create `src/content/topics/NN-slug.ts` exporting a `Topic` (order `NN` within its
-   unit, `dotPoints` from `coverage.ts`).
-2. Import and add it to the `TOPICS` array in `src/content/topics/index.ts` — that
-   array is the single source of truth for the sidebar, routing, and both checkers.
-3. Run `npm run build`, `npm run check:coverage`, `npm run check:exercises`.
+1. Create `src/content/topics/NN-slug.ts` exporting a `Topic` (order `NN` within
+   its unit, `dotPoints` from `coverage.ts`).
+2. Import and add it to the `TOPICS` array in
+   `src/content/topics/index.ts` — that array is the single source of truth for
+   the sidebar, routing, and both checkers.
+3. If it's a new module, add a module entry to `MODULES` in the same file and
+   wire `moduleForUnit` / `topicsForModule` to recognise the new unit.
+4. Run `npm run build`, `npm run check:coverage`, `npm run check:exercises`.
 
 ## Progress storage (`src/lib/storage.ts`)
 
 localStorage key `vce-mm-progress-v1`, tracking completed lessons and per-exercise
 attempt/correct counts. Updates fire a same-tab `vce-progress` event so the UI
-refreshes (`src/lib/useProgress.ts`). A legacy `sections` key is read for migration.
+refreshes (`src/lib/useProgress.ts`). A legacy `sections` key is read for
+migration. Progress is shared across both modules — a student switching from
+VCE to Pre-VCE keeps their completion ticks.
 
 ## Next up
 
-Both Units 1 and 2 are complete. Likely next directions (when one comes up):
+Both modules are complete. Likely next directions (when one comes up):
 enrich existing topics with more curated exercises, or add a Unit 3/4 study
 strand when the user asks. Any new topic follows the same registration pattern
 (`Topic` shape, registered in the `TOPICS` array) — `check:coverage` will
