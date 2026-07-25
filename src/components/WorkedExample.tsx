@@ -7,20 +7,20 @@ import { AnimatedStepText } from './AnimatedStepText'
  * Interactive worked-example card.
  *
  * Steps reveal **one at a time**, with smooth fade/slide CSS animations,
- * an optional **auto-play** mode that cycles through steps at a chosen
- * speed, keyboard shortcuts (Space = play/pause, ←/→ = step), and a
- * pulse highlight on the most recently revealed step so the eye lands
- * where it should. The cumulative effect is a video-like walkthrough
- * without needing pre-rendered media.
+ * an optional **auto-play** mode that cycles through steps at a fixed
+ * default pace, keyboard shortcuts (Space = play/pause, ←/→ = step),
+ * and a pulse highlight on the most recently revealed step so the eye
+ * lands where it should. The cumulative effect is a video-like
+ * walkthrough without needing pre-rendered media.
  */
 export function WorkedExample({ example }: { example: WorkedExample }) {
   const [open, setOpen] = useState(false)
   const [revealed, setRevealed] = useState(0) // 0..steps.length
   const [playing, setPlaying] = useState(false)
-  // Speed = ms per step.
-  const SPEEDS = [5000, 3000, 1500] // slow, normal, fast
-  const [speedIdx, setSpeedIdx] = useState(1)
-  const speed = SPEEDS[speedIdx]
+  // Default auto-play pacing — 3 seconds between steps. Picked to give the
+  // student enough time to read each step before the next one animates in,
+  // without feeling sluggish on a short worked example.
+  const AUTOPLAY_MS = 3000
   const total = example.steps.length
   const done = revealed >= total
 
@@ -34,11 +34,11 @@ export function WorkedExample({ example }: { example: WorkedExample }) {
     }
     timerRef.current = setTimeout(() => {
       setRevealed((n) => Math.min(n + 1, total))
-    }, speed)
+    }, AUTOPLAY_MS)
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current)
     }
-  }, [playing, revealed, speed, done, total])
+  }, [playing, revealed, done, total])
 
   // Keyboard shortcuts (active when the card is open).
   function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -204,7 +204,7 @@ export function WorkedExample({ example }: { example: WorkedExample }) {
               ) : done ? (
                 <>↺ Restart</>
               ) : (
-                <>▶ {revealed === 0 ? 'Play' : 'Play'}</>
+                <>▶ Play</>
               )}
             </button>
 
@@ -236,32 +236,10 @@ export function WorkedExample({ example }: { example: WorkedExample }) {
               </>
             )}
 
-            {/* Speed selector (visible when playing or about to play). */}
-            <div className="ml-auto flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
-              <span>Speed</span>
-              {SPEEDS.map((ms, i) => {
-                const labels = ['Slow', 'Normal', 'Fast']
-                return (
-                  <button
-                    key={ms}
-                    type="button"
-                    onClick={() => setSpeedIdx(i)}
-                    className={`rounded px-2 py-0.5 transition ${
-                      i === speedIdx
-                        ? 'bg-brand-600 text-white'
-                        : 'border border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800'
-                    }`}
-                  >
-                    {labels[i]}
-                  </button>
-                )
-              })}
-            </div>
-
             <button
               type="button"
               onClick={reset}
-              className="rounded-lg px-3 py-1.5 text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-200"
+              className="ml-auto rounded-lg px-3 py-1.5 text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-200"
             >
               Reset
             </button>
