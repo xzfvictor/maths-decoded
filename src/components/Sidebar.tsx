@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, useLocation, useParams } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import {
   topicsForUnit,
   strandForTopic,
@@ -237,17 +237,22 @@ function PreVceSidebarSection({
  * - /unit-1* → Unit 1 topics
  * - /unit-2* → Unit 2 topics
  * - /pre-vce* → Pre-VCE topics
- * - /topic/:id → look up the topic and pick the module that contains it
+ * - /topic/:id[/...] → look up the topic and pick the module that contains it
  * - / (landing) → default to Unit 1
+ *
+ * Important: the Sidebar is rendered outside `<Routes>` (see App.tsx), so
+ * `useParams()` here returns `{}` — params never flow in. We must parse
+ * the topic id from the pathname ourselves.
  */
 function useActiveModule(): ModuleId {
-  const location = useLocation()
-  const params = useParams<{ id: string }>()
-  if (location.pathname.startsWith('/pre-vce')) return 'pre-vce'
-  if (location.pathname.startsWith('/unit-2')) return 'unit-2'
-  if (location.pathname.startsWith('/unit-1')) return 'unit-1'
-  if (location.pathname.startsWith('/topic/') && params.id) {
-    const t = topicById(params.id)
+  const { pathname } = useLocation()
+  if (pathname.startsWith('/pre-vce')) return 'pre-vce'
+  if (pathname.startsWith('/unit-2')) return 'unit-2'
+  if (pathname.startsWith('/unit-1')) return 'unit-1'
+  // Match /topic/:id or /topic/:id/:lessonId — both start with /topic/.
+  const topicMatch = pathname.match(/^\/topic\/([^/]+)/)
+  if (topicMatch) {
+    const t = topicById(topicMatch[1])
     if (t?.unit === 1) return 'unit-1'
     if (t?.unit === 2) return 'unit-2'
     if (t?.unit === 10) return 'pre-vce'
@@ -255,9 +260,16 @@ function useActiveModule(): ModuleId {
   return 'unit-1'
 }
 
+/** Same caveat as useActiveModule — parse from the pathname, not useParams. */
+function useActiveTopicId(): string | undefined {
+  const { pathname } = useLocation()
+  const m = pathname.match(/^\/topic\/([^/]+)/)
+  return m?.[1]
+}
+
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   useProgress()
-  const { id: activeTopicId } = useParams<{ id: string; lessonId: string }>()
+  const activeTopicId = useActiveTopicId()
   const activeModule = useActiveModule()
   const m = moduleById(activeModule)
 
