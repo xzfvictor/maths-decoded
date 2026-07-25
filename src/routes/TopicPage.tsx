@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { topicById, topicsForUnit } from '../content/topics'
+import { topicById, topicsForUnit, moduleForUnit } from '../content/topics'
 import { DOT_POINTS } from '../content/coverage'
 import { ProgressBar } from '../components/ProgressBar'
 import { isLessonDone, topicLessonRatio } from '../lib/storage'
@@ -18,12 +18,17 @@ export function TopicPage() {
     }
   }, [id])
 
+  // The "back" link goes to the student's current module home, not the
+  // landing page — they came in via a module, that's where they're working.
+  const moduleHome = topic ? moduleForUnit(topic.unit) : undefined
+  const moduleHomeHref = moduleHome === 'pre-vce' ? '/pre-vce' : '/vce'
+
   if (!topic) {
     return (
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-slate-500">Topic not found.</p>
         <Link to="/" className="text-brand-600 hover:underline">
-          Back to home
+          Back to modules
         </Link>
       </div>
     )
@@ -47,8 +52,8 @@ export function TopicPage() {
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-6">
-        <Link to="/" className="text-sm text-brand-600 hover:underline">
-          ← All topics
+        <Link to={moduleHomeHref} className="text-sm text-brand-600 hover:underline">
+          ← Back to {moduleHome === 'pre-vce' ? 'Pre-VCE' : 'VCE'} topics
         </Link>
         <h1 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">{topic.title}</h1>
         <p className="mt-1 text-slate-600 dark:text-slate-300">{topic.blurb}</p>
@@ -87,10 +92,10 @@ export function TopicPage() {
             this is the first topic of the unit. If Year 10 foundations feel
             shaky, the{' '}
             <Link
-              to="/"
+              to="/pre-vce"
               className="font-medium text-brand-700 underline hover:no-underline dark:text-brand-300"
             >
-              Pre-VCE strand
+              Pre-VCE module
             </Link>{' '}
             has quick refreshers.
           </div>

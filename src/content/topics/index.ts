@@ -143,3 +143,48 @@ export const UNIT_TITLES: Record<Unit, string> = {
   2: 'Unit 2 — Transcendental functions, calculus & probability',
   10: 'Pre-VCE — Year 10 Mathematics',
 }
+
+/**
+ * A "module" is the top-level choice the student makes on the landing page —
+ * VCE Mathematical Methods (Units 1 & 2) or Pre-VCE Year 10 Maths. Once chosen,
+ * the rest of the app scopes itself to that module.
+ */
+export type ModuleId = 'vce' | 'pre-vce'
+
+export const MODULES: { id: ModuleId; title: string; tagline: string; units: Unit[] }[] = [
+  {
+    id: 'vce',
+    title: 'VCE Mathematical Methods',
+    tagline: 'Units 1 & 2',
+    units: [1, 2],
+  },
+  {
+    id: 'pre-vce',
+    title: 'Pre-VCE Year 10 Maths',
+    tagline: 'Year 10 foundations',
+    units: [10],
+  },
+]
+
+export function moduleById(id: ModuleId) {
+  return MODULES.find((m) => m.id === id)
+}
+
+/** Map a unit number to its parent module. */
+export function moduleForUnit(unit: Unit): ModuleId | undefined {
+  if (unit === 1 || unit === 2) return 'vce'
+  if (unit === 10) return 'pre-vce'
+  return undefined
+}
+
+/** Look up the module a topic belongs to. */
+export function moduleForTopic(topic: Topic): ModuleId | undefined {
+  return moduleForUnit(topic.unit)
+}
+
+/** All topics in a given module, in curriculum order. */
+export function topicsForModule(id: ModuleId): Topic[] {
+  const m = moduleById(id)
+  if (!m) return []
+  return m.units.flatMap((u) => topicsForUnit(u))
+}
