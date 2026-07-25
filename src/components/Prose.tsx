@@ -44,6 +44,8 @@ function renderMarkdownInline(text: string, keyBase: string): ReactNode[] {
 interface Block {
   type: 'p' | 'h3' | 'ul' | 'ol' | 'mathblock' | 'blockquote' | 'table'
   content: string | string[]
+  /** Optional callout flavour for blockquotes: 'definition' | 'warning' | undefined */
+  flavour?: 'definition' | 'warning'
   /** For tables: parsed rows of cells (first row is the header). */
   rows?: string[][]
 }
@@ -139,7 +141,17 @@ function parseBlocks(src: string): Block[] {
         buf.push(lines[i].trim().replace(/^>\s?/, ''))
         i++
       }
-      blocks.push({ type: 'blockquote', content: buf.join(' ') })
+      // Optional first-line tag like `> [!definition]` or `> [!warning]` — pulls
+      // a flavour onto the blockquote so the CSS can paint it differently.
+      let flavour: Block['flavour']
+      if (buf.length > 0) {
+        const m = buf[0].match(/^\[!(\w+)\]\s*(.*)$/)
+        if (m && (m[1] === 'definition' || m[1] === 'warning')) {
+          flavour = m[1]
+          buf[0] = m[2]
+        }
+      }
+      blocks.push({ type: 'blockquote', content: buf.join(' '), flavour })
       continue
     }
     // Table: a header row, a separator row, then body rows — all pipe-delimited.
@@ -198,15 +210,28 @@ export function Prose({ text, className = '' }: { text: string; className?: stri
                 ))}
               </ol>
             )
-          case 'blockquote':
+          case 'blockquote': {
+            const flavour = b.flavour
+            const base = 'my-3 border-l-4 py-2 pl-4 pr-3 text-slate-700 dark:text-slate-200'
+            const colour =
+              flavour === 'definition'
+                ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30'
+                : flavour === 'warning'
+                  ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/30'
+                  : 'border-brand-400 bg-brand-50 italic dark:border-brand-500 dark:bg-brand-950/30'
+            const label =
+              flavour === 'definition' ? 'Definition' : flavour === 'warning' ? 'Watch out' : null
             return (
-              <blockquote
-                key={i}
-                className="my-3 border-l-4 border-brand-400 bg-brand-50 py-2 pl-4 pr-3 italic text-slate-700 dark:border-brand-500 dark:bg-brand-950/30 dark:text-slate-200"
-              >
+              <blockquote key={i} className={`${base} ${colour}`}>
+                {label && (
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                    {label}
+                  </p>
+                )}
                 {renderInline(b.content as string)}
               </blockquote>
             )
+          }
           case 'table': {
             const rows = b.rows ?? []
             const [header, ...body] = rows

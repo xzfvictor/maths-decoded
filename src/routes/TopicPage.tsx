@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { topicById } from '../content/topics'
+import { topicById, topicsForUnit } from '../content/topics'
 import { DOT_POINTS } from '../content/coverage'
 import { ProgressBar } from '../components/ProgressBar'
 import { isLessonDone, topicLessonRatio } from '../lib/storage'
@@ -34,6 +34,16 @@ export function TopicPage() {
     .map((dpId) => DOT_POINTS.find((d) => d.id === dpId))
     .filter((d): d is NonNullable<typeof d> => Boolean(d))
 
+  // Surface the topics that come immediately before and after this one in
+  // the same unit, plus the first topic in the unit. These are the natural
+  // "what should I do next?" suggestions for a beginner working through
+  // the syllabus in order.
+  const unitTopics = topicsForUnit(topic.unit)
+  const idx = unitTopics.findIndex((t) => t.id === topic.id)
+  const prevTopic = idx > 0 ? unitTopics[idx - 1] : undefined
+  const nextTopic = idx >= 0 && idx < unitTopics.length - 1 ? unitTopics[idx + 1] : undefined
+  const firstTopic = unitTopics[0]
+
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-6">
@@ -49,9 +59,49 @@ export function TopicPage() {
             {topic.lessons.length} lessons complete
           </p>
         </div>
+
+        {/* "Before you start" callout — points back at the immediately
+            previous topic in the unit so a newcomer knows the assumed
+            background. Hidden on the very first topic in a unit. */}
+        {prevTopic && idx > 0 && (
+          <div className="learner-tip mt-5">
+            <span className="font-semibold text-slate-800 dark:text-slate-100">
+              Before you start:
+            </span>{' '}
+            This topic builds on{' '}
+            <Link
+              to={`/topic/${prevTopic.id}`}
+              className="font-medium text-brand-700 underline hover:no-underline dark:text-brand-300"
+            >
+              Topic {prevTopic.order} — {prevTopic.title}
+            </Link>
+            . If anything there feels shaky, refresh it first; the exercises
+            here assume that earlier material is solid.
+          </div>
+        )}
+        {idx === 0 && topic.unit !== 10 && firstTopic && (
+          <div className="learner-tip mt-5">
+            <span className="font-semibold text-slate-800 dark:text-slate-100">
+              No prior VCE Maths Methods assumed:
+            </span>{' '}
+            this is the first topic of the unit. If Year 10 foundations feel
+            shaky, the{' '}
+            <Link
+              to="/"
+              className="font-medium text-brand-700 underline hover:no-underline dark:text-brand-300"
+            >
+              Pre-VCE strand
+            </Link>{' '}
+            has quick refreshers.
+          </div>
+        )}
       </div>
 
       <h2 className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">Lessons</h2>
+      <p className="mb-3 -mt-2 text-sm text-slate-500 dark:text-slate-400">
+        Work through these in order — each lesson assumes you've done the ones
+        before it.
+      </p>
       <ol className="space-y-3">
         {topic.lessons.map((lesson, i) => {
           const done = isLessonDone(topic.id, lesson.id)
@@ -91,11 +141,34 @@ export function TopicPage() {
         })}
       </ol>
 
+      {/* Up next — the next topic in the same unit, so beginners always
+          have an obvious "what's after this?" answer without scrolling the
+          sidebar. */}
+      {nextTopic && (
+        <section className="mt-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+            Up next
+          </p>
+          <Link
+            to={`/topic/${nextTopic.id}`}
+            className="mt-1 block text-lg font-semibold text-slate-900 hover:text-brand-700 dark:text-white"
+          >
+            Topic {nextTopic.order} — {nextTopic.title} →
+          </Link>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{nextTopic.blurb}</p>
+        </section>
+      )}
+
       {/* Study-design coverage note. */}
       <section className="mt-8 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-5 text-sm dark:border-slate-700 dark:bg-slate-900/50">
         <h2 className="mb-2 font-semibold text-slate-700 dark:text-slate-200">
-          VCAA study-design coverage
+          Study-design coverage
         </h2>
+        <p className="mb-2 text-xs text-slate-500 dark:text-slate-400">
+          This topic addresses the following syllabus points. You don't need to
+          memorise the codes — they're shown so a teacher or tutor can verify
+          coverage.
+        </p>
         <ul className="list-disc space-y-1 pl-5 text-slate-500 dark:text-slate-400">
           {dotPointDetails.map((d) => (
             <li key={d.id}>

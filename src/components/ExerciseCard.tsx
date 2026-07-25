@@ -61,6 +61,11 @@ export function ExerciseCard({ topicId, exercise }: { topicId: string; exercise:
         )}
       </div>
 
+      {/* "Your turn" header — a small nudge that frames the prompt as a
+          question to attempt, not a fact to skim. */}
+      <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+        Your turn
+      </p>
       <div className="mb-3">
         <Prose text={instance.prompt} />
       </div>

@@ -106,21 +106,33 @@ export function WorkedExample({ example }: { example: WorkedExample }) {
         >
           Ex
         </span>
-        <div className="min-w-0 flex-1 text-base font-medium text-slate-800 dark:text-slate-100">
-          <Prose text={example.statement} className="inline" />
+        <div className="min-w-0 flex-1">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+            Worked example
+          </p>
+          <div className="text-base font-medium text-slate-800 dark:text-slate-100">
+            <Prose text={example.statement} className="inline" />
+          </div>
         </div>
       </div>
 
-      {/* Closed state — single "Show solution" button. */}
+      {/* Closed state — encourage attempting the problem first instead of
+          just revealing the worked solution. */}
       {!open && (
-        <button
-          type="button"
-          onClick={start}
-          className="inline-flex items-center gap-1 rounded-lg bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-100 dark:bg-brand-900/40 dark:text-brand-200 dark:hover:bg-brand-900/60"
-        >
-          Show solution
-          <span aria-hidden="true">▾</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={start}
+            className="inline-flex items-center gap-1 rounded-lg bg-brand-50 px-3 py-1.5 text-sm font-semibold text-brand-700 transition hover:bg-brand-100 dark:bg-brand-900/40 dark:text-brand-200 dark:hover:bg-brand-900/60"
+          >
+            Show solution
+            <span aria-hidden="true">▾</span>
+          </button>
+          <span className="text-xs text-slate-500 dark:text-slate-400">
+            Tip: have a go on paper first — the steps reveal one at a time so you
+            can pace yourself.
+          </span>
+        </div>
       )}
 
       {/* Open state — progressive reveal. */}

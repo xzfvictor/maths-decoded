@@ -20,16 +20,55 @@ body {
   @apply overflow-x-auto overflow-y-hidden py-1;
 }
 
-/* Prose-ish spacing for authored theory. */
+/* Prose-ish spacing for authored theory.
+   The theory body is the first thing a beginner sees — make it comfortable
+   to read at the width of a phone, with generous spacing and a calm,
+   friendlier type ramp than the default browser. */
+.theory {
+  @apply text-[15px] leading-7 text-slate-800 dark:text-slate-200;
+}
 .theory > * + * {
   @apply mt-4;
 }
 .theory h3 {
   @apply mt-8 text-lg font-semibold text-slate-900 dark:text-white;
 }
+.theory p {
+  @apply text-[15px] leading-7;
+}
 .theory ul {
-  @apply list-disc space-y-1 pl-6;
+  @apply list-disc space-y-1.5 pl-6;
 }
 .theory ol {
-  @apply list-decimal space-y-1 pl-6;
+  @apply list-decimal space-y-1.5 pl-6;
+}
+.theory li {
+  @apply leading-7;
+}
+.theory blockquote {
+  /* blockquote already styled by Prose.tsx; ensure good spacing. */
+  @apply my-5;
+}
+/* Math expressions inside paragraphs should sit comfortably on the
+   text baseline — slightly tighter line-height keeps the equation from
+   blowing out the surrounding paragraph's leading. */
+.theory p .katex {
+  @apply text-[1.02em];
+}
+.theory .katex-display {
+  @apply my-5 rounded-lg bg-slate-50 px-4 py-3 dark:bg-slate-900/60;
+}
+
+/* Definition / key-term callouts are written as blockquotes; give them
+   a distinct left-rail that signals "remember this". */
+.theory blockquote.callout-definition {
+  @apply border-l-4 border-emerald-500 bg-emerald-50 not-italic dark:bg-emerald-950/30;
+}
+.theory blockquote.callout-warning {
+  @apply border-l-4 border-amber-500 bg-amber-50 not-italic dark:bg-amber-950/30;
+}
+
+/* "First-time learner" tip box used by the home page. */
+.learner-tip {
+  @apply rounded-xl border border-dashed border-brand-300 bg-brand-50/60 p-4 text-sm text-slate-700 dark:border-brand-700 dark:bg-brand-900/30 dark:text-slate-200;
 }
