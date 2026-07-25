@@ -4,6 +4,7 @@ import { topicById } from '../content/topics'
 import { Prose } from '../components/Prose'
 import { ExerciseCard } from '../components/ExerciseCard'
 import { WorkedExample } from '../components/WorkedExample'
+import { LessonAudio } from '../components/LessonAudio'
 import { isLessonDone, setLessonDone } from '../lib/storage'
 import { useProgress } from '../lib/useProgress'
 
@@ -80,6 +81,10 @@ export function LessonPage() {
           </div>
         )}
       </div>
+
+      {/* AI explainer audio — sits between the lesson summary and the theory
+          card so a student can choose to listen first, read along, or skip. */}
+      <LessonAudio topicId={topic.id} lessonId={lesson.id} />
 
       {/* Theory. */}
       <section className="mb-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">

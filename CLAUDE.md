@@ -145,6 +145,60 @@ refreshes (`src/lib/useProgress.ts`). A legacy `sections` key is read for
 migration. Progress is shared across both modules — a student switching from
 VCE to Pre-VCE keeps their completion ticks.
 
+## AI "Explain to me" audio (`scripts/generate-audio.ts`, `src/components/LessonAudio.tsx`)
+
+Every lesson page renders an **Explain to me** audio card between the
+"What you'll learn" panel and the theory block. The card plays a
+30–60-second narration of the lesson and shows a collapsible transcript.
+
+The audio is **pre-generated offline** by `scripts/generate-audio.ts` and
+committed to `public/audio/lessons/{topic-id}/{lesson-id}.mp3` (plus a
+matching `.json` sidecar with the script text). The browser just plays
+the MP3 with a native `<audio>` element — no runtime AI or API keys in
+the bundle.
+
+### Generating audio
+
+```
+npm run generate:audio                                # every lesson
+npm run generate:audio -- --topic functions-relations # one topic
+npm run generate:audio -- --topic <t> --lesson <l>    # one lesson
+npm run generate:audio -- --dry-script                # scripts only, skip TTS
+npm run generate:audio -- --force                     # regenerate even if cached
+```
+
+Required env:
+
+- `ANTHROPIC_BASE_URL` — Anthropic-compatible endpoint (defaults to
+  `https://api.minimaxi.com/anthropic`).
+- `ANTHROPIC_AUTH_TOKEN` — bearer token.
+- `ANTHROPIC_MODEL` — model name (defaults to `$ANTHROPIC_MODEL` from
+  the shell, else `MiniMax-M3`).
+
+The generator does, in order:
+
+1. For each lesson, build a prompt that asks minimax M3 to write a
+   30–60s spoken script (markdown/TeX stripped to plain text, math
+   described in words). The script is persisted to
+   `public/audio/lessons/{topic}/{lesson}.json`.
+2. Probe common TTS routes on the same host (`/v1/audio/speech`,
+   `/v1/tts`, `/v1/t2a_v2`, etc.). The first that returns `200` with
+   `audio/*` content wins; the result is cached in
+   `.audio-tts-endpoint` (gitignored).
+3. POST the script to the discovered TTS endpoint and write the
+   response to `public/audio/lessons/{topic}/{lesson}.mp3`.
+
+**Graceful degradation:** if no TTS endpoint responds, the generator
+still writes the JSON scripts and the UI shows "Audio not generated
+yet — run `npm run generate:audio`" instead of a broken player. No
+silent failures.
+
+### Re-running
+
+Already-generated assets are skipped unless `--force` is passed. Edit
+`scripts/generate-audio.ts` to change the prompt, voice, or TTS
+probing; the rest of the app reads only the assets on disk.
+
 ## Next up
 
 Both modules are complete. Likely next directions (when one comes up):

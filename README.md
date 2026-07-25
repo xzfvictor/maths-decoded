@@ -18,6 +18,9 @@ not just a sample.
 - **Practise with feedback.** Exercises check your answer, offer a hint, and
   reveal a step-by-step solution. Many are randomised, so you get a fresh
   question each time.
+- **Listen before you read.** Each lesson has an "Explain to me" button that
+  plays a 30–60 second AI-narrated overview, with a transcript you can read
+  along to.
 - **Track your progress.** Completed lessons and exercise scores are saved
   locally in your browser — no account, no server.
 - **Complete coverage, guaranteed.** A build-time check asserts that every
@@ -77,6 +80,31 @@ npm run dev       # start the dev server (http://localhost:5173)
 | `npm run preview` | Serve the built site locally. |
 | `npm run check:coverage` | Verify every syllabus dot point is claimed by a topic. |
 | `npm run check:exercises` | Validate every randomised exercise across 300 seeds. |
+| `npm run generate:audio` | Pre-generate AI "Explain to me" audio for every lesson (writes to `public/audio/lessons/`). |
+
+## AI lesson audio
+
+Each lesson page includes an **Explain to me** card that plays a 30–60
+second spoken overview of the theory. Audio is **pre-generated offline**
+by `npm run generate:audio` and committed to the repo at
+`public/audio/lessons/{topic}/{lesson}.mp3` (with a matching `.json`
+transcript). The browser plays the MP3 with a native `<audio>` element
+— there is no runtime AI call and no API key in the bundle.
+
+Required env when generating:
+
+```
+ANTHROPIC_BASE_URL=https://api.minimaxi.com/anthropic
+ANTHROPIC_AUTH_TOKEN=***
+ANTHROPIC_MODEL=MiniMax-M3
+```
+
+The script first asks minimax M3 to write a conversational script for
+each lesson, then probes the same host for a TTS endpoint
+(`/v1/audio/speech`, `/v1/tts`, `/v1/t2a_v2`, etc.). If no TTS route is
+reachable, only the JSON scripts are written and the UI degrades to a
+clear "audio not generated yet" hint. See `CLAUDE.md` for the full
+flow.
 
 ## Course map
 

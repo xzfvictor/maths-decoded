@@ -16,3 +16,7 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Local cache for the AI audio generator — caches the discovered TTS
+# endpoint so we don't re-probe every run.
+.audio-tts-endpoint
