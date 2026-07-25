@@ -1,0 +1,7 @@
+In this lesson, we'll look at how to solve exponential equations when the bases just don't match, like when three to the power of x equals twenty. The trick is simple: take a logarithm of both sides. A logarithm is basically the inverse of an exponent, so it lets us bring that unknown x down where we can actually get to it.
+
+Here's how it goes. First, you apply a log to both sides of the equation. Then you use the power law, which says the log of something raised to a power equals that power times the log of the base. So if x is up in the exponent, it comes tumbling down to the front, multiplied by the log of the base. After that, it's just basic algebra — divide both sides by whatever is sitting next to x, and you've got your answer.
+
+Quick tip: you can use any log you like, but the natural log, written ln, is especially handy when you see an e-power on the right, because it cancels things out neatly.
+
+Now let's see it in action.

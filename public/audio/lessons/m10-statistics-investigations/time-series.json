@@ -1,0 +1,7 @@
+In this lesson, we'll look at how a quantity changes over time, using something called a time-series plot. The idea is simple: you put time on the horizontal axis and the measurement, like monthly rainfall, a share price, or population, on the vertical axis. Time is doing the job of your explanatory variable.
+
+As you read the plot, watch for three things. First, the trend, which is the overall direction the data is moving in, whether it looks roughly straight, curving up like exponential growth, or repeating in cycles. Second, seasonality, those regular ups and downs you see within a year, like sales spiking every December. Third, outliers or sudden jumps, which usually mean something interesting happened and is worth investigating.
+
+When it comes to modelling, if the trend looks straight you fit a least-squares line through the points. If it's exponential, you transform to a log scale first. And if there's a clear seasonal pattern, you can break the data into trend, seasonal, and random noise.
+
+Now let's see it in action.

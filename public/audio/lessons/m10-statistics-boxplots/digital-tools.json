@@ -1,0 +1,7 @@
+In this lesson, we'll look at how digital tools can do the heavy lifting when you're comparing distributions with boxplots and histograms. The key idea is simple — let the software crunch the numbers, and you focus on what the picture is telling you.
+
+Here's the workflow. First, enter or load your data into a tool like Excel, Google Sheets, R, or Python. Then ask for the five-number summary or a boxplot, and the software will calculate the median and quartiles for you. If you want to compare two groups, just overlay two boxplots on the same axis so you can see them side by side. And when you want to understand the shape of your data — whether it's symmetric, skewed, or has more than one peak — a histogram is your best friend.
+
+The most important step is interpretation. Don't get lost in the numbers. Instead, read the story from the picture. Where's the centre? How wide is the spread? Are there any outliers? Is the shape balanced or lopsided?
+
+Now let's see it in action.

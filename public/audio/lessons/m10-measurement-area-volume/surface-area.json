@@ -1,0 +1,5 @@
+In this lesson, we'll look at how to find the surface area of composite solids, which are just shapes made by sticking simpler solids together. Here's the key idea, and it might feel a bit strange at first. Instead of adding things up, you're actually subtracting. When two solids are joined, the faces where they meet disappear from the outside, so you don't count them. Think of it like two ice cubes glued together. The glue faces are now hidden inside, so they aren't part of the outside surface anymore.
+
+Now, let's quickly run through the building blocks you'll need. For a right rectangular prism, the surface area is twice the sum of length times width, length times height, and width times height. For a right circular cylinder, it's two pi r squared for the circular ends, plus two pi r h for the curved side. And for a cube, it's simply six times the side length squared. Super straightforward.
+
+The biggest mistake students make is just adding the surface areas of the separate parts together. Don't do that. Remember to count only the faces you can actually see from the outside, and skip the ones hidden at the join. Now let's see it in action.

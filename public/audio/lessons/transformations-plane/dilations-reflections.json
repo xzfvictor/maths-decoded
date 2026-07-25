@@ -1,0 +1,11 @@
+In this lesson we'll look at two ways to reshape a graph on the coordinate plane: dilations, which stretch it, and reflections, which flip it.
+
+Let's start with dilations. When a function gets multiplied by some number a out the front, every y-value gets multiplied by a. Imagine the graph hugging the x-axis and then being pulled up or squashed down by that factor, so the x-axis stays fixed. That's a dilation from the x-axis, a vertical stretch.
+
+Now here's the tricky one. When you replace x with n times x inside the function, it actually stretches horizontally, but by a factor of one over n, not n. So doubling x inside the function squashes the graph to half its width. Think of the y-axis as the anchor.
+
+Next, reflections. Multiplying the whole function by negative one flips it over the x-axis, so every point swaps from above to below. Replacing x with negative x inside the function flips it over the y-axis, swapping left and right.
+
+One more thing to remember. When you stack several transformations together, do the stretches and reflections first, then the shifts, or you'll mis-track your points.
+
+Now let's see it in action.

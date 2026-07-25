@@ -1,0 +1,7 @@
+In this lesson we'll look at anti-differentiation, which is just a fancy way of saying "reverse the derivative." If differentiating takes you from a function to its slope, anti-differentiation does the opposite and brings you back to a family of possible original functions.
+
+Here's the big idea. If someone hands you a derivative and asks, "what could the original function have been?" you work backwards. So if the derivative is two x, the original could be x squared plus something, and that something is just a constant we call big C. Notice why C matters: both x squared plus seven and x squared minus five differentiate down to two x, so the constant is unfixable from the derivative alone. Every time you anti-differentiate, you tack on plus C to cover all the possibilities.
+
+Now for the rules. The power rule, reversed, says you add one to the exponent, then divide by that new exponent, as long as the exponent isn't negative one. A constant by itself just becomes that constant times x, plus C again. And finally, the sum rule: you can anti-differentiate term by term and just add the pieces together.
+
+Now let's see it in action.

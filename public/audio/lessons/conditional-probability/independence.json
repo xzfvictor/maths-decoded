@@ -1,0 +1,9 @@
+In this lesson, we'll look at what it really means for two events to be independent. Here's the intuition: if learning that one event happened doesn't change the probability of the other, then the two events are independent. For example, flipping a coin twice, the result of the first flip doesn't affect the second.
+
+There are three equivalent ways to capture this. The multiplication rule says the probability that both events happen equals the probability of the first times the probability of the second. Then there's the conditional test, which says the probability of A given B is just the probability of A, as long as B has a nonzero chance of happening. And likewise, the probability of B given A equals the probability of B, provided A isn't impossible.
+
+In practice, the multiplication rule is your best friend because it's the easiest to calculate with.
+
+Now, a quick word on common settings. Drawing with replacement usually gives you independent draws, because the bag is the same each time. Drawing without replacement usually does not, because the bag changes after the first pick.
+
+Now let's see it in action.

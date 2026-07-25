@@ -1,0 +1,7 @@
+In this lesson, we'll look at how to perform one step of Newton's method. Here's the idea. You've got a starting guess, call it your current x value. To take one Newton step, you do three things. First, you plug that x into the original function and get its value. Second, you plug the same x into the derivative and get that value. Third, you take your current x, subtract the function value divided by the derivative value, and that gives you your new, better estimate.
+
+On your calculator, the trick is to use the previous answer feature so you're always building on the last result, which keeps things tidy and cuts down on typing errors. It's also worth setting up a small table so you can watch the numbers march toward the answer.
+
+As for how close is close enough, just keep going until the change between successive estimates is smaller than the tolerance you need, like five decimal places. For most cubics, that's only four to six steps from a sensible guess.
+
+Now let's see it in action.

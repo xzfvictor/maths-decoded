@@ -1,0 +1,5 @@
+In this lesson we'll look at the graph of the logarithm of x in base a, and the easiest way to picture it is to think about its best friend, the exponential function. Because a logarithm is just the inverse of an exponential, the graph of y equals log base a of x is really just the graph of y equals a to the x tipped over and flipped through the mirror line y equals x. So whatever shape the exponential has, the logarithm will have the matching shape on its side.
+
+A few key features to lock in. The domain is all positive x, so the curve only exists to the right of the y axis, and the y axis itself acts as a vertical asymptote that the curve hugs but never touches. The range, though, stretches across every real y value. Because the log of one is zero, the graph always crosses the x axis at the point one, zero, and it never crosses the y axis. Finally, depending on whether a is bigger than one or sitting between zero and one, the curve either rises or falls as x grows.
+
+And remember those two inverse identities, because they're the handshake between logs and exponentials. Now let's see it in action.

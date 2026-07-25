@@ -1,0 +1,9 @@
+In this lesson we'll look at power functions, which are just the basic y equals x to the n shapes. The really handy thing is that all the positive whole-number powers split into just two families based on whether n is even or odd, and once you see that, every graph on the list makes sense.
+
+Let's start with the even family, things like x squared and x to the fourth. Both of these are U-shaped, symmetric about the y-axis, so the left side is a mirror of the right. They all pass through the origin, through the point one comma one, and through negative one comma one as well. The bigger the even power, the flatter the curve sits near zero, and the steeper it shoots up once you leave the band between negative one and one. So x to the four hugs the axis more tightly near the origin than x squared does.
+
+Now the odd family, which is x and x cubed. These don't mirror across the y-axis. Instead, they have a kind of half-turn symmetry about the origin, so whatever happens on the right is flipped upside down on the left. They pass through the origin, through one comma one, and through negative one comma negative one. The cube is increasing everywhere, with a little flattening at the origin where the curve briefly levels out before continuing to rise.
+
+Quick note on domain and range: all four of these are defined for every real x. The odd ones can take any real y value, while the even ones only give you zero or positive y values.
+
+Now let's see it in action.

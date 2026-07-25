@@ -1,0 +1,5 @@
+In this lesson, we'll look at families of functions and how to pin down a single rule from a few clues. A parameter is just a letter that stands for a constant we can choose from, and the whole collection of curves it describes is called a family. For example, the straight-line family covers every line you can draw, and once you pick the slope and the y-intercept, you've chosen one specific line. The same idea works for parabolas written in turning-point form, where three letters let you slide, stretch, and flip any parabola around the plane.
+
+So how do we actually find the rule? The trick is to count your unknowns. Each unknown parameter needs its own piece of information, like a point the graph passes through, an intercept, or the location of a turning point. Write the general form for the family, plug in each fact to build a simple equation, then solve the system to lock in every parameter.
+
+Suppose a parabola has a turning point at two, negative one and passes through zero, seven. We'd start with the turning-point form, then substitute the point to find the stretch factor. Now let's see it in action.

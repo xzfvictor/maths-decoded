@@ -1,0 +1,9 @@
+In this lesson, we'll look at translations, which are the simplest way to shift a graph around without changing its shape or orientation. Imagine grabbing a picture and sliding it across the table — that's a translation.
+
+We'll start with a graph called f of x, and ask what happens when we tweak the formula. First, if we add a positive number outside the function, the whole graph slides straight up by that amount. Add a negative number and it slides down. Simple so far, right?
+
+Now here's the part that tricks everyone: horizontal shifts feel backwards. If we replace every x with x minus a number, the graph actually moves to the right by that amount. And if we replace x with x plus a number, it moves to the left. The trick is to ask yourself, "what value of x makes the bracket equal to zero?" That's where the original feature shows up, and it now happens later or earlier depending on which way you shifted.
+
+Finally, translations just send every point across by the same amount, so a shift right and up moves each point right and up by the same distance.
+
+Now let's see it in action.

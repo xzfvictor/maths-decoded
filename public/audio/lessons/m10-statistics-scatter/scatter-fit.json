@@ -1,0 +1,5 @@
+In this lesson, we'll look at how to draw a scatterplot and sketch a line of best fit. First, pick two numerical variables and pair them up, one for each observation. Then decide which one is the explanatory variable — that's the one you think explains the other — and put it on the horizontal axis. The response variable goes on the vertical axis. Now plot each pair as a single dot, and you'll start to see a pattern emerge.
+
+Next comes the line of best fit. It's a straight line that passes as close as possible to all the points, with roughly equal numbers above and below it. You eyeball it through the middle of the cloud. You can use this line to interpolate, which means estimating values that fall between your data points, and that works pretty well. But be careful with extrapolation, which is estimating beyond the range of your data, because the pattern might not hold out there.
+
+When you describe the relationship, comment on its strength, direction, and shape. Now let's see it in action.

@@ -1,0 +1,9 @@
+In this lesson we'll look at the limit definition of the derivative, which is the formal way that calculus introduces the idea of an instantaneous rate of change.
+
+Picture a curve, and draw a straight line cutting between two points on it — that's called a chord, and its slope is just the average rate of change between those two points. Now imagine sliding the two points closer and closer together until they almost merge. The chord turns into a tangent, and that average rate morphs into the instantaneous rate right at a single point.
+
+The derivative captures that idea in a formula. You take the change in the output, which is the function value at x plus a tiny step h minus the function value at x. You divide that by h, the size of the tiny step. That ratio is the average rate over a tiny interval. Then you let h shrink toward zero, and the limit of that whole expression is the derivative.
+
+For a nice polynomial, you can usually substitute, simplify so h cancels out, and then just plug h equals zero.
+
+Now let's see it in action.

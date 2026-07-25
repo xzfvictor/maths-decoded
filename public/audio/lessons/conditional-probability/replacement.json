@@ -1,0 +1,5 @@
+In this lesson we'll look at what really changes when you draw something, then draw again, but don't put the first one back. Let's start with the idea of with replacement. Picture a bag of cards. You pull one out, you have a look, then you slide it back in and shuffle. The bag looks exactly the same for your second draw, so the chance of any outcome is identical both times. If you wanted two aces, you'd just multiply the chance of an ace on the first draw by the same chance on the second draw.
+
+Now flip that around and try without replacement. You pull an ace, but this time you keep it on the table. Suddenly the bag has one card fewer, and one ace fewer. So the second draw is not the same situation anymore, the odds have shifted, and the two events are no longer independent. That's why we call them dependent draws.
+
+When you simulate this on a calculator, with replacement is easy, just generate a fresh random number each time. Without replacement you have to remember what you've already pulled and reject any repeats. Either way, as you run more trials, your relative frequency should settle close to the true theoretical probability. Now let's see it in action.

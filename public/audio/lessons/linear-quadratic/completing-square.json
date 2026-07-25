@@ -1,0 +1,7 @@
+In this lesson, we'll look at completing the square, a neat trick that turns a quadratic from its standard general form into something called turning-point form, so you can spot the vertex straight away.
+
+Start with the easy case, where the number in front of x squared is just one. Take half of the x coefficient, square that number, then add it and subtract it so the expression stays balanced. After a bit of tidying, you'll have a perfect square bracket, plus or minus a leftover number.
+
+If the number in front of x squared isn't one, don't panic. Just pull it out as a common factor from the x squared and x terms only, leaving the constant term where it is. Now the bracket in front starts with x squared, so you're back in the simple case. Complete the square inside that bracket, multiply out, and you've got your turning-point form.
+
+Once it's in that form, the vertex is sitting right there for you to read off. Now let's see it in action.

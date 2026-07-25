@@ -1,0 +1,9 @@
+In this lesson, we'll look at solving transformed exponential equations, and here's the good news — it's the exact same recipe you used for trig, just swapping out the inverse trig for something else. Think of it like swapping ingredients in a familiar dish.
+
+So when you see something like a number times a power of some base, raised to a linear expression in x, plus another constant equals a final value, the shape is the same as before. Your job is to get that power all by itself on one side. Move the extra constants over so you have just the exponential term, then you divide out the coefficient in front.
+
+Now here's where the swap happens. Instead of reaching for an inverse trig function, you reach for logs, because logs are the inverse of exponentials. You take the log of both sides, and that beautiful exponent just slides down into a multiplier. That gives you a simple linear expression in x.
+
+From there, undo any horizontal stretch by dividing, undo any horizontal shift by subtracting, and you've got x. On your calculator, if the base isn't ten or e, just use change of base — log the top, divide by log of the base.
+
+Now let's see it in action.

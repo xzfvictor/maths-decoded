@@ -1,0 +1,7 @@
+In this lesson we'll look at three real-world scales that all work the same clever way: pH, the Richter scale, and decibels. The big idea is that each step on these scales isn't just adding a little number, it's multiplying the actual thing being measured by ten. So a difference of two steps means a hundred times bigger, three steps means a thousand times, and so on.
+
+Let's start with pH, which measures how acidic something is. Each time pH drops by one, the concentration of hydrogen ions goes up by a factor of ten. Pure water sits right in the middle at pH seven.
+
+Next, the Richter scale measures earthquake amplitude. One step up means the ground shakes ten times more, and the energy released is roughly thirty-one times more. That is why a magnitude six feels so different from a magnitude four.
+
+Finally, decibels measure sound intensity. Ten decibels more is ten times the intensity, and twenty decibels more jumps to a hundred times. Now let's see it in action.

@@ -1,0 +1,7 @@
+In this lesson we'll look at the exact values of sine, cosine, and tangent at five special angles in the first quadrant. These are zero, thirty degrees, forty-five, sixty, and ninety degrees, or in radians, zero, pi over six, pi over four, pi over three, and pi over two. Honestly, the easiest move is to just memorise this little table, because every other special value on the unit circle falls out of it.
+
+Here's the key idea to remember. At zero, sine is zero and cosine is one, so tangent is zero. At thirty degrees, sine is one half and cosine is root three over two. At forty-five degrees, both sine and cosine are root two over two, which makes tangent exactly one. At sixty degrees, the values swap from thirty, so sine becomes root three over two and cosine becomes one half. And at ninety degrees, sine peaks at one while cosine drops to zero, which means tangent is undefined.
+
+Now for the rest of the circle, you don't learn new numbers, you use symmetry. In the second quadrant, the height stays the same as its reflection in the first quadrant, but the horizontal direction flips, so sine is unchanged and cosine becomes negative. In the third quadrant, both coordinates flip sign, so sine and cosine are both the negative of their first-quadrant twins. Tangent, being the ratio, stays positive there.
+
+Now let's see it in action.

@@ -1,0 +1,7 @@
+In this lesson, we'll look at the bisection method, a really neat way to hunt down a root of a polynomial when you can't just solve it neatly with algebra.
+
+So, imagine you know there's a root somewhere between two numbers, let's call them a and b. The key fact you're using is that the polynomial has opposite signs at those two points. Whenever a continuous function flips sign like that, a root must be sitting somewhere inside that interval.
+
+Here's the trick: you don't try to jump straight to the root. Instead, you find the midpoint, the number exactly halfway between a and b. Plug that midpoint into the polynomial and check its sign. Now you've got two halves to choose from. One half still has the sign flip, the other doesn't, and the root has to be hiding in the half that still does. So you keep that half and toss the rest away. The new interval is half as wide as before.
+
+Then you just repeat. Halve again, check the sign at the new midpoint, keep the half that still brackets the root. After every step, the interval is half as wide, so your estimate for the root is getting closer and closer. You stop once the interval is narrower than the accuracy you're after. Now let's see it in action.

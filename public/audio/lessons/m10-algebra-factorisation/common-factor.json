@@ -1,0 +1,7 @@
+In this lesson, we'll look at how to factorise expressions by pulling out a common factor. The big idea is simple: you hunt for the greatest thing that divides every single term, take it out the front, and leave what's left inside a pair of brackets.
+
+First, list the numbers, or coefficients, in front of each term and find the biggest number that divides them all. That's the numerical part of your common factor. Next, look at the variables in each term. Find the smallest power of each variable that shows up everywhere, and that's the variable part. Combine those together, and you've got your greatest common factor.
+
+Now factor it out by writing it once, then opening brackets and dividing every original term by that factor to fill the inside. To check yourself, expand it back out — it should match the expression you started with. This works because factorising is just expansion run backwards: a times the sum of b and c gives a-b plus a-c, so dividing by a and multiplying back lands you exactly where you started.
+
+For example, six x squared plus nine x, the numbers share a three and the variables share an x, so you pull out three x and get three x times the sum of two x and three. Now let's see it in action.

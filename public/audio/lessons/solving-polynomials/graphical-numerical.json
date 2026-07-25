@@ -1,0 +1,5 @@
+In this lesson we'll look at what to do when a polynomial just won't factor nicely. First up, the graphical approach. The real solutions of any polynomial equation are simply the x-intercepts of its graph, the spots where the curve crosses the horizontal axis. So you can sketch it, or pop it into your calculator, and just read the roots straight off. And if you're comparing two expressions, the solutions are where their graphs cross each other.
+
+Then there's the sign-change idea, which is what makes numerical root-finding possible. Here's the trick: if your polynomial is continuous, and it has a positive value at one point but a negative value at another, then somewhere in between it must pass through zero. So there's guaranteed to be a root hiding between them.
+
+That simple fact is powerful. It tells you a root exists, and it gives you a starting bracket to hunt it down, whether by zooming in on a graph or using a numerical method. Now let's see it in action.

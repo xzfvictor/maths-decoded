@@ -1,0 +1,9 @@
+In this lesson we'll look at points of inflection, which is just a fancy way of saying the spots on a graph where the curvature flips from bending upwards to bending downwards, or the other way around.
+
+So how do you actually find them? First, you take the derivative twice to get the second derivative, which basically measures that curvature. Then you set that equal to zero and solve. That gives you your candidate points. But here's the key part, and don't skip it: you have to test the sign of the second derivative on either side of each candidate. The curvature has to actually change sign. If it touches zero but stays the same shape, it's not a real inflection point.
+
+Sometimes you'll come across a special case where the tangent line is also flat at the inflection point. In that case, both the first derivative and the second derivative are equal to zero at that spot.
+
+Why does this matter? Well, inflections mark the moment when the rate of change itself changes character, like when something stops speeding up and starts slowing down. A classic example is population growth, where the steepest point on the curve is actually an inflection.
+
+Now let's see it in action.

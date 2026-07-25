@@ -1,0 +1,5 @@
+In this lesson we'll look at two simple ideas that solve almost every counting problem you'll meet. First up is the multiplication principle. This one's for when you make a choice, and then you make another choice after that. Think of it like ordering coffee and a muffin. If there are three coffees and four muffins, you don't add those numbers, you multiply them, giving you twelve total combinations. Whenever you see the word "and" in a counting question, this is usually your go-to.
+
+Then there's the addition principle. This one kicks in when you're choosing between options that don't overlap. So if you want to walk to school and there are three different routes, or you want to ride your bike and there are two different paths, you add those together to get five. That's the "or" rule. The key thing is that the options must be mutually exclusive, meaning you can't count the same route twice.
+
+The trick is just deciding which situation you're in. Are you doing one thing and another? Multiply. Are you doing one thing or another? Add. Now let's see it in action.

@@ -1,0 +1,11 @@
+In this lesson, we'll look at how four little parameters — a, n, k, and c — can stretch, squeeze, and slide an exponential curve around the plane. Imagine starting with the basic curve y equals b to the x, where b is just some positive number not equal to one. Now let's meet each transformation.
+
+First, the letter a. Think of a as a vertical pull. If a is bigger than one, the graph stretches away from the x-axis; if it's between zero and one, it flattens closer in. And if a is negative, the whole thing flips upside down across the x-axis.
+
+Next comes n, hiding inside the exponent. N controls how fast the exponential grows or decays. When the absolute value of n is bigger than one, things happen quicker — so b to the two x, for example, races ahead twice as fast as the basic curve. When n is smaller, the action slows down.
+
+Then we have k, sitting inside the brackets with x. K shifts the graph sideways — to the left if k is positive, to the right if k is negative.
+
+Finally, c slides the whole thing up or down. That constant c is also the horizontal asymptote, the value the graph creeps toward but never quite touches.
+
+Now let's see it in action.

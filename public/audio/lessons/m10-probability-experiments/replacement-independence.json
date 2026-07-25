@@ -1,0 +1,9 @@
+In this lesson, we'll look at the difference between drawing with replacement and drawing without replacement, and what that means for whether events are independent.
+
+Imagine a bag with some coloured balls. If you draw a ball, note it down, and then put it back before the next draw, that's with replacement. Because the bag is exactly the same each time, what you draw on the first go doesn't affect what you draw next. We call those draws independent. In a tree diagram, every branch out of each stage has the same set of probabilities.
+
+Now, without replacement means you keep the ball out. The bag actually shrinks, so the chances change. If you pulled out a red ball first, there are fewer reds left for the next draw. So the second set of branches on your tree looks different from the first. Knowing the first draw did change the probability of the second, which means the events are not independent.
+
+A quick way to check independence is whether the chance of both events happening equals the chance of the first times the chance of the second. If they're not equal, the events are dependent.
+
+Now let's see it in action.

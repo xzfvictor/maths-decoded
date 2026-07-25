@@ -1,0 +1,7 @@
+In this lesson, we'll look at expanding and factorising cubic and quartic polynomials. First, a quick refresher. A polynomial is just a sum of terms, each one made up of a coefficient and x raised to some power. The highest power tells you the degree — three means it's a cubic, four means quartic.
+
+When you're expanding, you're multiplying things out. Say you've got two brackets. You multiply every term in the first bracket by every term in the second, then collect any like terms. If there are three brackets, just expand two first, then multiply the result by the third.
+
+Factorising is the reverse. You're trying to write the polynomial as a product of brackets. The first thing to check is whether there's a common factor you can pull out of every term. Sometimes you'll spot a difference of two squares pattern, which is one bracket with plus and minus the same expression. And if you've got four terms, try grouping them into two pairs, factor each pair, and see if a common bracket pops out.
+
+The trick is just practice, so let's see it in action.

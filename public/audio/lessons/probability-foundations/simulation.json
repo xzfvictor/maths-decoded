@@ -1,0 +1,7 @@
+In this lesson we'll look at how to estimate probabilities by actually running an experiment lots of times, instead of working it out exactly. The idea is simple: you grab a random generator, like a coin, a die, a spinner, or the random button on your calculator, and you repeat your experiment over and over. Each trial gives you an outcome, and you keep track of how often the event you're interested in happens. That count divided by the total number of trials is called the relative frequency, or the sample proportion, and it becomes your estimate of the true probability.
+
+Now here's the key thing, the long-run link. If you only run a few trials, say four coin tosses and you get three heads, your proportion is way off from a half. That's totally normal. But if you flip a thousand times, the proportion of heads settles very close to one half. So as the number of trials grows, your estimate gets more reliable and hovers around the real probability.
+
+When you design a simulation, you just need to match your generator to the probability you're after. For something with probability one third, you'd roll a die and call a one or two a success, because two out of six is exactly one third.
+
+Now let's see it in action.
