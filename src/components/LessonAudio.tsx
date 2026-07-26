@@ -24,6 +24,7 @@ export function LessonAudio({
   const [duration, setDuration] = useState(0)
   const [transcript, setTranscript] = useState<string | null>(null)
   const [showTranscript, setShowTranscript] = useState(false)
+  const [rate, setRate] = useState(1)
 
   // Probe whether the audio file exists. We use a HEAD-style trick: load
   // the metadata only and react to onError / onLoadedMetadata.
@@ -75,6 +76,13 @@ export function LessonAudio({
       a.removeEventListener('ended', onEnd)
     }
   }, [status])
+
+  // Apply the selected playback speed to the audio element. Runs when the
+  // rate changes and once the player becomes ready (element mounts).
+  useEffect(() => {
+    const a = audioRef.current
+    if (a) a.playbackRate = rate
+  }, [rate, status])
 
   function togglePlay() {
     const a = audioRef.current
@@ -157,6 +165,31 @@ export function LessonAudio({
               </div>
               <span className="tabular-nums">{fmt(duration)}</span>
             </div>
+          </div>
+
+          {/* Playback speed control. */}
+          <div className="mt-3 flex items-center gap-3">
+            <label
+              htmlFor={`speed-${topicId}-${lessonId}`}
+              className="text-xs font-semibold text-slate-500 dark:text-slate-400"
+            >
+              Speed
+            </label>
+            <input
+              id={`speed-${topicId}-${lessonId}`}
+              type="range"
+              min={1}
+              max={2}
+              step={0.1}
+              value={rate}
+              onChange={(e) => setRate(Number(e.target.value))}
+              className="h-1.5 max-w-[10rem] flex-1 cursor-pointer accent-brand-600"
+              aria-label="Playback speed"
+              aria-valuetext={`${rate.toFixed(1)}x`}
+            />
+            <span className="w-10 shrink-0 text-xs font-semibold tabular-nums text-slate-600 dark:text-slate-300">
+              {rate.toFixed(1)}x
+            </span>
           </div>
 
           {transcript && (
