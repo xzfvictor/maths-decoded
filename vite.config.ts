@@ -5,4 +5,14 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: './',
+  server: {
+    fs: {
+      // KaTeX's CSS resolves font `url(...)` paths to absolute locations under
+      // node_modules in dev. Vite's default workspace-root detection doesn't
+      // always include that path, so the requests get rejected with
+      // "outside of Vite serving allow list". Pin the allow list to the
+      // project root explicitly.
+      allow: ['.'],
+    },
+  },
 })
