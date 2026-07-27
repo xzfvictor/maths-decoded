@@ -28,3 +28,7 @@ yarn-error.log*
 
 # Claude Code local state (sessions, plans, history, daemon logs, etc.)
 .claude/
+
+# Server-side progress JSON store. The directory itself is tracked (via
+# `data/.gitkeep`) so first-write doesn't fail, but the contents are not.
+data/progress.json

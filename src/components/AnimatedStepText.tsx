@@ -65,9 +65,6 @@ const MATH_PULSE_MS = 650 // halo outline that fades after each math token
 const POST_MATH_PAUSE_MS = 220 // "look at this formula" pause after math
 const POST_TEXT_PAUSE_MS = 60 // tiny breath between prose segments
 
-/** Brand primary in rgba, so the pulse halo matches the site theme. */
-const BRAND_RGB = '49, 109, 255' // #316dff (brand-500)
-
 /**
  * Render a step's text as a stream of animated tokens — words and
  * inline math appear one after another with a tiny fade-up.
@@ -170,45 +167,9 @@ export function AnimatedStepText({
           />
         )
       })}
-      {/* Per-step keyframe + token CSS, scoped under the class. */}
-      <style>{`
-        @keyframes animTokenIn {
-          from { opacity: 0; transform: translateY(4px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        /* Brand-coloured halo that briefly outlines the math so the eye
-           lands on it. The halo grows and fades, like a ping. */
-        @keyframes animMathPulse {
-          0%   { box-shadow: 0 0 0 3px rgba(${BRAND_RGB}, 0.45); }
-          60%  { box-shadow: 0 0 0 6px rgba(${BRAND_RGB}, 0.10); }
-          100% { box-shadow: 0 0 0 8px rgba(${BRAND_RGB}, 0); }
-        }
-        .animated-step-text .anim-token {
-          display: inline-block;
-          /* Preserve trailing whitespace inside the token; otherwise the
-             browser trims it and words run together. */
-          white-space: pre;
-          opacity: 0;
-          animation-name: animTokenIn, animMathPulse;
-          /* Two animations need two delays and two durations (comma-
-           separated). Plain-text tokens get a no-op pulse (the second
-           animation is animation-name: animTokenIn only — see below). */
-          animation-timing-function: ease-out, ease-out;
-          animation-fill-mode: forwards, forwards;
-          animation-duration: 280ms, 0s;
-        }
-        /* Math: re-declare two real animations. */
-        .animated-step-text .anim-math {
-          vertical-align: baseline;
-          padding: 0 4px;
-          border-radius: 4px;
-          /* Override the no-op durations above. */
-          animation-duration: 280ms, 650ms;
-        }
-        .animated-step-text .anim-math-block {
-          display: block;
-        }
-      `}</style>
+      {/* Keyframes and per-token styles live globally in src/styles/index.css
+         so the landing-page DecodeHero can share the same animation timing
+         and a single `prefers-reduced-motion` rule covers both surfaces. */}
       {/* The triggerKey is included to give React a stable identity but
           not rendered — its only effect is to remount the children when
           it changes, re-firing the animations. */}
