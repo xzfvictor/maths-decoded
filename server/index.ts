@@ -21,6 +21,7 @@ import type { GoogleConfig } from './googleAuth'
 import * as crypto from 'node:crypto'
 
 const PORT = Number(process.env.PORT ?? 8787)
+const HOST = process.env.HOST ?? '0.0.0.0'
 const BASE_URL = process.env.ANTHROPIC_BASE_URL ?? 'https://api.minimaxi.com/anthropic'
 const MODEL = process.env.ANTHROPIC_MODEL ?? 'MiniMax-M3'
 const NODE_ENV = process.env.NODE_ENV ?? 'development'
@@ -82,9 +83,10 @@ if (ephemeral) {
 
 const app = createApp({ auth, store, google })
 
-serve({ fetch: app.fetch, port: PORT }, (info) => {
+serve({ fetch: app.fetch, port: PORT, hostname: HOST }, (info) => {
   log('boot', {
     port: info.port,
+    host: info.address,
     baseUrl: BASE_URL,
     model: MODEL,
     pid: process.pid,
