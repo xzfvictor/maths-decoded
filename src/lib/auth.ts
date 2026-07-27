@@ -102,6 +102,57 @@ export async function signOut(): Promise<void> {
   writeMirror(null)
 }
 
+// ---------------------------------------------------------------------------
+// Real Google OAuth (client-side)
+// ---------------------------------------------------------------------------
+
+export interface ServerConfig {
+  /** OAuth 2.0 client ID from Google Cloud Console. `null` if Google
+   *  Sign-In isn't configured on the server — in that case the client
+   *  falls back to the dev-only mock SSO. */
+  googleClientId: string | null
+}
+
+/** Fetch the public server config. Cached for the lifetime of the page
+ *  so we don't re-request it on every render. */
+let configCache: ServerConfig | null = null
+let configPromise: Promise<ServerConfig | null> | null = null
+
+export function getConfig(): Promise<ServerConfig | null> {
+  if (configCache) return Promise.resolve(configCache)
+  if (configPromise) return configPromise
+  configPromise = fetch('/api/config', { credentials: 'same-origin', cache: 'no-store' })
+    .then(async (res) => {
+      if (!res.ok) return null
+      const data = (await res.json()) as ServerConfig
+      configCache = data
+      return data
+    })
+    .catch(() => null)
+  return configPromise
+}
+
+/** Exchange a Google ID token (from Google Identity Services) for a
+ *  server-signed session cookie. The same cookie format as mock SSO —
+ *  the rest of the app doesn't know or care which path issued it. */
+export async function signInWithGoogle(idToken: string): Promise<Session> {
+  const res = await fetch('/api/auth/google', {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    body: JSON.stringify({ idToken }),
+  })
+  if (!res.ok) {
+    throw new Error(`google sign-in failed: ${res.status}`)
+  }
+  const data = (await res.json()) as Session
+  writeMirror(data)
+  return data
+}
+
 /** React hook. Hydrates from the local mirror synchronously, then
  *  re-validates against the server. Subscribes to `vce-auth` so a
  *  sign-in/sign-out anywhere in the app re-renders all subscribers. */

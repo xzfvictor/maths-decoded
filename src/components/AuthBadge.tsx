@@ -1,21 +1,37 @@
-import { useSession, signIn, signOut } from '../lib/auth'
+import { useEffect, useState } from 'react'
+import { useSession, signIn, signOut, getConfig } from '../lib/auth'
 import { useProgress } from '../lib/useProgress'
 import { MODULES, topicsForModule } from '../content/topics'
+import { GoogleSignIn } from './GoogleSignIn'
 
 /**
- * Landing-page auth state panel. Shows the "Sign in with Google" button
- * when the user is anonymous, and a welcome card with progress + a
- * sign-out action when they are signed in.
+ * Landing-page auth state panel. Shows a sign-in control when the user
+ * is anonymous (the official Google button when the server has a client
+ * ID configured, otherwise the mock dev-login button), and a welcome
+ * card with progress + a sign-out action when they are signed in.
  *
- * v1 ships a mock SSO button — clicking it hits `/api/auth/dev-login`
- * which mints a fresh identity. The real Google button is a follow-up;
- * only the `signIn()` body changes.
+ * Mock SSO is gated to dev mode on the server — in production with no
+ * `GOOGLE_CLIENT_ID` set, the mock button 404s, so this component only
+ * shows the mock path when explicitly opted into on the client.
  */
 export function AuthBadge() {
   const auth = useSession()
   const progress = useProgress()
+  const [googleClientId, setGoogleClientId] = useState<string | null | undefined>(undefined)
+  const [error, setError] = useState<string | null>(null)
 
-  if (auth.status === 'loading') {
+  useEffect(() => {
+    let cancelled = false
+    void getConfig().then((cfg) => {
+      if (cancelled) return
+      setGoogleClientId(cfg?.googleClientId ?? null)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  if (auth.status === 'loading' || googleClientId === undefined) {
     return (
       <div className="h-14 animate-pulse rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/50" />
     )
@@ -31,15 +47,27 @@ export function AuthBadge() {
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
             Sign in to keep your lessons and exercise stats in sync.
           </p>
+          {error && (
+            <p className="mt-1 text-xs text-rose-600 dark:text-rose-400">{error}</p>
+          )}
         </div>
-        <button
-          type="button"
-          onClick={() => void signIn()}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-brand-400 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-brand-400 dark:hover:text-brand-300 dark:focus-visible:ring-offset-slate-900"
-        >
-          <GoogleGIcon />
-          Sign in with Google
-        </button>
+        {googleClientId ? (
+          <GoogleSignIn clientId={googleClientId} onError={setError} />
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setError(null)
+              void signIn().catch((e: unknown) => {
+                setError(e instanceof Error ? e.message : 'Sign-in failed')
+              })
+            }}
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-brand-400 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-brand-400 dark:hover:text-brand-300 dark:focus-visible:ring-offset-slate-900"
+          >
+            <GoogleGIcon />
+            Sign in with Google
+          </button>
+        )}
       </div>
     )
   }
@@ -54,6 +82,7 @@ export function AuthBadge() {
     (n, ids) => n + ids.length,
     0,
   )
+  const isMock = auth.session.userId.startsWith('dev:')
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-brand-200 bg-brand-50/60 p-4 shadow-sm dark:border-brand-800/60 dark:bg-brand-900/20">
       <div className="min-w-0">
@@ -65,6 +94,11 @@ export function AuthBadge() {
         </p>
         <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-300">
           {completedLessons} of {totalLessons} lessons done — saved to your account.
+          {isMock && (
+            <span className="ml-2 inline-block rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
+              mock
+            </span>
+          )}
         </p>
       </div>
       <button

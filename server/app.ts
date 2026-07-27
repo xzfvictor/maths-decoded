@@ -52,14 +52,17 @@ import {
   parseProgressBody,
   type ProgressStore,
 } from './progressStore'
+import { type GoogleConfig, verifyGoogleIdToken } from './googleAuth'
 
 export interface AppDeps {
   auth: AuthConfig
   store: ProgressStore
+  /** When omitted, the /api/auth/google endpoint returns 503. */
+  google?: GoogleConfig
 }
 
 export function createApp(deps: AppDeps): Hono {
-  const { auth, store } = deps
+  const { auth, store, google } = deps
   const app = new Hono().basePath('/api')
 
   // -----------------------------------------------------------------------
@@ -91,7 +94,9 @@ export function createApp(deps: AppDeps): Hono {
     }
     const displayName = randomDisplayName()
     const session: Session = {
-      userId: randomUserId(),
+      // Namespace mock identities so dev users can't collide with real
+      // Google accounts (which use `google:<sub>`).
+      userId: `dev:${randomUserId()}`,
       displayName,
       email: randomEmail(displayName),
       iat: Date.now(),
@@ -109,6 +114,69 @@ export function createApp(deps: AppDeps): Hono {
       },
     )
   })
+
+  // Real Google OAuth — accepts an ID token from Google Identity Services,
+  // verifies the signature + audience + issuer, and signs the same session
+  // cookie that dev-login does. The cookie/session shape downstream is
+  // identical to mock SSO, so /api/auth/me, /api/progress, and the client
+  // don't need to know which path produced the identity.
+  app.post('/auth/google', async (c) => {
+    if (!google) return c.json({ error: 'not_configured' }, 503)
+    if (!isSafeCsrf(c.req.raw.headers)) {
+      return c.json({ error: 'csrf' }, 403)
+    }
+    const ip = clientIp(c.req.raw)
+    if (!consume(ip)) {
+      return c.json({ error: 'rate_limited' }, 429)
+    }
+    let body: unknown
+    try {
+      body = await c.req.json()
+    } catch {
+      return c.json({ error: 'bad_request', detail: 'body must be JSON' }, 400)
+    }
+    const idToken = (body as { idToken?: unknown } | null)?.idToken
+    if (typeof idToken !== 'string' || idToken.length === 0) {
+      return c.json({ error: 'bad_request', detail: 'expected { idToken }' }, 400)
+    }
+    const identity = await verifyGoogleIdToken(idToken, google)
+    if (!identity) {
+      return c.json({ error: 'invalid_token' }, 401)
+    }
+    const session: Session = {
+      // Namespace real Google identities with `google:<sub>`. Stable across
+      // sign-in/sign-out cycles so a returning user keeps their progress.
+      userId: `google:${identity.sub}`,
+      displayName: identity.displayName,
+      email: identity.email,
+      iat: Date.now(),
+    }
+    const token = await signSession(session, auth.secrets[0])
+    return c.json(
+      { userId: session.userId, displayName: session.displayName, email: session.email },
+      200,
+      {
+        'Set-Cookie': buildSetCookie(token, {
+          maxAgeSec: auth.cookieMaxAgeSec,
+          secure: auth.secureCookies,
+        }),
+        'Cache-Control': 'no-store',
+      },
+    )
+  })
+
+  // Public config — tells the client whether real Google Sign-In is
+  // configured (so it can choose the official button over the mock one)
+  // and, if so, the client ID. Never returns secrets.
+  app.get('/config', (c) =>
+    c.json(
+      {
+        googleClientId: google?.clientId ?? null,
+      },
+      200,
+      { 'Cache-Control': 'no-store' },
+    ),
+  )
 
   app.post('/auth/logout', (c) =>
     c.json(

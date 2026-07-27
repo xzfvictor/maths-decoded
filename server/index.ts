@@ -11,6 +11,7 @@ import { createApp } from './app'
 import { log } from './logger'
 import { DEFAULT_AUTH_CONFIG, type AuthConfig } from './auth'
 import { makeNodeProgressStore } from './progressStore.node'
+import type { GoogleConfig } from './googleAuth'
 import * as crypto from 'node:crypto'
 
 const PORT = Number(process.env.PORT ?? 8787)
@@ -54,16 +55,26 @@ const DATA_DIR = process.env.DATA_DIR ?? './data'
 const store = makeNodeProgressStore(DATA_DIR)
 
 // ---------------------------------------------------------------------------
+// Optional Google OAuth. When GOOGLE_CLIENT_ID is set, the real
+// /api/auth/google endpoint is exposed; otherwise the client falls back
+// to the dev-only mock sign-in (which 404s in production anyway).
+// ---------------------------------------------------------------------------
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID ?? ''
+const google: GoogleConfig | undefined = GOOGLE_CLIENT_ID
+  ? { clientId: GOOGLE_CLIENT_ID }
+  : undefined
+
+// ---------------------------------------------------------------------------
 // Boot.
 // ---------------------------------------------------------------------------
 if (ephemeral) {
   log('boot.warn', {
     reason: 'AUTH_SECRET is not set — generated an ephemeral dev secret. Sessions will NOT survive a restart. Set AUTH_SECRET in your env to keep progress across restarts.',
-    hint: 'node -e "console.log(require(\\"crypto\\").randomBytes(32).toString(\\"hex\\"))"',
+    hint: 'node -p "require(\\"crypto\\").randomBytes(32).toString(\\"hex\\")"',
   })
 }
 
-const app = createApp({ auth, store })
+const app = createApp({ auth, store, google })
 
 serve({ fetch: app.fetch, port: PORT }, (info) => {
   log('boot', {
@@ -74,5 +85,6 @@ serve({ fetch: app.fetch, port: PORT }, (info) => {
     dataDir: DATA_DIR,
     devMode: auth.devMode,
     ephemeralSecret: ephemeral,
+    googleConfigured: !!google,
   })
 })
