@@ -6,6 +6,12 @@
  * /Cloudflare with no edits.
  */
 
+// Node 21.7+: load .env into process.env before reading any of it. Shell
+// variables take precedence (Node's `loadEnvFile` only fills in keys that
+// aren't already set). Silently no-ops when .env doesn't exist (e.g. in
+// CI or Vercel, where env is supplied by the platform).
+await process.loadEnvFile('.env')
+
 import { serve } from '@hono/node-server'
 import { createApp } from './app'
 import { log } from './logger'
