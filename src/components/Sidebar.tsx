@@ -234,8 +234,8 @@ function PreVceSidebarSection({
 
 /**
  * Derive which module to show in the sidebar from the current route.
- * - /unit-1* → Unit 1 topics
- * - /unit-2* → Unit 2 topics
+ * - /maths-methods-unit1* → Unit 1 topics
+ * - /maths-methods-unit2* → Unit 2 topics
  * - /pre-vce* → Pre-VCE topics
  * - /topic/:id[/...] → look up the topic and pick the module that contains it
  * - / (landing) → default to Unit 1
@@ -247,17 +247,17 @@ function PreVceSidebarSection({
 function useActiveModule(): ModuleId {
   const { pathname } = useLocation()
   if (pathname.startsWith('/pre-vce')) return 'pre-vce'
-  if (pathname.startsWith('/unit-2')) return 'unit-2'
-  if (pathname.startsWith('/unit-1')) return 'unit-1'
+  if (pathname.startsWith('/maths-methods-unit2')) return 'maths-methods-unit2'
+  if (pathname.startsWith('/maths-methods-unit1')) return 'maths-methods-unit1'
   // Match /topic/:id or /topic/:id/:lessonId — both start with /topic/.
   const topicMatch = pathname.match(/^\/topic\/([^/]+)/)
   if (topicMatch) {
     const t = topicById(topicMatch[1])
-    if (t?.unit === 1) return 'unit-1'
-    if (t?.unit === 2) return 'unit-2'
+    if (t?.unit === 1) return 'maths-methods-unit1'
+    if (t?.unit === 2) return 'maths-methods-unit2'
     if (t?.unit === 10) return 'pre-vce'
   }
-  return 'unit-1'
+  return 'maths-methods-unit1'
 }
 
 /** Same caveat as useActiveModule — parse from the pathname, not useParams. */
@@ -297,10 +297,10 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         ← Switch module
       </NavLink>
 
-      {activeModule === 'unit-1' && (
+      {activeModule === 'maths-methods-unit1' && (
         <UnitSidebarSection unit={1} activeTopicId={activeTopicId} onNavigate={onNavigate} />
       )}
-      {activeModule === 'unit-2' && (
+      {activeModule === 'maths-methods-unit2' && (
         <UnitSidebarSection unit={2} activeTopicId={activeTopicId} onNavigate={onNavigate} />
       )}
       {activeModule === 'pre-vce' && (

@@ -14,5 +14,13 @@ export default defineConfig({
       // project root explicitly.
       allow: ['.'],
     },
+    // Forward /api/* to the locally-running Hono node server (port 8787).
+    // The same shape nginx/caddy use in production, so dev mirrors prod.
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8787',
+        changeOrigin: false,
+      },
+    },
   },
 })

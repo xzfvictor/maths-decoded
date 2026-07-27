@@ -1,5 +1,6 @@
 import type { Topic, Unit } from '../types'
 import { DOT_POINTS, STRANDS, type Strand } from '../coverage'
+import { LESSON_INTROS } from '../_intros'
 
 // Import each authored topic. Stubs (skeleton with dotPoints only) and fully
 // authored topics share the same Topic shape, so this list is the single source
@@ -60,7 +61,7 @@ import { conditionalProbability } from './22-conditional-probability'
 // Topics are registered here in curriculum order. As more are authored they get
 // added to this array. The coverage checker reads TOPICS to verify every dot
 // point is claimed.
-export const TOPICS: Topic[] = [
+const _RAW_TOPICS: Topic[] = [
   functionsRelations,
   inverseFunctions,
   linearQuadratic,
@@ -115,6 +116,47 @@ export const TOPICS: Topic[] = [
   probabilityExperiments,
 ]
 
+// Merge AI-generated intro exercises (one per lesson that lacks one) into
+// each lesson. The `_intros.ts` sidecar is produced by `npm run seed:intros`
+// and is auto-regenerated — never edit by hand.
+//
+// Two concerns folded into this single pass:
+//   1. Drop any duplicate intro entries a lesson may already have in its
+//      source data (some lessons had two hand-authored intros). We keep
+//      only the first encountered.
+//   2. If the sidecar has an AI-generated intro for this lesson, it
+//      REPLACES the source intros entirely — exactly one intro per lesson.
+export const TOPICS: Topic[] = _RAW_TOPICS.map((topic) => {
+  const introsForTopic = LESSON_INTROS[topic.id]
+  return {
+    ...topic,
+    lessons: topic.lessons.map((lesson) => {
+      const sidecarIntro = introsForTopic?.[lesson.id]
+      if (sidecarIntro) {
+        return {
+          ...lesson,
+          // Sidecar intro wins. Drop any source intros and use it as the
+          // sole intro; non-intro exercises are preserved.
+          exercises: [
+            sidecarIntro,
+            ...lesson.exercises.filter((e) => e.difficulty !== 'intro'),
+          ],
+        }
+      }
+      // No sidecar: dedupe the source intros in-place. Keep the first
+      // exercise with `difficulty === 'intro'`; drop any subsequent ones.
+      let keptFirstIntro = false
+      const exercises = lesson.exercises.filter((ex) => {
+        if (ex.difficulty !== 'intro') return true
+        if (keptFirstIntro) return false
+        keptFirstIntro = true
+        return true
+      })
+      return { ...lesson, exercises }
+    }),
+  }
+})
+
 export function topicById(id: string): Topic | undefined {
   return TOPICS.find((t) => t.id === id)
 }
@@ -149,17 +191,17 @@ export const UNIT_TITLES: Record<Unit, string> = {
  * Each VCE unit is its own module so a student studying Unit 1 doesn't have
  * Unit 2 topics crowding the sidebar; Pre-VCE Year 10 is its own module.
  */
-export type ModuleId = 'unit-1' | 'unit-2' | 'pre-vce'
+export type ModuleId = 'maths-methods-unit1' | 'maths-methods-unit2' | 'pre-vce'
 
 export const MODULES: { id: ModuleId; title: string; tagline: string; units: Unit[] }[] = [
   {
-    id: 'unit-1',
+    id: 'maths-methods-unit1',
     title: 'VCE Mathematical Methods — Unit 1',
     tagline: 'Functions, algebra, calculus & probability',
     units: [1],
   },
   {
-    id: 'unit-2',
+    id: 'maths-methods-unit2',
     title: 'VCE Mathematical Methods — Unit 2',
     tagline: 'Transcendental functions, calculus & probability',
     units: [2],
@@ -178,8 +220,8 @@ export function moduleById(id: ModuleId) {
 
 /** Map a unit number to its parent module. */
 export function moduleForUnit(unit: Unit): ModuleId | undefined {
-  if (unit === 1) return 'unit-1'
-  if (unit === 2) return 'unit-2'
+  if (unit === 1) return 'maths-methods-unit1'
+  if (unit === 2) return 'maths-methods-unit2'
   if (unit === 10) return 'pre-vce'
   return undefined
 }

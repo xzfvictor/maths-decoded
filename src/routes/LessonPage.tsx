@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { topicById } from '../content/topics'
 import { Prose } from '../components/Prose'
-import { ExerciseCard } from '../components/ExerciseCard'
+import { PracticeLadder } from '../components/PracticeLadder'
 import { WorkedExample } from '../components/WorkedExample'
 import { LessonAudio } from '../components/LessonAudio'
 import { isLessonDone, setLessonDone } from '../lib/storage'
@@ -107,20 +107,35 @@ export function LessonPage() {
         </section>
       )}
 
-      {/* Exercises. */}
+      {/* Exercises + the AI Generated Questions panel. The panel renders the
+          existing exercises (just the intro by default) plus a section
+          with two buttons that generate fresh questions as the student
+          climbs the difficulty ladder. */}
       {lesson.exercises.length > 0 && (
         <section className="mb-8">
-          <h2 className="mb-4 text-2xl font-bold text-slate-900 dark:text-white">Exercises</h2>
-          <p className="mb-3 -mt-2 text-sm text-slate-500 dark:text-slate-400">
+          <h2 className="mb-4 text-2xl font-bold text-slate-900 dark:text-white">
+            Exercises
+          </h2>
+          <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">
             Have a go on paper first — it's the difference between "I can follow a worked
             solution" and "I can solve it myself". Use the hint if you're stuck, and
             reveal the worked solution only after you've genuinely tried.
           </p>
-          <div className="space-y-4">
-            {lesson.exercises.map((ex) => (
-              <ExerciseCard key={ex.id} topicId={topic.id} exercise={ex} />
-            ))}
-          </div>
+          <p className="mb-4 text-xs text-slate-500 dark:text-slate-400">
+            Each lesson opens with one{' '}
+            <span className="font-semibold text-emerald-700 dark:text-emerald-300">Intro</span>{' '}
+            question. Solve it, then click{' '}
+            <span className="font-semibold text-amber-700 dark:text-amber-300">Harder</span>{' '}
+            below to generate a Core variant, then a Challenge. The Harder button greys
+            out until the current level is solved; the ladder caps at Challenge with a
+            celebration message.
+          </p>
+          <PracticeLadder
+            key={`${topic.id}/${lesson.id}`}
+            topicId={topic.id}
+            lessonId={lesson.id}
+            exercises={lesson.exercises}
+          />
         </section>
       )}
 

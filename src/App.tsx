@@ -81,8 +81,8 @@ export default function App() {
         <main className={`flex-1 px-4 py-8 sm:px-8 ${onLanding ? '' : ''}`}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/unit-1" element={<UnitHome unit={1} moduleId="unit-1" />} />
-            <Route path="/unit-2" element={<UnitHome unit={2} moduleId="unit-2" />} />
+            <Route path="/maths-methods-unit1" element={<UnitHome unit={1} moduleId="maths-methods-unit1" />} />
+            <Route path="/maths-methods-unit2" element={<UnitHome unit={2} moduleId="maths-methods-unit2" />} />
             <Route path="/pre-vce" element={<PreVceHome />} />
             <Route path="/topic/:id" element={<TopicPage />} />
             <Route path="/topic/:id/:lessonId" element={<LessonPage />} />

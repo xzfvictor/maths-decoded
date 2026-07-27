@@ -20,3 +20,11 @@ yarn-error.log*
 # Local cache for the AI audio generator — caches the discovered TTS
 # endpoint so we don't re-probe every run.
 .audio-tts-endpoint
+
+# Local env files (server reads $ANTHROPIC_AUTH_TOKEN at runtime — keep it out of git).
+.env
+.env.*
+!.env.example
+
+# Claude Code local state (sessions, plans, history, daemon logs, etc.)
+.claude/

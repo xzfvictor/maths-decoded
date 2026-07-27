@@ -77,29 +77,29 @@ export function LandingPage() {
 }
 
 function badgeClass(id: string): string {
-  if (id === 'unit-1')
+  if (id === 'maths-methods-unit1')
     return 'bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200'
-  if (id === 'unit-2')
+  if (id === 'maths-methods-unit2')
     return 'bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-200'
   return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200'
 }
 
 function badgeLabel(id: string): string {
-  if (id === 'unit-1') return 'Unit 1'
-  if (id === 'unit-2') return 'Unit 2'
+  if (id === 'maths-methods-unit1') return 'Unit 1'
+  if (id === 'maths-methods-unit2') return 'Unit 2'
   return 'Pre-VCE'
 }
 
 function description(id: string): string {
-  if (id === 'unit-1')
+  if (id === 'maths-methods-unit1')
     return 'Functions, algebra, calculus and probability — the first half of VCE Mathematical Methods. Eleven topics that build on each other in order.'
-  if (id === 'unit-2')
+  if (id === 'maths-methods-unit2')
     return 'Transcendental functions, calculus and probability — the second half. Eleven topics covering circular functions, exponentials, logs, calculus and more.'
   return 'Year 10 foundations organised into the six strands (Number, Algebra, Measurement, Space, Statistics, Probability). Use as a refresher before VCE, or on its own.'
 }
 
 function openLabel(id: string): string {
-  if (id === 'unit-1') return 'Open Unit 1'
-  if (id === 'unit-2') return 'Open Unit 2'
+  if (id === 'maths-methods-unit1') return 'Open Unit 1'
+  if (id === 'maths-methods-unit2') return 'Open Unit 2'
   return 'Open Pre-VCE'
 }

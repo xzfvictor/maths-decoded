@@ -22,6 +22,14 @@ touching the rest of the codebase.
 - **Practise with feedback.** Exercises check your answer, offer a hint, and
   reveal a step-by-step solution. Many are randomised, so you get a fresh
   question each time.
+- **Refresh with AI variants.** Stumped or bored by a question? Use the
+  lesson-level **AI Generated Questions** panel at the bottom of the exercises section.
+  Two buttons — **Similar question** (re-roll at the same difficulty) and
+  **Harder question** (climb one level up) — generate fresh practice from
+  the dot points you've already learned. Cap at `challenge`; once you
+  clear the hardest card, the **Harder** button disappears with a
+  congratulatory note. See "Self-hosting the regenerate server" below for
+  what runs that endpoint.
 - **Listen before you read.** Each lesson has an "Explain to me" button that
   plays a short AI-narrated overview, with a transcript you can read along to.
 - **Track your progress.** Completed lessons and exercise scores are saved
@@ -40,9 +48,9 @@ The landing page (`/`) asks the student to choose between the current
 modules. New modules (other subjects) plug into the same picker with no
 code changes outside `src/content/topics/index.ts`.
 
-- **VCE Mathematical Methods — Unit 1** — `/unit-1`. Functions, algebra,
+- **VCE Mathematical Methods — Unit 1** — `/maths-methods-unit1`. Functions, algebra,
   calculus and probability. Eleven topics covering all Unit 1 dot points.
-- **VCE Mathematical Methods — Unit 2** — `/unit-2`. Transcendental functions,
+- **VCE Mathematical Methods — Unit 2** — `/maths-methods-unit2`. Transcendental functions,
   calculus and probability. Eleven topics covering all Unit 2 dot points.
 - **Pre-VCE Year 10 Maths** — `/pre-vce`. Year 10 foundations organised into the
   six Victorian Curriculum strands (Number, Algebra, Measurement, Space,
@@ -74,12 +82,17 @@ topic walkthrough.
 
 ## Tech stack
 
-Static single-page app — no backend.
+Static single-page app — content and coverage are bundled into the
+client. A small [Hono](https://hono.dev/) Node server (`server/`) handles
+the one runtime call (regenerating exercises on thumb-down) so the API
+key never reaches the browser. Self-hostable today; portable to Vercel
+or Cloudflare later.
 
 - [Vite](https://vitejs.dev/) + [React](https://react.dev/) + TypeScript
 - [Tailwind CSS](https://tailwindcss.com/) (light/dark mode)
 - [KaTeX](https://katex.org/) for maths rendering
 - [React Router](https://reactrouter.com/) (hash routing, so it runs from any static host)
+- [Hono](https://hono.dev/) + `@hono/node-server` for the regenerate API
 
 ## Getting started
 
@@ -87,16 +100,26 @@ Requires [Node.js](https://nodejs.org/) 18+.
 
 ```bash
 npm install       # install dependencies
-npm run dev       # start the dev server (http://localhost:5173)
+npm run dev:all   # start the Vite dev server + the API server (http://localhost:5173, http://localhost:8787)
+```
+
+For the Vite dev server only (static UI without the regenerate API):
+
+```bash
+npm run dev
 ```
 
 ## Scripts
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Start the local development server. |
+| `npm run dev` | Start the Vite dev server (port 5173). |
+| `npm run dev:server` | Start only the Hono API server (port 8787). |
+| `npm run dev:all` | Start both via `concurrently` — the typical dev workflow. |
+| `npm run start:server` | Production start of the API server (run behind nginx/caddy). |
 | `npm run build` | Type-check and build the production site into `dist/`. |
 | `npm run preview` | Serve the built site locally. |
+| `npm run test:regenerate` | End-to-end test against a running server. Requires `npm run dev:server` in another shell. |
 | `npm run check:coverage` | Verify every syllabus dot point is claimed by a topic. |
 | `npm run check:exercises` | Validate every randomised exercise across 300 seeds. |
 | `npm run generate:audio` | Pre-generate AI "Explain to me" audio for every lesson (writes to `public/audio/lessons/`). |
@@ -183,7 +206,7 @@ Module → Topic → Lessons → Worked examples + Exercises
 ```
 
 - **Modules** are defined in [`src/content/topics/index.ts`](./src/content/topics/index.ts)
-  (`MODULES`). The current modules are `unit-1`, `unit-2`, and `pre-vce`. New
+  (`MODULES`). The current modules are `maths-methods-unit1`, `maths-methods-unit2`, and `pre-vce`. New
   modules (other subjects) are added by appending to `MODULES` and wiring
   their home route.
 - **Topics** live in [`src/content/topics/`](./src/content/topics/) and are
@@ -207,6 +230,37 @@ npm run build     # outputs a static site to dist/
 The `dist/` folder can be served by any static host (GitHub Pages, Netlify,
 Vercel, or a plain file server). Because routing uses hash URLs and asset
 paths are relative, no special server configuration is needed.
+
+## Self-hosting the regenerate server
+
+The regenerate API is in `server/`. The same `Hono` app definition is
+portable to Vercel and Cloudflare Workers with a one-file adapter.
+
+For self-host:
+
+1. Copy `.env.example` to `.env` and fill in `ANTHROPIC_AUTH_TOKEN`.
+2. Build the static bundle:
+   ```bash
+   npm run build
+   ```
+3. Run the API as a long-lived process:
+   ```bash
+   npm run start:server
+   ```
+4. Front both with nginx or caddy. The static site serves at `/`;
+   `/api/*` proxies to `http://127.0.0.1:8787`. Example caddyfile:
+   ```
+   maths.example.com {
+       root * /var/www/maths-decoded/dist
+       file_server
+       reverse_proxy /api/* 127.0.0.1:8787
+   }
+   ```
+
+The API holds the token — it is **never** sent to the browser. Each request
+is rate-limited per IP (10 tokens, refills 1 / 36 s) and identical exercise
+regenerations are cached for 24 h. Migrations to Vercel or Cloudflare
+Workers are documented in `CLAUDE.md`.
 
 ## Disclaimer
 

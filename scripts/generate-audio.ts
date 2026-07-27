@@ -28,6 +28,7 @@
 
 import { TOPICS } from '../src/content/topics'
 import type { Topic, Lesson } from '../src/content/types'
+import { callM3 } from './lib/m3'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 
@@ -108,37 +109,6 @@ function buildPrompt(topic: Topic, lesson: Lesson): string {
   ]
     .filter(Boolean)
     .join('\n')
-}
-
-async function callM3(prompt: string): Promise<string> {
-  if (!AUTH_TOKEN) throw new Error('ANTHROPIC_AUTH_TOKEN is not set')
-  const res = await fetch(`${BASE_URL}/v1/messages`, {
-    method: 'POST',
-    headers: {
-      authorization: `Bearer ${AUTH_TOKEN}`,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 600,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  })
-  if (!res.ok) {
-    const err = await res.text().catch(() => '')
-    throw new Error(`M3 ${res.status}: ${err.slice(0, 300)}`)
-  }
-  const json = (await res.json()) as {
-    content?: { type: string; text?: string }[]
-  }
-  const text = (json.content ?? [])
-    .filter((b) => b.type === 'text' && typeof b.text === 'string')
-    .map((b) => b.text)
-    .join('\n')
-    .trim()
-  if (!text) throw new Error('M3 returned empty content')
-  return text
 }
 
 // --- TTS probe ------------------------------------------------------------
@@ -309,7 +279,16 @@ async function processLesson(t: Topic, l: Lesson, tts: TTSEndpoint | null): Prom
 
   if (!script || FORCE) {
     process.stdout.write(`  · M3 → ${t.id}/${l.id} … `)
-    script = await callM3(buildPrompt(t, l))
+    const result = await callM3(buildPrompt(t, l), {
+      baseUrl: BASE_URL,
+      authToken: AUTH_TOKEN,
+      model: MODEL,
+      maxTokens: 600,
+    })
+    if (result.kind !== 'text') {
+      throw new Error('M3 returned unexpected tool output for audio script')
+    }
+    script = result.text
     await fs.writeFile(jsonPath, script, 'utf8')
     process.stdout.write(`script saved (${script.length} chars) `)
   } else {

@@ -26,7 +26,7 @@ export function UnitHome({
   // Find the natural "next module" — for Unit 1 it's Unit 2; for Unit 2
   // there isn't one, so we offer a link back to Pre-VCE for revision instead.
   const nextModuleId: ModuleId | undefined =
-    moduleId === 'unit-1' ? 'unit-2' : undefined
+    moduleId === 'maths-methods-unit1' ? 'maths-methods-unit2' : undefined
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -84,7 +84,7 @@ export function UnitHome({
             className="mt-1 block text-lg font-semibold text-slate-900 hover:text-brand-700 dark:text-white"
           >
             Continue to{' '}
-            {nextModuleId === 'unit-2'
+            {nextModuleId === 'maths-methods-unit2'
               ? 'Unit 2 — Transcendental functions, calculus & probability'
               : ''}{' '}
             →
