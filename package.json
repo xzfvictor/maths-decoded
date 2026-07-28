@@ -15,11 +15,14 @@
     "check:exercises": "tsx scripts/verify.ts",
     "test:regenerate": "tsx scripts/test-regenerate.ts",
     "seed:intros": "tsx scripts/seed-intros.ts",
-    "generate:audio": "tsx scripts/generate-audio.ts"
+    "generate:audio": "tsx scripts/generate-audio.ts",
+    "seed:dev-user": "tsx scripts/seed-dev-user.ts",
+    "reset:progress": "tsx scripts/reset-progress.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.0.12",
     "hono": "^4.12.32",
+    "jose": "^6.2.4",
     "katex": "^0.16.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

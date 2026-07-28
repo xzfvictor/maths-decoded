@@ -6,13 +6,15 @@ import { UnitHome } from './routes/UnitHome'
 import { PreVceHome } from './routes/PreVceHome'
 import { TopicPage } from './routes/TopicPage'
 import { LessonPage } from './routes/LessonPage'
-import { toggleTheme, isDark } from './lib/theme'
+import { ThemeToggle } from './components/ThemeToggle'
+import { useSession } from './lib/auth'
+import { signOut } from './lib/auth'
 import { resetProgress } from './lib/storage'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [dark, setDark] = useState(() => isDark())
   const location = useLocation()
+  const auth = useSession()
   // Hide the header chrome on the landing page — it's the module picker,
   // no nav needed and the screen reads better without it.
   const onLanding = location.pathname === '/'
@@ -59,6 +61,15 @@ export default function App() {
               >
                 ← Modules
               </a>
+              {auth.status === 'authed' && (
+                <button
+                  onClick={() => void signOut()}
+                  className="rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  title={`Signed in as ${auth.session.displayName}`}
+                >
+                  Sign out
+                </button>
+              )}
               <button
                 onClick={() => {
                   if (confirm('Reset all progress on this device?')) resetProgress()
@@ -67,13 +78,7 @@ export default function App() {
               >
                 Reset progress
               </button>
-              <button
-                onClick={() => setDark(toggleTheme())}
-                className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                aria-label="Toggle dark mode"
-              >
-                {dark ? '☀️' : '🌙'}
-              </button>
+              <ThemeToggle />
             </div>
           </header>
         )}

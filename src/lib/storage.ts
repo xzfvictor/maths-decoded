@@ -34,6 +34,9 @@ function write(p: Progress) {
     localStorage.setItem(KEY, JSON.stringify(p))
     // Notify listeners in the same tab (storage event only fires cross-tab).
     window.dispatchEvent(new Event('vce-progress'))
+    // Carry the new value so debounced sync to the server can read it
+    // without re-parsing localStorage. See `progressSync.ts`.
+    window.dispatchEvent(new CustomEvent<Progress>('vce-progress-write', { detail: p }))
   } catch {
     /* quota or privacy mode — progress simply won't persist */
   }
@@ -76,4 +79,44 @@ export function resetProgress() {
   if (typeof localStorage === 'undefined') return
   localStorage.removeItem(KEY)
   window.dispatchEvent(new Event('vce-progress'))
+  window.dispatchEvent(new CustomEvent<Progress>('vce-progress-write', { detail: empty }))
+}
+
+/** Merge two progress snapshots. Used when reconciling local with server.
+ *  Semantics: lesson union (set), per-topic counters take the max. This
+ *  never decreases a counter — counters only grow as the student works. */
+export function mergeProgress(local: Progress, server: Progress): Progress {
+  const lessons: Record<string, string[]> = { ...local.lessons }
+  for (const [topicId, ids] of Object.entries(server.lessons)) {
+    const merged = new Set([...(lessons[topicId] ?? []), ...ids])
+    lessons[topicId] = [...merged]
+  }
+  const exercises: Record<string, { attempted: number; correct: number }> = {
+    ...local.exercises,
+  }
+  for (const [topicId, next] of Object.entries(server.exercises)) {
+    const cur = exercises[topicId]
+    exercises[topicId] = cur
+      ? { attempted: Math.max(cur.attempted, next.attempted), correct: Math.max(cur.correct, next.correct) }
+      : { ...next }
+  }
+  return { lessons, exercises }
+}
+
+/** Shallow-equality check for change detection (skip no-op sync writes). */
+export function progressEqual(a: Progress, b: Progress): boolean {
+  const aTopics = new Set([...Object.keys(a.lessons), ...Object.keys(a.exercises)])
+  const bTopics = new Set([...Object.keys(b.lessons), ...Object.keys(b.exercises)])
+  if (aTopics.size !== bTopics.size) return false
+  for (const t of aTopics) {
+    if (!bTopics.has(t)) return false
+    const al = (a.lessons[t] ?? []).slice().sort().join('|')
+    const bl = (b.lessons[t] ?? []).slice().sort().join('|')
+    if (al !== bl) return false
+    const ae = a.exercises[t]
+    const be = b.exercises[t]
+    if ((ae?.attempted ?? 0) !== (be?.attempted ?? 0)) return false
+    if ((ae?.correct ?? 0) !== (be?.correct ?? 0)) return false
+  }
+  return true
 }
