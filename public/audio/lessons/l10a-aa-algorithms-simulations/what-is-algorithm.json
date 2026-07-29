@@ -1,0 +1,5 @@
+In this lesson, we'll look at what an algorithm actually is. At its heart, an algorithm is just a finite, ordered, repeatable list of steps that always finishes. It takes some input, follows the steps one after another, and gives you an output. The key rule is that it has to terminate, meaning it can't loop forever. A simple example is finding the biggest of three numbers: read the three values, start by assuming the first is the largest, then check the second, then the third, and update your answer as you go before outputting the maximum.
+
+Now, we don't usually write algorithms in real programming code because that's too strict for maths. Instead, we use something called pseudocode, which is just informal English mixed with a bit of maths notation. Think of lines like "read x", or "if x is negative, set x equal to the opposite of x", and then "output x". Anyone can read it.
+
+So why bother with algorithms in maths? Because plenty of problems don't have a neat formula, so we use an iterative approach: do a step, check the answer, then refine it. Methods like bisection and Newton's method are famous examples we'll meet later. Now let's see it in action.

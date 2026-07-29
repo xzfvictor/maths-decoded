@@ -1,0 +1,5 @@
+In this lesson we'll look at what stays the same and what changes when you enlarge a shape. First, the stuff that stays the same. An enlargement keeps the shape exactly the same, just bigger or smaller. So all the angles are unchanged, parallel lines stay parallel, and a circle stays a circle. That's why we call the new shape similar to the original.
+
+Now, the stuff that changes. Every length gets multiplied by the size of the scale factor, which we call k. So if k is three, every side becomes three times as long. Areas scale up much faster, because area is length times length, so each area gets multiplied by k squared. Imagine a little square one centimetre by one centimetre. When you enlarge it by k, you can fit k by k copies of that little square inside, giving an area of k squared. Volumes scale even faster, by k cubed, because you're filling a cube with k by k by k tiny cubes. So lengths grow by k, areas by k squared, and volumes by k cubed.
+
+Now let's see it in action.

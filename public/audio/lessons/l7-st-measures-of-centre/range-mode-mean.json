@@ -1,0 +1,13 @@
+In this lesson we'll look at four simple ways to summarise a list of numbers into a single value. Think of it like squashing a whole data set down so you can describe it quickly.
+
+First, the range. That's just your biggest value minus your smallest value. It tells you how spread out the data is, but watch out — one extreme outlier can make the range look way bigger than the data really is.
+
+Next, the mode. That's the value that shows up most often. A set might have no mode if every value is unique, one mode, or even two modes, which we call bimodal.
+
+Then there's the mean, the everyday average. You add everything up and divide by how many values you have. The mean uses every single number, which also means an outlier can pull it around quite a lot.
+
+Finally, the median, the middle value. Line your data up from smallest to largest. If you have an odd count, it's the one right in the middle. If you have an even count, it's the average of the two middle numbers. Because it only cares about position, one outlier barely moves it.
+
+And remember, these work whether your data is discrete, like number of siblings, or continuous, like height.
+
+Now let's see it in action.

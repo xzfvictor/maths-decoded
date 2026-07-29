@@ -1,0 +1,9 @@
+In this lesson, we'll look at what an algorithm actually is, and why it matters for solving spatial problems. At its heart, an algorithm is just a step-by-step procedure that takes some inputs, follows clear rules, and finishes with an output. Think of a recipe, but one that always has to end with a plate of food.
+
+Three properties make a good algorithm. It's definite, so every step is unambiguous and there's no guessing. It's finite, meaning it always finishes, no infinite loops. And it's effective, so each step is something we can actually do.
+
+Now, spatial algorithms are the same idea, but the inputs are geometric things, like coordinates, side lengths, or angles, and the outputs are geometric facts, like a distance, an area, or the type of shape you're dealing with.
+
+We also want to tell pseudocode apart from real code. Pseudocode is just plain-English notation for an algorithm. It lets you think through the logic without worrying about any programming language. And most algorithms boil down to three structures: sequence, which is just doing step A, then B, then C; selection, or if-else branching; and iteration, which is looping until a condition stops you.
+
+Now let's see it in action.

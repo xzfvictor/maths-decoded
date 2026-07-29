@@ -1,0 +1,9 @@
+In this lesson, we'll look at how to measure a circle, both the distance around it and the space it covers. First, you need to know two key terms. The radius is the distance from the centre of the circle to its edge, and the diameter is the full distance across the circle, passing straight through the centre. A really important relationship is that the diameter is just twice the radius, so if you know one, you can quickly find the other.
+
+Next up is the circumference, which is the fancy word for the distance around the outside of the circle. There's a simple formula for this, two times pi times the radius. Pi is that special number, roughly three point one four, that you keep in your calculator for accuracy.
+
+Then we have the area, meaning the space inside the circle. The formula here is pi times the radius squared. And here's the classic trap, so listen up. The area uses the radius, not the diameter. If a question gives you the diameter, you have to halve it before you square it, otherwise your answer will be four times too big.
+
+Finally, a quick word on units. Circumference is a length, so use centimetres or metres. Area is two dimensional, so it's centimetres squared or metres squared. Keep pi exact in your calculator until the very end so rounding doesn't throw you off.
+
+Now let's see it in action.

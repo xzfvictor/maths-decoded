@@ -1,0 +1,7 @@
+In this lesson we'll look at the big choice you face in any two-step chance experiment: do you put the first item back before drawing the second, or do you leave it out? That single decision changes everything that follows.
+
+Let's start with the easier case, with replacement. Here, after your first draw, you pop the item back into the bag. So when you reach in for the second draw, the bag looks exactly the same as it did the first time. The probabilities stay identical, and the two draws are independent of each other.
+
+Now flip to without replacement. This time, whatever you draw stays out. So the bag actually shrinks by one item. That means the probabilities on your second set of branches shift to reflect the new total, and the second draw depends on what happened first.
+
+Here's a quick picture. Imagine a bag with three red marbles and two blue, five in total. You draw one red and don't put it back. The chance of red on the first draw is three out of five. Now the bag only has two red and two blue left, so the chance of red on the second draw, given the first was red, drops to two out of four, or one half. Multiply them and you get three tenths for both draws being red. Notice how that second fraction changed, and that's the whole point. Now let's see it in action with a worked example.

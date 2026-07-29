@@ -1,0 +1,9 @@
+In this lesson we'll look at expanding and factorising binomial products, which just means multiplying two brackets together and then doing the reverse.
+
+Start with the easy case, a bracket with x plus a number, multiplied by another bracket with x plus another number. To expand it, you can use FOIL, which is a handy little checklist. First, multiply the x's together to get x squared. Then Outer, so x times the second number. Then Inner, the first number times x. And Last, the two plain numbers together. The two middle pieces, the x terms, combine into one x term, and the coefficient of that x is just the sum of the two numbers. The constant at the end is their product.
+
+For trickier brackets with numbers out the front, FOIL still works the same way, you just get a slightly messier middle term.
+
+Now for the reverse trick, factorising. If you've got a quadratic that starts with x squared, you want to split it back into two brackets. So you hunt for two numbers whose product is the constant at the end, and whose sum is the coefficient of x. Quick sign hint, if the constant is positive, both numbers share the same sign. If it's negative, the two numbers have opposite signs.
+
+Now let's see it in action.

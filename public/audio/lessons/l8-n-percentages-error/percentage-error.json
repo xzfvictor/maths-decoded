@@ -1,0 +1,7 @@
+In this lesson we'll look at percentage error, which is a quick way to judge how close a measurement or estimate is to the real answer. Whenever you measure something, there's almost always a small gap between what you get and the true value, and percentage error tells you how big that gap really is, relative to the truth.
+
+The idea is simple. You take the absolute error, which is just how far off you are, ignoring whether you're too high or too low, and you divide it by the true value. Then you turn that into a percentage. So the bigger the percentage, the worse the measurement, and the smaller the percentage, the more accurate you were.
+
+Here's the key thing to watch out for. The denominator has to be the true value, not the value you measured. If you divide by your own measurement instead, you'll get a different number, and it won't really tell you how accurate you were.
+
+Why do we even care? Scientists use it to show how reliable an experiment is, and engineers use it to set acceptable tolerances. As a rough guide, a couple of percent is excellent, but twenty percent would usually be unacceptable. Now let's see it in action.

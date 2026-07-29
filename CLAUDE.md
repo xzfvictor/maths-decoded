@@ -15,16 +15,22 @@ question** feature on curated exercises.
 
 The app is named after the core promise — *decode the syllabus, meet a
 beginner where they are* — and is designed to scale to new subjects by
-adding modules. The Mathematics module (the only one currently shipped)
-covers **all of VCE Mathematical Methods Units 1 & 2** plus the
-**Victorian Curriculum Level 10 (Pre-VCE) Mathematics** syllabus.
+adding modules. The Mathematics module covers **all of VCE Mathematical
+Methods Units 1 & 2** plus the **Victorian Curriculum F-10 Version 2.0
+Mathematics** syllabus for Levels 7, 8, 9, 10, and 10A.
 
-**Status:** Both modules are fully authored. **52 topics, 157 lessons, 383
-exercises** (281 curated + 102 randomised) covering **73/73 syllabus dot
-points** — 19 in Unit 1, 24 in Unit 2, and 30 in Pre-VCE Year 10. Unit 1 has
-11 topics; Unit 2 has 11 topics (each one is a separate file in
-`src/content/topics/` registered in the `TOPICS` array). Pre-VCE adds 30 more
-topics grouped into 6 strands.
+**Status:** Seven modules are registered. **162 topics** covering
+**183/183 syllabus dot points** — 19 in Unit 1, 24 in Unit 2, 31 in Year 7,
+29 in Year 8, 24 in Year 9, 30 in Year 10, and 26 in Year 10A. All 162 topics
+are fully authored: **363 lessons** and **729 exercises** (630 curated + 99
+parameterised). Each new lesson has a body with `###` headings, exactly 3
+worked examples, and a curated intro exercise; core and challenge variants
+are generated on demand from the `/api/regenerate-exercise` endpoint via
+the PracticeLadder. Unit 1 has 11 topics; Unit 2 has 11 topics; Year 10 has
+30 topics (each one is a separate file in `src/content/topics/` registered in
+the `TOPICS` array). Year 7, 8, 9, and 10A add 31 + 29 + 24 + 26 = 110 stub
+or fully authored topics.
+array). Year 7, 8, 9, and 10A add 31 + 29 + 24 + 26 = 110 stub topics.
 
 ## Stack
 
@@ -184,10 +190,14 @@ the move is final.
 ## App structure
 
 ```
-/                LandingPage — pick Unit 1, Unit 2, or Pre-VCE
+/                LandingPage — pick a module
+/year-7          LevelHome — Year 7 topics grouped by strand
+/year-8          LevelHome — Year 8 topics grouped by strand
+/year-9          LevelHome — Year 9 topics grouped by strand
+/year-10         LevelHome — Year 10 topics grouped by strand
+/year-10a        LevelHome — Year 10A topics grouped by strand
 /maths-methods-unit1          UnitHome — Unit 1 topics
 /maths-methods-unit2          UnitHome — Unit 2 topics
-/pre-vce         PreVceHome — Year 10 topics grouped by strand
 /topic/:id       TopicPage — lessons in a single topic
 /topic/:id/:lessonId
                  LessonPage — theory, worked examples, exercises
@@ -199,8 +209,9 @@ topic). The sidebar always shows a `← Switch module` link that returns to the
 landing page. Topic and lesson URLs are unchanged across modules, so a
 bookmarked lesson keeps working.
 
-Unit 1's home page shows a "Continue to Unit 2" card once the student has
-finished it, making the natural VCE progression one click away.
+Each module home shows a "Continue to …" card pointing at the next module
+in `MODULE_PROGRESSION` (Year 7 → 8 → 9 → 10 → 10A → VCE Unit 1 → VCE Unit 2),
+making the Foundation → VCE progression one click away.
 
 ## Content model (`src/content/types.ts`)
 
@@ -213,9 +224,11 @@ Exercise = CuratedExercise (fixed) | ParamExercise (build(seed) => ExerciseInsta
 ```
 
 - **Modules** are defined in `src/content/topics/index.ts` (`MODULES`). The
-  three modules are `maths-methods-unit1` (unit 1), `maths-methods-unit2` (unit 2), and `pre-vce`
-  (unit 10). Helpers `moduleForUnit`, `moduleForTopic`, `topicsForModule`,
-  `homePathForModule` resolve the mapping.
+  seven modules are `year-7`, `year-8`, `year-9`, `year-10`, `year-10a`
+  (Foundation levels 7–10A), `maths-methods-unit1` (VCE Unit 1), and
+  `maths-methods-unit2` (VCE Unit 2). Helpers `moduleForUnit`, `moduleForTopic`,
+  `topicsForModule`, `homePathForModule`, and the `MODULE_PROGRESSION` array
+  (Year 7 → 8 → 9 → 10 → 10A → VCE Unit 1 → VCE Unit 2) resolve the mapping.
 - A **Lesson** is one short study session. Keep its theory, examples, and
   exercises self-contained.
 - `body` and all solution/example strings are lightweight markdown + TeX.
@@ -264,8 +277,9 @@ write `"1/3"`, never `"\\dfrac{1}{3}"`.
 
 ## Coverage contract
 
-`src/content/coverage.ts` lists all 73 syllabus dot points (19 Unit 1, 24 Unit 2,
-30 Pre-VCE Year 10) with stable ids like `u1-al-6` and `m10-a-3`. Each `Topic`
+`src/content/coverage.ts` lists all 183 syllabus dot points (19 Unit 1, 24 Unit 2,
+31 Year 7, 29 Year 8, 24 Year 9, 30 Year 10, 26 Year 10A) with stable ids like
+`u1-al-6`, `m10-a-3`, `l7-n-1`, and `l10a-aa-1`. Each `Topic`
 declares the dot-point ids it covers in its `dotPoints` array.
 `scripts/check-coverage.ts` asserts every id is claimed by at least one topic.
 This is what makes "covers all study requirements" verifiable rather than a
@@ -287,8 +301,8 @@ promise.
 localStorage key `vce-mm-progress-v1`, tracking completed lessons and per-exercise
 attempt/correct counts. Updates fire a same-tab `vce-progress` event so the UI
 refreshes (`src/lib/useProgress.ts`). A legacy `sections` key is read for
-migration. Progress is shared across both modules — a student switching from
-VCE to Pre-VCE keeps their completion ticks.
+migration. Progress is shared across all modules — a student switching from
+Year 10 to VCE Unit 1 keeps their completion ticks.
 
 ## AI "Explain to me" audio (`scripts/generate-audio.ts`, `src/components/LessonAudio.tsx`)
 

@@ -1,0 +1,7 @@
+In this lesson we'll look at what makes an expression a polynomial. A polynomial in x is just a sum of terms, where each term is a real number multiplied by x raised to a whole number power, like zero, one, two, three, and so on. So five x cubed minus two x plus seven is a polynomial, because the powers are three, one, and zero, all non-negative. x squared minus one is also a polynomial, and even just the number six counts, since it's a constant, and we can think of it as six times x to the zero.
+
+Now, things that are not polynomials include anything with a negative or fractional exponent, like one over x, which is x to the negative one, or the square root of x, which is x to the one half. And two to the x is out too, because the variable is in the exponent, not the base.
+
+A few key words to remember. The degree is the biggest power that appears, so in our first example the degree is three. The leading coefficient is the number in front of that biggest term, and the constant term is the one left over when x is zero.
+
+Polynomials matter because they're the only expressions where we can divide exactly, and that division links to a beautiful theorem we'll meet soon. Now let's see it in action.

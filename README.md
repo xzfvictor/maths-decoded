@@ -2,10 +2,11 @@
 
 A self-study platform that breaks down a syllabus into short lessons, walks you
 through worked examples, and tests you with exercises that give full worked
-solutions. The landing page lets you pick a **module** — currently **VCE
-Mathematical Methods Units 1 & 2** plus a **Pre-VCE Year 10** foundation
-module — and the rest of the app narrows to that module so the student isn't
-distracted by material outside their course.
+solutions. The landing page lets you pick a **module** — currently the full
+**Victorian Curriculum F-10 Version 2.0 Mathematics** for Levels 7, 8, 9, 10,
+and 10A, plus **VCE Mathematical Methods Units 1 & 2** — and the rest of the
+app narrows to that module so the student isn't distracted by material outside
+their course.
 
 The app is named **MathsDecoded** because the core promise is the same for any
 subject: take the syllabus, demystify it, and meet a beginner where they are.
@@ -37,10 +38,15 @@ touching the rest of the codebase.
 - **Complete coverage, guaranteed.** A build-time check asserts that every
   syllabus dot point is covered by a topic.
 
-> **Status:** The Mathematics module is fully authored — **52 topics, 157
-> lessons, 383 exercises** (281 curated + 102 randomised) covering **73/73
-> syllabus dot points** (43 VCE + 30 Pre-VCE). The `check:coverage` script
-> asserts every dot point is claimed and stays green.
+> **Status:** Seven modules are registered — **162 topics** covering
+> **183/183 syllabus dot points** (19 VCE Unit 1, 24 VCE Unit 2, 31 Year 7,
+> 29 Year 8, 24 Year 9, 30 Year 10, 26 Year 10A). All topics are now fully
+> authored: **363 lessons** (157 from VCE/Year 10, 206 new across
+> Year 7–10A) and **729 exercises** (630 curated + 99 parameterised). Each
+> lesson has a body with `###` headings, 3 worked examples, and 1+ curated
+> intro exercises; core and challenge variants are generated on demand from
+> the `/api/regenerate-exercise` endpoint. The `check:coverage` and
+> `check:exercises` scripts assert the contract stays green.
 
 ## Modules
 
@@ -48,18 +54,24 @@ The landing page (`/`) asks the student to choose between the current
 modules. New modules (other subjects) plug into the same picker with no
 code changes outside `src/content/topics/index.ts`.
 
+- **Year 7 Mathematics** — `/year-7`. 31 topics across the six Victorian
+  Curriculum strands — currently stubs.
+- **Year 8 Mathematics** — `/year-8`. 29 topics — currently stubs.
+- **Year 9 Mathematics** — `/year-9`. 24 topics — currently stubs.
+- **Year 10 Mathematics** — `/year-10`. 30 fully authored topics across the
+  six strands; use as a refresher before VCE, or on its own.
+- **Year 10A Mathematics** — `/year-10a`. 26 topics — currently stubs (no
+  achievement standard; topics extend into VCE Methods).
 - **VCE Mathematical Methods — Unit 1** — `/maths-methods-unit1`. Functions, algebra,
   calculus and probability. Eleven topics covering all Unit 1 dot points.
 - **VCE Mathematical Methods — Unit 2** — `/maths-methods-unit2`. Transcendental functions,
   calculus and probability. Eleven topics covering all Unit 2 dot points.
-- **Pre-VCE Year 10 Maths** — `/pre-vce`. Year 10 foundations organised into the
-  six Victorian Curriculum strands (Number, Algebra, Measurement, Space,
-  Statistics, Probability). Use as a refresher before VCE, or on its own.
 
 Once a module is picked, the sidebar narrows to that module's topics and the
-app keeps that focus until the student returns to the landing page. Unit 1's
-home page offers a "Continue to Unit 2" card so the natural progression is
-one click away when Unit 1 is finished.
+app keeps that focus until the student returns to the landing page. Each
+module home shows a "Continue to …" card pointing at the next module in
+curriculum order (Year 7 → 8 → 9 → 10 → 10A → VCE Unit 1 → VCE Unit 2), so the
+natural Foundation → VCE progression is one click away.
 
 Topic and lesson URLs (`/topic/:id`, `/topic/:id/:lessonId`) are shared across
 modules — a bookmarked lesson opens in whichever module the sidebar thinks you
@@ -176,7 +188,7 @@ flow.
 21. Probability of compound events
 22. Conditional probability & independence
 
-### Pre-VCE — Year 10 Mathematics
+### Year 10 Mathematics (Victorian Curriculum F-10 V2.0)
 
 Organised into the six curriculum strands:
 
@@ -206,9 +218,10 @@ Module → Topic → Lessons → Worked examples + Exercises
 ```
 
 - **Modules** are defined in [`src/content/topics/index.ts`](./src/content/topics/index.ts)
-  (`MODULES`). The current modules are `maths-methods-unit1`, `maths-methods-unit2`, and `pre-vce`. New
-  modules (other subjects) are added by appending to `MODULES` and wiring
-  their home route.
+  (`MODULES`). The current modules are `year-7`, `year-8`, `year-9`, `year-10`,
+  `year-10a`, `maths-methods-unit1`, and `maths-methods-unit2`. New modules
+  (other subjects or year levels) are added by appending to `MODULES` and
+  wiring their home route.
 - **Topics** live in [`src/content/topics/`](./src/content/topics/) and are
   registered in the `TOPICS` array.
 - **Coverage** is defined in [`src/content/coverage.ts`](./src/content/coverage.ts):

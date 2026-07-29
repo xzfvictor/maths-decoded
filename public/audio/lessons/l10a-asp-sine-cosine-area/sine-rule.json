@@ -1,0 +1,7 @@
+In this lesson, we'll look at the sine rule, a handy tool for solving triangles when you know one side and its opposite angle. The big idea is simple: in any triangle, the sides are proportional to the sines of the angles across from them. So a longer side always sits opposite a larger angle.
+
+So when do you use it? Whenever you have one complete side and angle pair, and one extra piece of information, either another side or another angle. From there, two cases come up. If you're hunting for a missing side, you set up a proportion equating the ratio of a side to the sine of its opposite angle for two different sides, then rearrange to solve. If you're after a missing angle, you flip that idea around, set the sine of the unknown angle over the unknown side equal to a known ratio, and then use inverse sine to find the angle.
+
+Now, heads up on the ambiguous case. If you're given two sides and an angle opposite one of them, sometimes there are two possible triangles. A quick check on the side lengths tells you whether both solutions exist.
+
+The trick to staying organised? Always sketch the triangle first, label what you know and what you need, then match the ratios. Now let's see it in action.

@@ -1,0 +1,7 @@
+In this lesson, we'll look at how to find the area of triangles and parallelograms, starting from something you already know — the rectangle. Here's the big idea: a triangle is exactly half a rectangle, and a parallelogram is just a rectangle with a triangular notch that slides from one side to the other. So once you're comfortable with the rectangle, the other two are easy.
+
+Let's start with a triangle. If you take any triangle and rotate a copy of it one hundred and eighty degrees around the middle of one side, the two pieces snap together to form a parallelogram with the same base and the same height. That means a triangle's area is half of base times perpendicular height. And here's the key word — perpendicular. The height is measured straight up at a right angle to the base, not along the slanted side. Tilting the triangle doesn't change its area at all.
+
+For a parallelogram, picture slicing off that triangular notch and sliding it across to the other side. It flattens into a rectangle with the same base and the same perpendicular height, so its area is just base times perpendicular height.
+
+Now let's see it in action.

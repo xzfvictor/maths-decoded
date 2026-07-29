@@ -1,0 +1,7 @@
+In this lesson, we'll look at what a logarithm actually is. At first glance, it looks like just another piece of maths notation, but really it's asking one simple question: what power do I raise the base to, in order to get this number? For example, if I want to know what power of two gives me eight, the answer is three, because two cubed equals eight. Written as a log, we say the log base two of eight equals three. Same relationship, just flipped around.
+
+You'll meet a few common notations. When you see log with no base, or log base ten, that's the one used a lot in science. When you see the letters L-N, that means natural log, which uses a special base called e, roughly two point seven. You don't need to memorise that number yet.
+
+Two quick things to remember. First, you can only take a log of a positive number, so zero and negatives are off limits. Second, the log itself can give you any real number back, positive or negative. For instance, the log base five of zero point two is negative one, because five to the negative one equals zero point two.
+
+If you ever need to estimate a log, just squeeze it between two powers you already know. So the log of five hundred sits somewhere between two and three, closer to three. Now let's see it in action.

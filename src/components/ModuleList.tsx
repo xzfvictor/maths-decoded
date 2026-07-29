@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { MODULES, topicsForModule, homePathForModule, UNIT_TITLES } from '../content/topics'
-import { STRANDS } from '../content/coverage'
 import { useProgress } from '../lib/useProgress'
 import { useSession } from '../lib/auth'
 
@@ -82,7 +81,20 @@ function moduleColour(id: string): { bg: string; text: string } {
   if (id === 'maths-methods-unit2') {
     return { bg: 'bg-violet-100 dark:bg-violet-900/40', text: 'text-violet-700 dark:text-violet-200' }
   }
-  return { bg: 'bg-emerald-100 dark:bg-emerald-900/40', text: 'text-emerald-700 dark:text-emerald-200' }
+  if (id === 'year-7') {
+    return { bg: 'bg-amber-100 dark:bg-amber-900/40', text: 'text-amber-700 dark:text-amber-200' }
+  }
+  if (id === 'year-8') {
+    return { bg: 'bg-rose-100 dark:bg-rose-900/40', text: 'text-rose-700 dark:text-rose-200' }
+  }
+  if (id === 'year-9') {
+    return { bg: 'bg-teal-100 dark:bg-teal-900/40', text: 'text-teal-700 dark:text-teal-200' }
+  }
+  if (id === 'year-10') {
+    return { bg: 'bg-emerald-100 dark:bg-emerald-900/40', text: 'text-emerald-700 dark:text-emerald-200' }
+  }
+  // year-10a
+  return { bg: 'bg-indigo-100 dark:bg-indigo-900/40', text: 'text-indigo-700 dark:text-indigo-200' }
 }
 
 function tagline(id: string): string {
@@ -90,7 +102,16 @@ function tagline(id: string): string {
     return 'Functions, algebra, calculus and probability — the first half of VCE Methods.'
   if (id === 'maths-methods-unit2')
     return 'Transcendentals, calculus and probability — the second half.'
-  return `Year 10 foundations across ${STRANDS.length} strands.`
+  if (id === 'year-7')
+    return 'Foundations across number, algebra, measurement, space, statistics & probability.'
+  if (id === 'year-8')
+    return 'Linear algebra, geometry, Pythagoras, sampling, and complementary events.'
+  if (id === 'year-9')
+    return 'Real numbers, quadratics, trigonometry, scientific notation, and bivariate statistics.'
+  if (id === 'year-10')
+    return 'Factorisation, simultaneous equations, modelling, and statistical investigations.'
+  // year-10a
+  return 'Surds, logarithms, polynomials, trigonometry, and standard deviation — extension into VCE.'
 }
 
 // Re-export for any callers that still want the unit-titles map.

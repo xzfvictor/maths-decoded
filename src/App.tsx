@@ -3,13 +3,14 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { Sidebar } from './components/Sidebar'
 import { LandingPage } from './routes/LandingPage'
 import { UnitHome } from './routes/UnitHome'
-import { PreVceHome } from './routes/PreVceHome'
+import { LevelHome } from './routes/LevelHome'
 import { TopicPage } from './routes/TopicPage'
 import { LessonPage } from './routes/LessonPage'
 import { ThemeToggle } from './components/ThemeToggle'
 import { useSession } from './lib/auth'
 import { signOut } from './lib/auth'
 import { resetProgress } from './lib/storage'
+import type { Unit } from './content/types'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -86,9 +87,13 @@ export default function App() {
         <main className={`flex-1 px-4 py-8 sm:px-8 ${onLanding ? '' : ''}`}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/year-7" element={<LevelHome unit={7} />} />
+            <Route path="/year-8" element={<LevelHome unit={8} />} />
+            <Route path="/year-9" element={<LevelHome unit={9} />} />
+            <Route path="/year-10" element={<LevelHome unit={10} />} />
+            <Route path="/year-10a" element={<LevelHome unit={'10A' as Unit} />} />
             <Route path="/maths-methods-unit1" element={<UnitHome unit={1} moduleId="maths-methods-unit1" />} />
             <Route path="/maths-methods-unit2" element={<UnitHome unit={2} moduleId="maths-methods-unit2" />} />
-            <Route path="/pre-vce" element={<PreVceHome />} />
             <Route path="/topic/:id" element={<TopicPage />} />
             <Route path="/topic/:id/:lessonId" element={<LessonPage />} />
             <Route path="*" element={<LandingPage />} />

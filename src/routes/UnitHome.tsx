@@ -1,5 +1,12 @@
 import { Link } from 'react-router-dom'
-import { topicsForUnit, UNIT_TITLES, topicsForModule, type ModuleId } from '../content/topics'
+import {
+  topicsForUnit,
+  UNIT_TITLES,
+  topicsForModule,
+  MODULE_PROGRESSION,
+  moduleById,
+  type ModuleId,
+} from '../content/topics'
 import type { Unit } from '../content/types'
 import { useProgress } from '../lib/useProgress'
 import { topicLessonRatio } from '../lib/storage'
@@ -10,8 +17,10 @@ import { ProgressBar } from '../components/ProgressBar'
  * unit — sibling topics from the other VCE unit are hidden so the student
  * isn't tempted to jump ahead.
  *
- * `nextModuleHref` lets us show an "Up next → Unit 2" card when the student
- * finishes Unit 1, which is the natural progression through the VCE course.
+ * `nextModuleId` is derived from `MODULE_PROGRESSION` so the "Finished this
+ * unit?" card automatically follows the curriculum order (Year 7 → 8 → 9 →
+ * 10 → 10A → VCE Unit 1 → VCE Unit 2). Unit 2 is the last module, so the
+ * card doesn't render for it.
  */
 export function UnitHome({
   unit,
@@ -23,10 +32,12 @@ export function UnitHome({
   useProgress()
   const topics = topicsForUnit(unit)
 
-  // Find the natural "next module" — for Unit 1 it's Unit 2; for Unit 2
-  // there isn't one, so we offer a link back to Pre-VCE for revision instead.
+  const idx = MODULE_PROGRESSION.indexOf(moduleId)
   const nextModuleId: ModuleId | undefined =
-    moduleId === 'maths-methods-unit1' ? 'maths-methods-unit2' : undefined
+    idx >= 0 && idx < MODULE_PROGRESSION.length - 1
+      ? MODULE_PROGRESSION[idx + 1]
+      : undefined
+  const nextModule = nextModuleId ? moduleById(nextModuleId) : undefined
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -74,24 +85,20 @@ export function UnitHome({
         </div>
       )}
 
-      {nextModuleId && (
+      {nextModule && (
         <section className="mt-10 rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
             Finished this unit?
           </p>
           <Link
-            to={`/${nextModuleId}`}
+            to={`/${nextModule.id}`}
             className="mt-1 block text-lg font-semibold text-slate-900 hover:text-brand-700 dark:text-white"
           >
-            Continue to{' '}
-            {nextModuleId === 'maths-methods-unit2'
-              ? 'Unit 2 — Transcendental functions, calculus & probability'
-              : ''}{' '}
-            →
+            Continue to {nextModule.title} →
           </Link>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            {topicsForModule(nextModuleId).length} topics, {''}
-            {topicsForModule(nextModuleId).reduce((n, t) => n + t.lessons.length, 0)} lessons
+            {topicsForModule(nextModule.id).length} topics, {''}
+            {topicsForModule(nextModule.id).reduce((n, t) => n + t.lessons.length, 0)} lessons
           </p>
         </section>
       )}

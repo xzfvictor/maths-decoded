@@ -16,7 +16,7 @@ import { topicLessonRatio, isLessonDone } from '../lib/storage'
 /**
  * Render the active topic's lessons inline in the sidebar so the student
  * can jump back into any lesson without scrolling back to the topic page.
- * Shared between the VCE and Pre-VCE sidebar trees.
+ * Shared between the VCE and Foundation sidebar trees.
  */
 function ActiveTopicLessons({
   topicId,
@@ -124,16 +124,19 @@ function UnitSidebarSection({
 }
 
 /**
- * Render the Pre-VCE module: topics grouped by strand, each strand collapsible.
+ * Render a Foundation module: topics grouped by strand, each strand collapsible.
+ * Used for Year 7, 8, 9, 10, and 10A.
  */
-function PreVceSidebarSection({
+function LevelSidebarSection({
+  unit,
   activeTopicId,
   onNavigate,
 }: {
+  unit: Unit
   activeTopicId?: string
   onNavigate?: () => void
 }) {
-  const topics = topicsForUnit(10)
+  const topics = topicsForUnit(unit)
   const activeStrandId = activeTopicId
     ? strandForTopic(topics.find((t) => t.id === activeTopicId)!)?.id
     : undefined
@@ -149,7 +152,7 @@ function PreVceSidebarSection({
   return (
     <div>
       <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-        {UNIT_TITLES[10]}
+        {UNIT_TITLES[unit]}
       </p>
       <ul className="space-y-2">
         {STRANDS.map((strand) => {
@@ -234,11 +237,11 @@ function PreVceSidebarSection({
 
 /**
  * Derive which module to show in the sidebar from the current route.
+ * - /year-7*, /year-8*, /year-9*, /year-10*, /year-10a* → corresponding module
  * - /maths-methods-unit1* → Unit 1 topics
  * - /maths-methods-unit2* → Unit 2 topics
- * - /pre-vce* → Pre-VCE topics
  * - /topic/:id[/...] → look up the topic and pick the module that contains it
- * - / (landing) → default to Unit 1
+ * - / (landing) → default to Year 7
  *
  * Important: the Sidebar is rendered outside `<Routes>` (see App.tsx), so
  * `useParams()` here returns `{}` — params never flow in. We must parse
@@ -246,18 +249,28 @@ function PreVceSidebarSection({
  */
 function useActiveModule(): ModuleId {
   const { pathname } = useLocation()
-  if (pathname.startsWith('/pre-vce')) return 'pre-vce'
+  // /year-10a must be matched before /year-10 to avoid prefix collision.
+  if (pathname.startsWith('/year-10a')) return 'year-10a'
+  if (pathname.startsWith('/year-10')) return 'year-10'
+  if (pathname.startsWith('/year-9')) return 'year-9'
+  if (pathname.startsWith('/year-8')) return 'year-8'
+  if (pathname.startsWith('/year-7')) return 'year-7'
   if (pathname.startsWith('/maths-methods-unit2')) return 'maths-methods-unit2'
   if (pathname.startsWith('/maths-methods-unit1')) return 'maths-methods-unit1'
   // Match /topic/:id or /topic/:id/:lessonId — both start with /topic/.
   const topicMatch = pathname.match(/^\/topic\/([^/]+)/)
   if (topicMatch) {
     const t = topicById(topicMatch[1])
-    if (t?.unit === 1) return 'maths-methods-unit1'
-    if (t?.unit === 2) return 'maths-methods-unit2'
-    if (t?.unit === 10) return 'pre-vce'
+    if (!t) return 'year-7'
+    if (t.unit === 1) return 'maths-methods-unit1'
+    if (t.unit === 2) return 'maths-methods-unit2'
+    if (t.unit === 7) return 'year-7'
+    if (t.unit === 8) return 'year-8'
+    if (t.unit === 9) return 'year-9'
+    if (t.unit === 10) return 'year-10'
+    if (t.unit === '10A') return 'year-10a'
   }
-  return 'maths-methods-unit1'
+  return 'year-7'
 }
 
 /** Same caveat as useActiveModule — parse from the pathname, not useParams. */
@@ -303,8 +316,20 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       {activeModule === 'maths-methods-unit2' && (
         <UnitSidebarSection unit={2} activeTopicId={activeTopicId} onNavigate={onNavigate} />
       )}
-      {activeModule === 'pre-vce' && (
-        <PreVceSidebarSection activeTopicId={activeTopicId} onNavigate={onNavigate} />
+      {activeModule === 'year-7' && (
+        <LevelSidebarSection unit={7} activeTopicId={activeTopicId} onNavigate={onNavigate} />
+      )}
+      {activeModule === 'year-8' && (
+        <LevelSidebarSection unit={8} activeTopicId={activeTopicId} onNavigate={onNavigate} />
+      )}
+      {activeModule === 'year-9' && (
+        <LevelSidebarSection unit={9} activeTopicId={activeTopicId} onNavigate={onNavigate} />
+      )}
+      {activeModule === 'year-10' && (
+        <LevelSidebarSection unit={10} activeTopicId={activeTopicId} onNavigate={onNavigate} />
+      )}
+      {activeModule === 'year-10a' && (
+        <LevelSidebarSection unit={'10A' as Unit} activeTopicId={activeTopicId} onNavigate={onNavigate} />
       )}
     </nav>
   )

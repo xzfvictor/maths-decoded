@@ -49,10 +49,25 @@ export function TopicPage() {
   const nextTopic = idx >= 0 && idx < unitTopics.length - 1 ? unitTopics[idx + 1] : undefined
   const firstTopic = unitTopics[0]
 
-  // Human label for the current module, used in the "back" link and the
-  // first-topic callout.
-  const moduleLabel =
-    topic.unit === 10 ? 'Pre-VCE' : topic.unit === 1 ? 'Unit 1' : 'Unit 2'
+  // Human label for the current module, used in the "back" link.
+  const moduleLabel = (() => {
+    switch (topic.unit) {
+      case 1:
+        return 'Unit 1'
+      case 2:
+        return 'Unit 2'
+      case 7:
+        return 'Year 7'
+      case 8:
+        return 'Year 8'
+      case 9:
+        return 'Year 9'
+      case 10:
+        return 'Year 10'
+      case '10A':
+        return 'Year 10A'
+    }
+  })()
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -89,7 +104,7 @@ export function TopicPage() {
             here assume that earlier material is solid.
           </div>
         )}
-        {idx === 0 && topic.unit !== 10 && firstTopic && (
+        {idx === 0 && (topic.unit === 1 || topic.unit === 2) && firstTopic && (
           <div className="learner-tip mt-5">
             <span className="font-semibold text-slate-800 dark:text-slate-100">
               No prior VCE Maths Methods assumed:
@@ -97,10 +112,10 @@ export function TopicPage() {
             this is the first topic of {UNIT_TITLES[topic.unit]}. If Year 10
             foundations feel shaky, the{' '}
             <Link
-              to="/pre-vce"
+              to="/year-10"
               className="font-medium text-brand-700 underline hover:no-underline dark:text-brand-300"
             >
-              Pre-VCE module
+              Year 10 module
             </Link>{' '}
             has quick refreshers.
           </div>

@@ -1,0 +1,11 @@
+In this lesson we'll look at how to measure how spread out a set of numbers really is, using something called the range, the interquartile range, and the five-number summary. First up, the range. It's the simplest one, just take your biggest value and subtract your smallest. Quick and easy, but here's the catch, it's super sensitive to outliers. One freakish number can blow the range out and make the data look way more scattered than it really is.
+
+That's where the interquartile range, or IQR, comes in. The IQR measures the middle fifty percent of your data. You find the lower quarter, called Q one, and the upper quarter, called Q three, then subtract. Because you're chopping off the tails, the IQR stays calm even when there are outliers hanging around.
+
+The five-number summary is just a tidy little package of the five key values used in a boxplot, and it leans heavily on those quartiles.
+
+So which should you use? Range for a quick snapshot, IQR when outliers might be lurking, and standard deviation when your data is nicely symmetric.
+
+Quick rule of thumb, if a value sits more than one and a half times the IQR below Q one or above Q three, treat it as a possible outlier.
+
+Now let's see it in action.

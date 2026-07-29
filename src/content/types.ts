@@ -1,7 +1,7 @@
 // Core content model for the app. Topics are authored as plain data so the whole
 // site is static and the coverage checker can reason about it.
 
-export type Unit = 1 | 2 | 10
+export type Unit = 1 | 2 | 7 | 8 | 9 | 10 | '10A'
 
 /**
  * A lesson (sub-topic) — the unit of a single study session. Holds its own theory,

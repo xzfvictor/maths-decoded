@@ -1,0 +1,9 @@
+In this lesson, we'll look at geometric construction algorithms — those step-by-step recipes you follow with just a compass and a straightedge to build an exact shape on paper. Think of it like a cooking recipe for geometry.
+
+The key idea is that you only have two tools: a compass for drawing circles and arcs, and a straightedge for drawing straight lines. With those two tools, and a few standard moves, you can produce almost any basic construction.
+
+Now, the building blocks you'll use over and over again. First, the perpendicular bisector — that's the line that cuts a segment exactly in half at a right angle, and it also gives you the midpoint for free. Second, dropping a perpendicular from a point onto a line — useful whenever you need a perfect right angle. Third, bisecting an angle — splitting it into two equal halves. And copying an angle somewhere else — handy when you need to build the same angle at a new spot.
+
+When you write up one of these constructions, you follow a simple recipe style. You state the inputs, like two given points or a segment. Then you list each step in order, with every step either using one of those building blocks or building on something you already drew. And finally, you state the output — the shape, point, or line you ended up with.
+
+Now let's see it in action.

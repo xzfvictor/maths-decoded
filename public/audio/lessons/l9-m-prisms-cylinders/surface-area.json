@@ -1,0 +1,11 @@
+In this lesson we'll look at surface area, which is basically the total area of every face on the outside of a solid. Imagine wrapping a shape in paper — the amount of paper you'd need is the surface area.
+
+For a right rectangular prism, like a box, you'll always have three pairs of identical faces: a top and bottom, a front and back, and two sides. So the surface area formula adds up those three pairs.
+
+For a right circular cylinder, think of a soup can. You've got two circles on the ends, so that's two times pi r squared. Then there's the curved side wrapping around. If you unroll that curve, it flattens into a rectangle whose width is the distance all the way around the circle, two pi r, and whose height is the height of the cylinder. Multiply those and add the two circles, and you've got the total surface area.
+
+For a right triangular prism, like a Toblerone shape, just add the area of the two triangular ends plus the area of the three rectangular sides. No special formula needed, just sum every face.
+
+Quick note on units: surface area is always in square units, like centimetres squared, and make sure every measurement uses the same unit before you calculate.
+
+Now let's see it in action.

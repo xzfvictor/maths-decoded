@@ -1,0 +1,7 @@
+In this lesson, we'll look at how to find the volume of prisms and cylinders. The big idea is simple and powerful: any right prism or right cylinder has the same cross-section all the way along its length. So to find its volume, you just take the area of that cross-section and multiply it by the length or height of the solid. Picture it like stacking identical slices one after another.
+
+Now let's talk about the common cases. For a right rectangular prism, think of it as length times width times height. For a right triangular prism, picture a triangle as the cross-section, so you take half of base times height of the triangle, then multiply by the length of the prism. And for a right circular cylinder, the cross-section is a circle, so it's pi times the radius squared, times the height.
+
+One quick note on units. Volume is always in cubic units, so if your lengths are in centimetres, your answer is in cubic centimetres, and if they're in metres, it's cubic metres. Just keep your units consistent.
+
+Now let's see it in action.

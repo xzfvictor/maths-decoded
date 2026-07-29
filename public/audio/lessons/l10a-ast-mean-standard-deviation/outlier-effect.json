@@ -1,0 +1,11 @@
+In this lesson we'll look at how a single unusual value, called an outlier, can completely change both the mean and the standard deviation of a data set.
+
+Here's the key idea. Standard deviation is built from squared distances from the mean, so it magnifies anything that's far away. That means one outlier gets pulled into the mean, dragging it off centre, and then its huge squared distance blows the standard deviation way up.
+
+Why does this matter? Imagine two data sets. The first is a tight little group of fives and sixes, with a mean around five and a small standard deviation. The second is exactly the same, but with one extra value of thirty tacked on. The mean barely moves, but the standard deviation skyrockets, all because of that one extreme number.
+
+So what's the fix? When outliers are around, the median and the interquartile range are much safer, because they ignore extreme values.
+
+The trick for any problem is this. Calculate your mean and standard deviation, list the data in order, and flag anything sitting more than one and a half times the interquartile range outside the middle fifty percent. Then recalculate without that point and see how much it mattered.
+
+Now let's see it in action.

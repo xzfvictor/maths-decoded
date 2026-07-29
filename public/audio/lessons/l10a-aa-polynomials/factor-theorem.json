@@ -1,0 +1,5 @@
+In this lesson, we'll look at the factor theorem, a really handy shortcut for breaking polynomials into pieces. Here's the big idea. If you plug a value into your polynomial and you get zero, then that value is called a root, and it tells you something important: the bracket formed by x minus that value is a factor of the polynomial. The rule works both ways too. If x minus a is a factor, then plugging in a gives zero. So zeros and factors are just two sides of the same coin.
+
+Now, how do you actually use it? Start by trying easy whole number values for x. A handy tip is that any integer root has to divide the constant term, so that narrows down your guesses fast. When you find a value that makes the polynomial equal to zero, you pull out that bracket as a factor, then divide to get a simpler quotient polynomial. Then you repeat the same process on that smaller piece until you've factored everything you can.
+
+This trick is great for solving polynomial equations, because every factor hands you a root on a plate. It also helps you sketch graphs, since every x-intercept matches up with a linear factor. Now let's see it in action.

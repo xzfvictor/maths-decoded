@@ -1,0 +1,7 @@
+In this lesson we'll look at hyperbolas, which are the graphs you get from reciprocal equations like y equals k over x. Picture the classic curve y equals one over x. It has two separate branches sitting in opposite corners of the graph. The first branch lives up in the top right, where x and y are both positive. The second branch sits down in the bottom left, where both x and y are negative. You can never plug in x equals zero, and y can never equal zero either, because the curve never actually touches the axes. The axes act like asymptotes, which is a fancy word for lines the curve keeps getting closer to without ever reaching.
+
+Now, what if k isn't one? If k is positive, the branches sit in the first and third quadrants, just like before. If k is negative, they flip into the second and fourth quadrants instead.
+
+Finally, you can shift the whole thing. The equation y equals k over the quantity x minus h, plus v, slides the basic hyperbola h units to the right and v units up. The centre of the curve lands at the point h, v, and the new asymptotes are the vertical line x equals h and the horizontal line y equals v.
+
+Now let's see it in action.

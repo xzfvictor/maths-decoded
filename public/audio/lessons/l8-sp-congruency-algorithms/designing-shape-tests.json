@@ -1,0 +1,7 @@
+In this lesson, we'll look at designing a decision algorithm that tells you whether two shapes are congruent, similar, or neither. Think of it as a flowchart you follow step by step until you reach a verdict. A good algorithm is ordered, unambiguous, finite, and testable, meaning anyone following the same steps lands on the same answer.
+
+For testing two triangles for congruence, start by checking whether both triangles are right-angled. If yes, you can use the right-angle, hypotenuse, side shortcut. If not, list the three side lengths of each triangle. Do all three pairs match? Then they are congruent by the side-side-side rule. Still not sure? List the three angles instead. If two angles match and a side between them matches, you have congruence by the angle-angle-side rule. Otherwise, the data you have just isn't enough to decide.
+
+For testing two triangles for similarity, list each triangle's side lengths and sort them from shortest to longest. Here's the key step: divide each side of the first triangle by the matching side of the second. If all three ratios come out the same number, the triangles are similar, and that number is the scale factor. If even one ratio is off, they are not similar.
+
+Now let's see it in action.

@@ -1,0 +1,9 @@
+In this lesson, we'll look at the volume of any right prism, and here's the good news — there's just one formula you need. A right prism is a solid where the cross-section stays exactly the same shape all the way along, and the sides stand straight up, perpendicular to that cross-section. Think of a cereal box or a Toblerone bar — both are right prisms.
+
+So how do we find the volume? Imagine stacking the cross-sections from one end to the other. Each cross-section has the same area, and there are as many layers as the prism's perpendicular height. That's it. Take the area of the cross-section and multiply it by the perpendicular height.
+
+For a rectangular prism, the cross-section is a rectangle, so the volume is length times width times height. For a triangular prism, the cross-section is a triangle, so the volume is the area of that triangle — that's half the base times its height — multiplied by the perpendicular height of the prism. Same idea, different cross-section.
+
+One really important thing to watch out for: the height in the formula is the perpendicular distance between the two end faces, never the slant length. Get that right and you're set.
+
+Now let's see it in action.

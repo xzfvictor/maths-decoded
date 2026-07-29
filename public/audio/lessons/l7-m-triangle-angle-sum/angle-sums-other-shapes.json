@@ -1,0 +1,7 @@
+In this lesson, we'll look at how to find the angle sum of any polygon using a clever trick with triangles. Here's the idea. Pick one vertex of your polygon, then draw diagonals from that vertex to every other vertex it isn't already connected to. Those diagonals slice the polygon into triangles. For a polygon with n sides, you always get n minus two triangles. Since each triangle has angles that add up to one hundred and eighty degrees, the total angle sum of the polygon is n minus two times one hundred and eighty degrees. Let's try a few. A triangle gives three minus two times one hundred and eighty, which is one hundred and eighty. A quadrilateral gives four minus two times one hundred and eighty, which is three hundred and sixty. A pentagon gives five hundred and forty, and a hexagon gives seven hundred and twenty. 
+
+One quick warning. This formula works cleanly for convex polygons, where every angle is less than one hundred and eighty degrees. For a concave polygon, the total is still correct, but one of the angles will be reflex, meaning more than one hundred and eighty degrees. 
+
+For regular polygons, where all sides and angles are equal, you just divide the total by the number of sides to find each angle. A regular hexagon has each angle at one hundred and twenty degrees, and a regular octagon at one hundred and thirty-five. 
+
+Now let's see it in action.

@@ -1,0 +1,5 @@
+In this lesson we'll look at how similar triangles connect to trigonometry. So picture two triangles that look identical, except one is a bigger or smaller copy of the other. That's what we call similar triangles, and they have two key features. First, all three angles match up perfectly, same angles, just possibly in different positions. Second, every side is scaled by the same amount. So if you double the size of a triangle, each side becomes twice as long, and that multiplier is called the scale factor.
+
+Here's the cool part. When you scale a triangle, the angles don't change at all. So think about any right-angled triangle with a particular acute angle, say thirty degrees. Every such triangle, no matter how big or small, is just a scaled-up or scaled-down version of every other one. They're all similar.
+
+And that means something really important for trigonometry. Any ratio of two sides, like the length opposite that angle divided by the hypotenuse, has to come out the same every time. The scale factor cancels out. That's exactly why the trig ratios of an angle are constant, no matter which triangle you pick. Now let's see it in action.

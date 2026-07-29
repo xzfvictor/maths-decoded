@@ -1,0 +1,7 @@
+In this lesson we'll look at what a sorting algorithm actually is. At its core, an algorithm is just a clear, ordered list of steps that takes some input and turns it into an output — think of it like a recipe for making a decision.
+
+When we're sorting shapes, the inputs are the shapes themselves, the steps are yes or no checks about their features — things like "does it have a right angle?" or "are all four sides equal?" — and the output is the class name, like "square" or "rhombus" or "kite."
+
+So why bother writing it all out? Because once your algorithm is on paper, anyone can follow the same steps and reach the same answer, which makes your classification reproducible. It also helps you spot gaps — for instance, what happens if a shape has four right angles but unequal sides? A good algorithm has to handle that case.
+
+One common way to lay out an algorithm is as a decision tree, where each check branches into a yes path and a no path, and you keep going until you land on a final label. Now let's see it in action.

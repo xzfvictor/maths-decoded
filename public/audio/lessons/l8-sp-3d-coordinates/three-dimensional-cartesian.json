@@ -1,0 +1,7 @@
+In this lesson, we'll look at how to describe a point in three-dimensional space. You've already used two perpendicular axes, x and y, to locate points on a flat plane as ordered pairs. To go into 3D, we just add a third axis, called z, which runs up and down. All three axes meet at a single origin point, written as zero, zero, zero, and they slice space into eight little regions called octants, kind of like how the two axes split the plane into four quadrants. We'll mostly work in the first octant, where all three coordinates are positive.
+
+So a point in space becomes an ordered triple, like x, then y, then z. The x tells you how far across, y how far forward, and z how far up. The order really matters, so swapping two numbers gives you a completely different point.
+
+A 2D point just becomes a 3D point sitting on the floor, with z equal to zero. One quick warning: some programs and games swap which axis points up, so always check the labels on the diagram before reading coordinates.
+
+Now let's see it in action.

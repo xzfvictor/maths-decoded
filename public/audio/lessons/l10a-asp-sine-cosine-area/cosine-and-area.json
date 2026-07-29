@@ -1,0 +1,7 @@
+In this lesson we'll look at the cosine rule and the area rule, two tools that save you whenever the sine rule can't get you started. The cosine rule is a relationship between the three sides of any triangle and one of its angles. Picture the longest side squared equals the square of one of the other sides plus the square of the third side, minus twice the product of those two sides times the cosine of the angle between them. Notice that if that angle is a right angle, the cosine piece disappears and you get right back to Pythagoras, which is a nice way to remember it.
+
+So when do you reach for it? You need it whenever you know two sides and the angle squashed between them, that's the SAS case, or when you know all three sides and want an angle, the SSS case. If you only know two angles and a side, the sine rule is usually quicker.
+
+For area, there's a really handy shortcut. If you know two sides and the included angle, the area is just half of side A times side B times the sine of the angle between them. No perpendicular height needed.
+
+So remember, SAS or SSS, think cosine rule, and for area with two sides and a squished angle, think half a b sine C. Now let's see it in action.
