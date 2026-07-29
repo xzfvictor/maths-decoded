@@ -160,37 +160,158 @@ reachable, only the JSON scripts are written and the UI degrades to a
 clear "audio not generated yet" hint. See `CLAUDE.md` for the full
 flow.
 
-## Course map — VCE Mathematical Methods
+## Course map
 
-### Unit 1 — Functions, algebra, calculus & probability
-1. Functions, relations, domain & range
-2. Inverse functions & their graphs
-3. Linear & quadratic functions
-4. Cubic & quartic functions
-5. Power functions
-6. Transformations of the plane
-7. Solving polynomials
-8. Simultaneous equations
-9. Rates of change
-10. Probability foundations
-11. Counting techniques
+Seven modules form the Foundation → VCE progression: **Year 7 → Year 8 →
+Year 9 → Year 10 → Year 10A → VCE Methods Unit 1 → VCE Methods Unit 2**.
+Every topic below is registered with a stable kebab-case id and a
+Victorian-Curriculum dot-point code (for the Foundation levels) or VCE AoS
+reference (for the two VCE units).
 
-### Unit 2 — Transcendental functions, calculus & probability
-12. Circular functions
-13. Periodicity, symmetry & transformed circular functions
-14. Exponential functions & their graphs
-15. Logarithms
-16. Solving transcendental equations
-17. Newton's method
-18. Limits & the derivative from first principles
-19. Differentiation rules & applications
-20. Anti-differentiation
-21. Probability of compound events
-22. Conditional probability & independence
+Total coverage: **162 topics, 363 lessons, 729 exercises** (602 curated + 99
+parameterised, × 300 seeds each), **183/183 syllabus dot points** claimed.
+The five Foundation modules share the same six-strand taxonomy, while the two
+VCE modules use the four Areas of Study.
+
+### Year 7 Mathematics (Victorian Curriculum F-10 V2.0)
+
+31 dot points across the six strands. Topic titles below; the bracketed
+prefix is the coverage code (`l7-n-N`, `l7-a-N`, etc.).
+
+#### Number
+1. `l7-n-1` — Squares and square roots
+2. `l7-n-2` — Prime factorisation and expanded notation
+3. `l7-n-3` — Equivalent fractions and the number line
+4. `l7-n-4` — Rounding and estimation
+5. `l7-n-5` — Multiply and divide fractions and decimals
+6. `l7-n-6` — 4 operations with positive rationals
+7. `l7-n-7` — Percentages of quantities
+8. `l7-n-8` — Addition and subtraction of integers
+9. `l7-n-9` — Ratios
+10. `l7-n-10` — Mathematical modelling with rationals and percentages
+
+#### Algebra
+11. `l7-a-1` — Variables and formulas
+12. `l7-a-2` — Laws and algebraic expressions
+13. `l7-a-3` — One-variable linear equations
+14. `l7-a-4` — Graphs of relationships in authentic data
+15. `l7-a-5` — Tables of values and the Cartesian plane
+16. `l7-a-6` — Formulas with several variables
+
+#### Measurement
+17. `l7-m-1` — Areas of rectangles, triangles and parallelograms
+18. `l7-m-2` — Volume of right prisms
+19. `l7-m-3` — Circle circumference and prism formulas
+20. `l7-m-4` — Parallel lines and angle relationships
+21. `l7-m-5` — Triangle angle sum
+22. `l7-m-6` — Modelling with ratios of lengths, areas and volumes
+
+#### Space
+23. `l7-sp-1` — 3D objects in 2D
+24. `l7-sp-2` — Classifying polygons
+25. `l7-sp-3` — Coordinate transformations
+26. `l7-sp-4` — Sorting and classifying shapes
+
+#### Statistics
+27. `l7-st-1` — Measures of centre
+28. `l7-st-2` — Data displays and distributions
+29. `l7-st-3` — Statistical investigations
+
+#### Probability
+30. `l7-p-1` — Sample spaces and probability
+31. `l7-p-2` — Repeated chance experiments
+
+### Year 8 Mathematics
+
+29 dot points. Like Year 7, every topic declares its strand via the first
+coverage code.
+
+#### Number
+1. `l8-n-1` — Irrational numbers
+2. `l8-n-2` — Exponent laws with positive integers
+3. `l8-n-3` — Fractions, terminating and recurring decimals
+4. `l8-n-4` — 4 operations with integers and rationals
+5. `l8-n-5` — Percentages, including percentage error
+6. `l8-n-6` — Modelling with rationals and percentages
+
+#### Algebra
+7. `l8-a-1` — Linear expressions
+8. `l8-a-2` — Linear equations and inequalities
+9. `l8-a-3` — Linear modelling in financial contexts
+10. `l8-a-4` — Algorithms and testing procedures
+11. `l8-a-5` — Linear functions and relations
+
+#### Measurement
+12. `l8-m-1` — Area and perimeter of composite shapes
+13. `l8-m-2` — Volume and capacity of right prisms
+14. `l8-m-3` — Circumference and area of a circle
+15. `l8-m-4` — Time and time zones
+16. `l8-m-5` — Rates
+17. `l8-m-6` — Pythagoras' theorem
+18. `l8-m-7` — Modelling with ratios and rates
+
+#### Space
+19. `l8-sp-1` — Congruence and similarity
+20. `l8-sp-2` — Properties of quadrilaterals
+21. `l8-sp-3` — 3D coordinate systems
+22. `l8-sp-4` — Algorithms for congruency and similarity
+
+#### Statistics
+23. `l8-st-1` — Populations, samples and data collection
+24. `l8-st-2` — Sampling techniques
+25. `l8-st-3` — Comparing sample distributions
+26. `l8-st-4` — Statistical investigations with samples
+
+#### Probability
+27. `l8-p-1` — Complementary events
+28. `l8-p-2` — Outcome combinations for two events
+29. `l8-p-3` — Chance experiments and simulations
+
+### Year 9 Mathematics
+
+24 dot points. Adds scientific notation, quadratic functions, and
+similar-triangle trig — the bridge between Year 8 and Year 10.
+
+#### Number
+1. `l9-n-1` — Real numbers, rational and irrational
+
+#### Algebra
+2. `l9-a-1` — Exponent laws with variables
+3. `l9-a-2` — Simplifying, expanding and factorising
+4. `l9-a-3` — Linear graphs and linear equations
+5. `l9-a-4` — Gradient, midpoint and distance
+6. `l9-a-5` — Quadratic functions and equations
+7. `l9-a-6` — Mathematical modelling of change
+8. `l9-a-7` — Variation of parameters
+
+#### Measurement
+9. `l9-m-1` — Volume and surface area of prisms and cylinders
+10. `l9-m-2` — Scientific notation
+11. `l9-m-3` — Pythagoras and trigonometry
+12. `l9-m-4` — Errors in measurements
+13. `l9-m-5` — Modelling with proportion, rates and scale
+
+#### Space
+14. `l9-sp-1` — Trigonometric ratios in similar triangles
+15. `l9-sp-2` — Enlargement transformation
+16. `l9-sp-3` — Geometric algorithms
+
+#### Statistics
+17. `l9-st-1` — Survey reports and data collection
+18. `l9-st-2` — Sampling methods
+19. `l9-st-3` — Comparing data sets
+20. `l9-st-4` — Choosing data displays
+21. `l9-st-5` — Statistical investigations
+
+#### Probability
+22. `l9-p-1` — Two-step chance experiments
+23. `l9-p-2` — Relative frequencies
+24. `l9-p-3` — Repeated chance experiments and simulations
 
 ### Year 10 Mathematics (Victorian Curriculum F-10 V2.0)
 
-Organised into the six curriculum strands:
+30 dot points, fully authored (with parameters and AI intros). The bridge
+into VCE Methods. Organised into the six curriculum strands:
 
 - **Number** — real numbers, approximations, and the effect of repeated
   calculations on final results.
@@ -205,8 +326,90 @@ Organised into the six curriculum strands:
 - **Probability** — conditional probability, multi-step chance experiments, and
   independence.
 
+### Year 10A Mathematics — extension into VCE
+
+26 dot points. There is no achievement standard for Level 10A; the topics
+are organised as an extension bridge into VCE Mathematical Methods. Adds
+surds, logarithms, polynomials, factor / remainder theorems, standard
+deviation, sine/cosine/area rules, and counting principles.
+
+#### Number
+1. `l10a-an-1` — Surds and fractional indices
+2. `l10a-an-2` — Operations with fractional exponents and surds
+3. `l10a-an-3` — Logarithms and logarithmic scales
+
+#### Algebra
+4. `l10a-aa-1` — Polynomials, factor and remainder theorems
+5. `l10a-aa-2` — Algorithms and simulations
+6. `l10a-aa-3` — Linear expressions with rational coefficients
+7. `l10a-aa-4` — Exponentials and logarithms as inverses
+8. `l10a-aa-5` — Parabolas, hyperbolas, circles and exponentials
+9. `l10a-aa-6` — Polynomial features and sketching
+10. `l10a-aa-7` — Factorising and solving quadratics
+11. `l10a-aa-8` — Function notation in modelling
+12. `l10a-aa-9` — Linear and non-linear simultaneous equations
+13. `l10a-aa-10` — Functions and relations with digital tools
+
+#### Measurement
+14. `l10a-am-1` — Surface area and volume of pyramids, cones, spheres
+15. `l10a-am-2` — Rates of change and limiting values
+
+#### Space
+16. `l10a-asp-1` — Circle theorems
+17. `l10a-asp-2` — Sine, cosine and area rules
+18. `l10a-asp-3` — Symmetry and periodicity of trig functions
+19. `l10a-asp-4` — Simple trigonometric equations
+20. `l10a-asp-5` — 3D right-angled triangle problems
+21. `l10a-asp-6` — Algorithms for spatial problems
+
+#### Statistics
+22. `l10a-ast-1` — Mean, standard deviation and data sets
+23. `l10a-ast-2` — Measures of spread
+24. `l10a-ast-3` — Bivariate data and lines of best fit
+
+#### Probability
+25. `l10a-ap-1` — Counting principles and factorial notation
+26. `l10a-ap-2` — Investigating reports of studies
+
+### VCE Mathematical Methods — Unit 1
+
+Functions, algebra, calculus & probability. Eleven topics covering the four
+Areas of Study (FR, AL, CA, PR):
+
+1. Functions, relations, domain & range
+2. Inverse functions & their graphs
+3. Linear & quadratic functions
+4. Cubic & quartic functions
+5. Power functions
+6. Transformations of the plane
+7. Solving polynomials
+8. Simultaneous equations
+9. Rates of change
+10. Probability foundations
+11. Counting techniques
+
+### VCE Mathematical Methods — Unit 2
+
+Transcendental functions, calculus & probability. Eleven topics covering
+the four Areas of Study:
+
+12. Circular functions
+13. Periodicity, symmetry & transformed circular functions
+14. Exponential functions & their graphs
+15. Logarithms
+16. Solving transcendental equations
+17. Newton's method
+18. Limits & the derivative from first principles
+19. Differentiation rules & applications
+20. Anti-differentiation
+21. Probability of compound events
+22. Conditional probability & independence
+
+---
+
 See [`src/content/coverage.ts`](./src/content/coverage.ts) for the full
-dot-point catalog and which topics cover each one.
+dot-point catalog (every `code` field is the original Victorian Curriculum
+F-10 V2.0 code, e.g. `VC2M7N01`) and which topics cover each one.
 
 ## How content is organised
 
