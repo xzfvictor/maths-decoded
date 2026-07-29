@@ -37,7 +37,7 @@ export function LandingPage() {
           <span aria-hidden="true">✨</span> AI-powered
         </span>
         <h1 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">
-          Decode the syllabus.
+          Decode the Maths syllabus.
         </h1>
         <p className="mt-3 max-w-2xl text-base text-slate-600 dark:text-slate-300 sm:text-lg">
           Short lessons, worked examples, and exercises that meet you where
