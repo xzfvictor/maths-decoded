@@ -6,6 +6,7 @@ import { UnitHome } from './routes/UnitHome'
 import { LevelHome } from './routes/LevelHome'
 import { TopicPage } from './routes/TopicPage'
 import { LessonPage } from './routes/LessonPage'
+import { FeedbackPage } from './routes/FeedbackPage'
 import { ThemeToggle } from './components/ThemeToggle'
 import { useSession } from './lib/auth'
 import { signOut } from './lib/auth'
@@ -62,6 +63,13 @@ export default function App() {
               >
                 ← Modules
               </a>
+              <a
+                href="/#/feedback"
+                className="rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+                title="View collected lesson feedback"
+              >
+                Feedback
+              </a>
               {auth.status === 'authed' && (
                 <button
                   onClick={() => void signOut()}
@@ -96,6 +104,7 @@ export default function App() {
             <Route path="/maths-methods-unit2" element={<UnitHome unit={2} moduleId="maths-methods-unit2" />} />
             <Route path="/topic/:id" element={<TopicPage />} />
             <Route path="/topic/:id/:lessonId" element={<LessonPage />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
             <Route path="*" element={<LandingPage />} />
           </Routes>
         </main>

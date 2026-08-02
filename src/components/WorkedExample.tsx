@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { WorkedExample } from '../content/types'
 import { Prose } from './Prose'
 import { AnimatedStepText } from './AnimatedStepText'
+import { FeedbackButtons } from './FeedbackButtons'
 
 /**
  * Interactive worked-example card.
@@ -13,7 +14,19 @@ import { AnimatedStepText } from './AnimatedStepText'
  * lands where it should. The cumulative effect is a video-like
  * walkthrough without needing pre-rendered media.
  */
-export function WorkedExample({ example }: { example: WorkedExample }) {
+export function WorkedExample({
+  example,
+  sectionId,
+  topicId,
+  lessonId,
+}: {
+  example: WorkedExample
+  /** Stable id from exampleSectionId. Passed in by the parent so the
+   *  source of truth for the id format stays in one place. */
+  sectionId: string
+  topicId: string
+  lessonId: string
+}) {
   const [open, setOpen] = useState(false)
   const [revealed, setRevealed] = useState(0) // 0..steps.length
   const [playing, setPlaying] = useState(false)
@@ -114,6 +127,14 @@ export function WorkedExample({ example }: { example: WorkedExample }) {
             <Prose text={example.statement} className="inline" />
           </div>
         </div>
+        <FeedbackButtons
+          sectionId={sectionId}
+          topicId={topicId}
+          lessonId={lessonId}
+          sectionType="example"
+          sectionRef={example.id}
+          compact
+        />
       </div>
 
       {/* Closed state — encourage attempting the problem first instead of
