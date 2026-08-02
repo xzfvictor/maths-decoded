@@ -21,6 +21,18 @@ yarn-error.log*
 # endpoint so we don't re-probe every run.
 .audio-tts-endpoint
 
+# Manim render artifacts (the lesson MP4 itself in
+# public/video/lessons/... is checked in; only the build subdirs are
+# gitignored).
+public/video/videos/
+public/video/images/
+public/video/Tex/
+public/video/texts/
+
+# Python bytecode caches (transient, regenerated on every run).
+__pycache__/
+*.pyc
+
 # Local env files (server reads $ANTHROPIC_AUTH_TOKEN at runtime — keep it out of git).
 .env
 .env.*

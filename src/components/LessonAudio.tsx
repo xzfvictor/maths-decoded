@@ -26,6 +26,11 @@ export function LessonAudio({
   const [showTranscript, setShowTranscript] = useState(false)
   const [rate, setRate] = useState(1)
 
+  // Independent video probe: a missing MP4 must never suppress the audio.
+  const [videoStatus, setVideoStatus] = useState<'checking' | 'missing' | 'ready'>(
+    'checking',
+  )
+
   // Probe whether the audio file exists. We use a HEAD-style trick: load
   // the metadata only and react to onError / onLoadedMetadata.
   useEffect(() => {
@@ -54,6 +59,25 @@ export function LessonAudio({
       a.removeEventListener('loadedmetadata', onMeta)
       a.removeEventListener('error', onErr)
       a.src = ''
+    }
+  }, [topicId, lessonId])
+
+  // Probe for the optional MP4 — same metadata pattern as audio, but
+  // separate state so a missing video doesn't affect audio rendering.
+  useEffect(() => {
+    setVideoStatus('checking')
+    const v = document.createElement('video')
+    v.preload = 'metadata'
+    const onMeta = () => setVideoStatus('ready')
+    const onErr = () => setVideoStatus('missing')
+    v.addEventListener('loadedmetadata', onMeta)
+    v.addEventListener('error', onErr)
+    v.src = videoUrl(topicId, lessonId)
+
+    return () => {
+      v.removeEventListener('loadedmetadata', onMeta)
+      v.removeEventListener('error', onErr)
+      v.src = ''
     }
   }, [topicId, lessonId])
 
@@ -121,8 +145,31 @@ export function LessonAudio({
         </div>
       </div>
 
-      {/* Player area — only when audio is ready. */}
-      {status === 'ready' && (
+      {/* Video player — independent of audio status so a missing MP4
+          never suppresses the audio card. Rendered above the audio
+          player as the more inviting first impression for beginners. */}
+      {videoStatus === 'ready' && (
+        <div className="mt-4">
+          <video
+            src={videoUrl(topicId, lessonId)}
+            controls
+            preload="metadata"
+            playsInline
+            className="aspect-video w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-950 dark:border-slate-700"
+          >
+            Your browser does not support embedded video.
+          </video>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            Watch and listen — animation with narration. Use the transcript
+            below if you'd rather read while you listen, or scan it after.
+          </p>
+        </div>
+      )}
+
+      {/* Audio player — only when audio is ready AND no video is present.
+          The video carries its own narration track, so duplicating the audio
+          controls would be redundant. */}
+      {status === 'ready' && videoStatus !== 'ready' && (
         <div className="mt-4">
           <audio
             ref={audioRef}
@@ -191,28 +238,31 @@ export function LessonAudio({
               {rate.toFixed(1)}x
             </span>
           </div>
+        </div>
+      )}
 
-          {transcript && (
-            <div className="mt-3">
-              <button
-                type="button"
-                onClick={() => setShowTranscript((s) => !s)}
-                className="text-xs font-semibold text-brand-600 hover:underline dark:text-brand-300"
-              >
-                {showTranscript ? 'Hide transcript' : 'Show transcript'}
-              </button>
-              {showTranscript && (
-                <p className="mt-2 rounded-lg bg-slate-50 p-3 text-sm leading-6 text-slate-700 dark:bg-slate-900/60 dark:text-slate-200">
-                  {transcript}
-                </p>
-              )}
-            </div>
+      {/* Transcript — shown when we have a transcript and at least one of
+          the audio or video is ready. Rendered as its own block so the
+          video doesn't suppress it. */}
+      {transcript && (status === 'ready' || videoStatus === 'ready') && (
+        <div className="mt-3">
+          <button
+            type="button"
+            onClick={() => setShowTranscript((s) => !s)}
+            className="text-xs font-semibold text-brand-600 hover:underline dark:text-brand-300"
+          >
+            {showTranscript ? 'Hide transcript' : 'Show transcript'}
+          </button>
+          {showTranscript && (
+            <p className="mt-2 rounded-lg bg-slate-50 p-3 text-sm leading-6 text-slate-700 dark:bg-slate-900/60 dark:text-slate-200">
+              {transcript}
+            </p>
           )}
         </div>
       )}
 
-      {/* Audio not generated yet. */}
-      {status === 'missing' && (
+      {/* Audio not generated yet — only when there's no video to fall back on. */}
+      {status === 'missing' && videoStatus !== 'ready' && (
         <div className="mt-4 rounded-lg border border-dashed border-slate-300 bg-slate-50 p-3 text-xs text-slate-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-400">
           Audio not generated yet. Run{' '}
           <code className="rounded bg-slate-200 px-1 py-0.5 font-mono text-[11px] dark:bg-slate-800">
@@ -230,6 +280,9 @@ function audioUrl(topicId: string, lessonId: string): string {
 }
 function transcriptUrl(topicId: string, lessonId: string): string {
   return `audio/lessons/${topicId}/${lessonId}.json`
+}
+function videoUrl(topicId: string, lessonId: string): string {
+  return `video/lessons/${topicId}/${lessonId}.mp4`
 }
 
 function fmt(seconds: number): string {
