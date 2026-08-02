@@ -22,6 +22,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { CuratedExercise, Difficulty, Exercise, ExerciseInstance } from '../content/types'
 import { ExerciseCard } from './ExerciseCard'
 import { regenerateExercise } from '../lib/regenerateExercise'
+import { exerciseSectionId } from '../lib/feedback'
 
 const LEVEL_ORDER: Difficulty[] = ['intro', 'core', 'challenge']
 const LEVEL_INDEX: Record<Difficulty, 0 | 1 | 2> = {
@@ -230,6 +231,7 @@ export function PracticeLadder({
           exercise={ex}
           hideRegenerate
           onSolved={onCardSolved}
+          sectionId={exerciseSectionId(topicId, lessonId, ex.id)}
         />
       ))}
 
@@ -254,6 +256,7 @@ export function PracticeLadder({
                 exercise={ex}
                 hideRegenerate
                 onSolved={onCardSolved}
+                sectionId={exerciseSectionId(topicId, lessonId, item.key)}
               />
             )
           })}

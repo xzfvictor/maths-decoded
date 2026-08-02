@@ -7,6 +7,7 @@ import { WorkedExample } from '../components/WorkedExample'
 import { LessonAudio } from '../components/LessonAudio'
 import { isLessonDone, setLessonDone } from '../lib/storage'
 import { useProgress } from '../lib/useProgress'
+import { exampleSectionId } from '../lib/feedback'
 
 export function LessonPage() {
   const { id, lessonId } = useParams<{ id: string; lessonId: string }>()
@@ -101,7 +102,13 @@ export function LessonPage() {
           </p>
           <div className="space-y-4">
             {lesson.examples.map((ex) => (
-              <WorkedExample key={ex.id} example={ex} />
+              <WorkedExample
+                key={ex.id}
+                example={ex}
+                sectionId={exampleSectionId(topic.id, lesson.id, ex.id)}
+                topicId={topic.id}
+                lessonId={lesson.id}
+              />
             ))}
           </div>
         </section>

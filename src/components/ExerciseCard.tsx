@@ -4,6 +4,7 @@ import { checkAnswer } from '../lib/answer'
 import { recordExercise } from '../lib/storage'
 import { regenerateExercise } from '../lib/regenerateExercise'
 import { Prose } from './Prose'
+import { FeedbackButtons } from './FeedbackButtons'
 
 const DIFFICULTY_LABEL: Record<string, string> = {
   intro: 'Intro',
@@ -29,6 +30,7 @@ export function ExerciseCard({
   exercise,
   hideRegenerate,
   onSolved,
+  sectionId,
 }: {
   topicId: string
   lessonId: string
@@ -39,6 +41,9 @@ export function ExerciseCard({
   /** Called when the student answers the question correctly. Used by the
    *  PracticeLadder to track the highest cleared difficulty level. */
   onSolved?: (difficulty: Difficulty) => void
+  /** Stable id from exerciseSectionId. Built by the parent so the
+   *  source of truth for the id format stays in one place. */
+  sectionId?: string
 }) {
   // Seed advances when the student asks for a new version of a param question.
   const [seed, setSeed] = useState(() => (exercise.id.length * 2654435761) >>> 0)
@@ -131,6 +136,18 @@ export function ExerciseCard({
         {override && (
           <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-800 dark:bg-violet-900/40 dark:text-violet-200">
             AI variant
+          </span>
+        )}
+        {sectionId && (
+          <span className="ml-auto">
+            <FeedbackButtons
+              sectionId={sectionId}
+              topicId={topicId}
+              lessonId={lessonId}
+              sectionType="exercise"
+              sectionRef={exercise.id}
+              compact
+            />
           </span>
         )}
       </div>

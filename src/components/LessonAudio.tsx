@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { FeedbackButtons } from './FeedbackButtons'
+import { audioSectionId } from '../lib/feedback'
 
 /**
  * "Explain to me" audio card. Plays a pre-generated spoken narration
@@ -119,6 +121,13 @@ export function LessonAudio({
             before reading.
           </p>
         </div>
+        <FeedbackButtons
+          sectionId={audioSectionId(topicId, lessonId)}
+          topicId={topicId}
+          lessonId={lessonId}
+          sectionType="audio"
+          sectionRef="audio"
+        />
       </div>
 
       {/* Player area — only when audio is ready. */}
