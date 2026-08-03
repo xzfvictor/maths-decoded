@@ -1,185 +1,37 @@
-"""
-Manim scene for the lesson `general-solutions`
-(topic `l10a-asp-trig-equations`).
-
-For sin(x) = sin(α), the general solutions are
-x = α + 2πk  OR  x = π − α + 2πk  for integer k. The animation draws
-the unit circle to show why both families are needed.
-
-Target duration: ~88.2 s (matches the audio narration length).
-"""
-
+"""General solutions: period, family, sin/cos/tan, and sin(2θ) scaling."""
 import sys
-sys.path.insert(0, '/home/victor/maths-decoded/scripts/videos')
-from _common import (
-    BAND_CHART_CENTER, BLUE_TERM, TEAL_TERM, ORANGE_TERM, RED_REJECT,
-    GREEN_OK, beat_group, make_term_card, make_equation_card,
-    animate_intro, animate_final_definition,
-)
+sys.path.insert(0,'/home/victor/maths-decoded/scripts/videos')
+from _common import BLUE_TERM, ORANGE_TERM, GREEN_OK, animate_intro, animate_final_definition, beat_group
 from manim import *
-import numpy as np
-
 
 class GeneralSolutionsScene(Scene):
-    def construct(self) -> None:
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 1 — Title (~5 s)
-        # ──────────────────────────────────────────────────────────────────
-        animate_intro(
-            self,
-            "General solutions of sin x = sin α",
-            "Two families: x = α + 2πk and x = π − α + 2πk.",
-        )
+    def construct(self):
+        animate_intro(self,"General solutions and periods","One angle spawns an infinite family — but a domain cuts it down")
+        b=beat_group()
+        sin_card=MathTex(r"\sin(\theta+2\pi k)=\sin\theta,\quad\text{period }T=2\pi",color=BLUE_TERM).scale(.85).move_to(UP*.65)
+        cos_card=MathTex(r"\cos(\theta+2\pi k)=\cos\theta,\quad T=2\pi",color=BLUE_TERM).scale(.85).move_to(UP*.0)
+        tan_card=MathTex(r"\tan(\theta+\pi k)=\tan\theta,\quad T=\pi",color=ORANGE_TERM).scale(.85).move_to(DOWN*.65)
+        b=beat_group(sin_card,cos_card,tan_card); self.play(Write(sin_card)); self.play(Write(cos_card)); self.play(Write(tan_card)); self.wait(3); self.play(FadeOut(b))
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 2 — Unit circle with sin x = sin α marked (~22 s)
-        # ──────────────────────────────────────────────────────────────────
-        head = Text("Two points on the unit circle", font_size=26, color=BLUE_TERM)
-        head.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head_bg = BackgroundRectangle(head, color=BLACK, fill_opacity=0.95, buff=0.15)
-        head_bg.move_to(head.get_center())
-        self.play(FadeIn(head_bg, run_time=0.4), FadeIn(head, run_time=1.0))
-        self.wait(0.8)
+        b=beat_group()
+        unit=Circle(radius=1.0,color=WHITE).move_to(LEFT*2.5+UP*.15)
+        x_ax=Line(LEFT*4+UP*.15,RIGHT*.5+UP*.15,color=WHITE); y_ax=Line(LEFT*2.5+UP*1.15,LEFT*2.5+UP*-.85,color=WHITE)
+        a_pt=unit.point_from_proportion(1/12); b_pt=unit.point_from_proportion(5/12)
+        ad=Dot(a_pt,color=BLUE_TERM); bd=Dot(b_pt,color=ORANGE_TERM)
+        at=MathTex(r"\alpha",color=BLUE_TERM).scale(.7).next_to(ad,UR,buff=.08)
+        bt=MathTex(r"\pi-\alpha",color=ORANGE_TERM).scale(.7).next_to(bd,UL,buff=.08)
+        family=MathTex(r"\theta=\alpha+2\pi k\quad\text{or}\quad\theta=\pi-\alpha+2\pi k",color=GREEN_OK).scale(.78).move_to(RIGHT*2.6+UP*.4)
+        note=Text("Without a domain there are infinitely many solutions.",font_size=21,color=WHITE).move_to(RIGHT*2.6+DOWN*.25)
+        b=beat_group(unit,x_ax,y_ax,ad,bd,at,bt,family,note); self.play(Create(unit),Create(x_ax),Create(y_ax),FadeIn(ad),FadeIn(bd),Write(at),Write(bt),Write(family),FadeIn(note)); self.wait(3); self.play(FadeOut(b))
 
-        centre = BAND_CHART_CENTER + DOWN * 0.4
-        circle = Circle(radius=1.5, color=WHITE).move_to(centre)
-        # Reference axes through circle.
-        x_axis = Line(centre + LEFT * 1.8, centre + RIGHT * 1.8,
-                      color=WHITE, stroke_width=2)
-        y_axis = Line(centre + DOWN * 1.8, centre + UP * 1.8,
-                      color=WHITE, stroke_width=2)
+        b=beat_group()
+        domain=MathTex(r"[0,2\pi]:\quad\theta=\frac{\pi}{6},\frac{5\pi}{6}",color=GREEN_OK).scale(.85).move_to(UP*.45)
+        d2=MathTex(r"[-90^\circ,90^\circ]:\quad\tan\theta=\sqrt3\Rightarrow\theta=60^\circ",color=ORANGE_TERM).scale(.78).move_to(DOWN*.15)
+        b=beat_group(domain,d2); self.play(Write(domain)); self.play(Write(d2)); self.wait(3); self.play(FadeOut(b))
 
-        # α point in Q1.
-        alpha = np.deg2rad(40)
-        p_alpha = centre + 1.5 * np.array([np.cos(alpha), np.sin(alpha), 0])
-        # Mirror point in Q2: π - α.
-        mirror = np.deg2rad(180) - alpha
-        p_mirror = centre + 1.5 * np.array([np.cos(mirror), np.sin(mirror), 0])
-
-        dot_a = Dot(p_alpha, color=BLUE_TERM)
-        dot_b = Dot(p_mirror, color=TEAL_TERM)
-        a_lbl = MathTex(r"\alpha", color=BLUE_TERM).scale(0.9).next_to(
-            dot_a, UR, buff=0.1)
-        b_lbl = MathTex(r"\pi - \alpha", color=TEAL_TERM).scale(0.9).next_to(
-            dot_b, UL, buff=0.1)
-
-        # Horizontal dashed line through both points (same sin).
-        sin_line = DashedLine(
-            np.array([centre[0] - 1.8, p_alpha[1], 0]),
-            np.array([centre[0] + 1.8, p_alpha[1], 0]),
-            color=ORANGE_TERM, stroke_width=2,
-        )
-        sin_lbl = MathTex(r"\sin x = \sin\alpha",
-                          color=ORANGE_TERM).scale(0.7)
-        sin_lbl.move_to(BAND_CHART_CENTER + UP * 1.3 + RIGHT * 3.0)
-        sin_lbl_bg = BackgroundRectangle(sin_lbl, color=BLACK,
-                                         fill_opacity=0.9, buff=0.15)
-        sin_lbl_bg.move_to(sin_lbl.get_center())
-
-        self.play(Create(circle), Create(x_axis), Create(y_axis), run_time=1.5)
-        self.play(FadeIn(dot_a), FadeIn(dot_b),
-                  FadeIn(a_lbl), FadeIn(b_lbl), run_time=0.8)
-        self.play(Create(sin_line, run_time=1.0),
-                  FadeIn(sin_lbl_bg), FadeIn(sin_lbl), run_time=0.8)
-        self.wait(2.5)
-
-        beat2 = beat_group(head, head_bg, circle, x_axis, y_axis,
-                           dot_a, dot_b, a_lbl, b_lbl,
-                           sin_line, sin_lbl, sin_lbl_bg)
-        self.play(FadeOut(beat2, run_time=1.0))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 3 — General-solution families (~22 s)
-        # ──────────────────────────────────────────────────────────────────
-        head3 = Text("General solutions", font_size=26, color=GREEN_OK)
-        head3.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head3_bg = BackgroundRectangle(head3, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
-        head3_bg.move_to(head3.get_center())
-        self.play(FadeIn(head3_bg, run_time=0.4), FadeIn(head3, run_time=1.0))
-        self.wait(0.8)
-
-        eq1 = make_equation_card(
-            r"x = \alpha + 2\pi k",
-            color=BLUE_TERM, scale=1.1,
-        )
-        eq1.move_to(BAND_CHART_CENTER + UP * 0.4 + LEFT * 2.0)
-        self.play(FadeIn(eq1, shift=UP * 0.2, run_time=1.4))
-        self.wait(1.0)
-
-        eq2 = make_equation_card(
-            r"x = \pi - \alpha + 2\pi k",
-            color=TEAL_TERM, scale=1.1,
-        )
-        eq2.move_to(BAND_CHART_CENTER + UP * 0.4 + RIGHT * 2.0)
-        self.play(FadeIn(eq2, shift=UP * 0.2, run_time=1.4))
-        self.wait(1.5)
-
-        or_label = MathTex(r"\text{or}", color=WHITE).scale(1.0)
-        or_label.move_to(BAND_CHART_CENTER + UP * 0.4)
-        or_label_bg = BackgroundRectangle(or_label, color=BLACK,
-                                          fill_opacity=0.95, buff=0.2)
-        or_label_bg.move_to(or_label.get_center())
-        self.play(FadeIn(or_label_bg), FadeIn(or_label), run_time=0.6)
-        self.wait(1.5)
-
-        k_note = MathTex(r"k \in \mathbb{Z}", font_size=20, color=WHITE)
-        k_note.move_to(BAND_CHART_CENTER + DOWN * 0.9)
-        k_note_bg = BackgroundRectangle(k_note, color=BLACK,
-                                        fill_opacity=0.95, buff=0.15)
-        k_note_bg.move_to(k_note.get_center())
-        self.play(FadeIn(k_note_bg, run_time=0.4), FadeIn(k_note, run_time=1.0))
-        self.wait(2.0)
-
-        beat3 = beat_group(head3, head3_bg, eq1, eq2,
-                           or_label, or_label_bg, k_note, k_note_bg)
-        self.play(FadeOut(beat3, run_time=1.0))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 4 — Concrete: sin x = 1/2 (~18 s)
-        # ──────────────────────────────────────────────────────────────────
-        head4 = Text("Example: sin x = ½", font_size=26, color=ORANGE_TERM)
-        head4.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head4_bg = BackgroundRectangle(head4, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
-        head4_bg.move_to(head4.get_center())
-        self.play(FadeIn(head4_bg, run_time=0.4), FadeIn(head4, run_time=1.0))
-        self.wait(0.8)
-
-        # alpha = π/6, so solutions are π/6 and 5π/6 (mod 2π).
-        ans1 = make_equation_card(
-            r"x = \dfrac{\pi}{6} + 2\pi k",
-            color=BLUE_TERM, scale=1.0,
-        )
-        ans1.move_to(BAND_CHART_CENTER + UP * 0.3 + LEFT * 2.3)
-        self.play(FadeIn(ans1, shift=UP * 0.2, run_time=1.4))
-
-        ans2 = make_equation_card(
-            r"x = \dfrac{5\pi}{6} + 2\pi k",
-            color=TEAL_TERM, scale=1.0,
-        )
-        ans2.move_to(BAND_CHART_CENTER + UP * 0.3 + RIGHT * 2.3)
-        self.play(FadeIn(ans2, shift=UP * 0.2, run_time=1.4))
-        self.wait(2.0)
-
-        note = Text("Two solutions per 2π period — both families needed.",
-                    font_size=20, color=WHITE)
-        note.move_to(BAND_CHART_CENTER + DOWN * 1.2)
-        note_bg = BackgroundRectangle(note, color=BLACK,
-                                      fill_opacity=0.95, buff=0.15)
-        note_bg.move_to(note.get_center())
-        self.play(FadeIn(note_bg, run_time=0.4), FadeIn(note, run_time=1.0))
-        self.wait(2.0)
-
-        beat4 = beat_group(head4, head4_bg, ans1, ans2, note, note_bg)
-        self.play(FadeOut(beat4, run_time=1.0))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (held; total ≈ 88.2 s)
-        # ──────────────────────────────────────────────────────────────────
-        animate_final_definition(
-            self,
-            r"x = \alpha + 2\pi k \;\;\text{or}\;\; x = \pi - \alpha + 2\pi k",
-            "Mirror angle in Q1 ↔ Q2 gives the second family.",
-            final_wait=39.0,
-        )
+        b=beat_group()
+        inside=MathTex(r"\sin(2\theta)=\frac12\quad\Rightarrow\quad 2\theta=\frac{\pi}{6}+2\pi k\ \text{ or }\ \frac{5\pi}{6}+2\pi k",color=BLUE_TERM).scale(.74).move_to(UP*.55)
+        divided=MathTex(r"\theta=\frac{\pi}{12}+\pi k\quad\text{or}\quad\theta=\frac{5\pi}{12}+\pi k",color=GREEN_OK).scale(.85).move_to(DOWN*.05)
+        period=Text("Period shrinks: T = 2π/2 = π.",font_size=22,color=ORANGE_TERM).move_to(DOWN*1.05)
+        b=beat_group(inside,divided,period); self.play(Write(inside)); self.play(Write(divided)); self.play(FadeIn(period)); self.wait(3); self.play(FadeOut(b))
+        animate_final_definition(self,r"\theta=\alpha+2\pi k\ \text{or}\ \pi-\alpha+2\pi k,\qquad\sin(n\theta):\ T=\frac{2\pi}n","Combine family (period) with domain; sin(nθ) scales the period.",final_wait=40)

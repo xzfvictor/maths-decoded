@@ -1,3 +1,16 @@
+"""
+Manim scene for the lesson `linear-fit-equation`
+(topic `l10a-ast-bivariate-lines`).
+
+Finding the line of best fit for paired data via least squares. The
+formulas are a headache by hand, so use software (spreadsheet,
+graphics calculator, Desmos/GeoGebra). The slope is "extra x adds
+slope×y units"; the intercept is the predicted y at x = 0 — only
+meaningful when 0 is near the data range.
+
+Target duration: ~76 s (matches the audio narration length).
+"""
+
 import sys
 sys.path.insert(0, '/home/victor/maths-decoded/scripts/videos')
 from _common import (
@@ -10,77 +23,141 @@ from manim import *
 
 class LinearFitEquationScene(Scene):
     def construct(self) -> None:
-        animate_intro(
+        # ──────────────────────────────────────────────────────────────────
+        # Beat 1 — Title (~5 s)
+        # ──────────────────────────────────────────────────────────────────
+        title = animate_intro(
             self,
             "The least-squares line",
-            "Turn a roughly linear cloud into the prediction y = a + bx.",
+            "Software finds the slope and intercept for you.",
         )
+
+        # ──────────────────────────────────────────────────────────────────
+        # Beat 2 — Concrete scatterplot (~22 s)
+        # ──────────────────────────────────────────────────────────────────
+        beat_2 = beat_group()
 
         def scatter(color=BLUE_TERM):
             axes = Axes(
                 x_range=[0, 10, 2], y_range=[0, 10, 2],
-                x_length=5.2, y_length=2.6, tips=False,
+                x_length=4.8, y_length=2.4, tips=False,
                 axis_config={"include_numbers": False, "stroke_width": 1.5},
-            ).move_to(BAND_CHART_CENTER + LEFT * 1.6 + UP * 0.05)
+            )
             points = [(1, 1.7), (2, 2.4), (3, 3.6), (4, 4.0), (5, 5.3),
                       (6, 5.7), (7, 6.8), (8, 7.4), (9, 8.2)]
-            dots = VGroup(*[Dot(axes.c2p(x, y), color=color, radius=0.06) for x, y in points])
+            dots = VGroup(*[Dot(axes.c2p(x, y), color=color, radius=0.06)
+                            for x, y in points])
             return axes, dots
 
-        # Beat 2 — concrete scatterplot.
-        head2 = Text("A roughly linear pattern", font_size=24, color=BLUE_TERM)
-        head2.move_to(BAND_CHART_CENTER + UP * 1.4 + RIGHT * 3.9)
+        head = Text("A roughly linear pattern",
+                    font_size=24, color=BLUE_TERM)
+        head.move_to(BAND_CHART_CENTER + UP * 1.0 + LEFT * 2.6)
+        head_bg = BackgroundRectangle(head, color=BLACK, fill_opacity=0.95, buff=0.15)
+        head_bg.move_to(head.get_center())
+        beat_2 = beat_group(beat_2, head, head_bg)
+
         ax, dots = scatter()
-        prompt = Text("Can one line summarise the trend?", font_size=21, color=ORANGE_TERM)
-        prompt.move_to(BAND_CHART_CENTER + RIGHT * 3.7 + DOWN * 0.2)
+        grp = VGroup(ax, dots).move_to(BAND_CHART_CENTER + LEFT * 2.6 + UP * -0.05)
+        beat_2 = beat_group(beat_2, grp)
+
+        prompt = Text("Can one line summarise the trend?",
+                      font_size=20, color=ORANGE_TERM)
+        prompt.move_to(BAND_CHART_CENTER + UP * -1.1 + LEFT * 2.6)
         prompt_bg = BackgroundRectangle(prompt, color=BLACK, fill_opacity=0.95, buff=0.14)
-        beat2 = beat_group(head2, ax, dots, prompt_bg, prompt)
-        self.play(FadeIn(head2), Create(ax), run_time=1.1)
-        self.play(LaggedStart(*[FadeIn(d) for d in dots], lag_ratio=0.08), run_time=1.3)
-        self.play(FadeIn(prompt_bg), FadeIn(prompt), run_time=0.9)
+        prompt_bg.move_to(prompt.get_center())
+        beat_2 = beat_group(beat_2, prompt, prompt_bg)
+
+        self.play(FadeIn(head_bg, run_time=0.3), FadeIn(head, run_time=0.9),
+                  Create(ax, run_time=1.0))
+        self.play(LaggedStart(*[FadeIn(d, run_time=0.4) for d in dots],
+                             lag_ratio=0.08), run_time=1.3)
+        self.play(FadeIn(prompt_bg, run_time=0.4), FadeIn(prompt, run_time=1.0))
         self.wait(4.0)
-        self.play(FadeOut(beat2, run_time=0.8))
+        self.play(FadeOut(beat_2, run_time=0.8))
 
-        # Beat 3 — generalise to the fitted equation.
-        head3 = Text("Least squares chooses a and b", font_size=24, color=GREEN_OK)
-        head3.move_to(BAND_CHART_CENTER + UP * 1.4 + RIGHT * 3.6)
-        ax3, dots3 = scatter()
-        fit_line = ax3.plot(lambda x: 1 + 0.8 * x, x_range=[0, 10], color=GREEN_OK, stroke_width=3)
-        fit = make_equation_card(
-            r"\hat y=a+bx", color=GREEN_OK, scale=1.0
-        ).move_to(BAND_CHART_CENTER + RIGHT * 3.7 + UP * 0.35)
-        labels = Text("a: intercept     b: slope", font_size=20, color=TEAL_TERM)
-        labels.move_to(BAND_CHART_CENTER + RIGHT * 3.7 + DOWN * 0.65)
-        labels_bg = BackgroundRectangle(labels, color=BLACK, fill_opacity=0.95, buff=0.14)
-        beat3 = beat_group(head3, ax3, dots3, fit_line, fit, labels_bg, labels)
-        self.play(FadeIn(head3), Create(ax3), FadeIn(dots3), run_time=1.2)
-        self.play(Create(fit_line), FadeIn(fit), run_time=1.4)
-        self.play(FadeIn(labels_bg), FadeIn(labels), run_time=0.9)
-        self.wait(5.0)
-        self.play(FadeOut(beat3, run_time=0.8))
+        # ──────────────────────────────────────────────────────────────────
+        # Beat 3 — Software tools do the work (~22 s)
+        # ──────────────────────────────────────────────────────────────────
+        beat_3 = beat_group()
 
-        # Beat 4 — contrast and reject an unsuitable fit.
-        head4 = Text("Reject a line when no trend is present", font_size=24, color=RED_REJECT)
-        head4.move_to(BAND_CHART_CENTER + UP * 1.4 + RIGHT * 3.5)
-        ax4, _ = scatter(RED_REJECT)
-        random_points = [(1, 8), (2, 1), (3, 7), (4, 2.5), (5, 9),
-                         (6, 3), (7, 8.5), (8, 4), (9, 6.5)]
-        random_dots = VGroup(*[
-            Dot(ax4.c2p(x, y), color=RED_REJECT, radius=0.06)
-            for x, y in random_points
-        ])
-        reject = Text("No linear pattern: predictions would mislead.", font_size=20, color=RED_REJECT)
-        reject.move_to(BAND_CHART_CENTER + RIGHT * 3.7 + DOWN * 0.3)
-        reject_bg = BackgroundRectangle(reject, color=BLACK, fill_opacity=0.95, buff=0.14)
-        beat4 = beat_group(head4, ax4, random_dots, reject_bg, reject)
-        self.play(FadeIn(head4), Create(ax4), FadeIn(random_dots), run_time=1.3)
-        self.play(FadeIn(reject_bg), FadeIn(reject), run_time=0.9)
-        self.wait(5.0)
-        self.play(FadeOut(beat4, run_time=0.8))
+        head3 = Text("Let the computer find it",
+                     font_size=24, color=GREEN_OK)
+        head3.move_to(BAND_CHART_CENTER + UP * 1.1)
+        head3_bg = BackgroundRectangle(head3, color=BLACK, fill_opacity=0.95, buff=0.15)
+        head3_bg.move_to(head3.get_center())
+        beat_3 = beat_group(beat_3, head3, head3_bg)
+        self.play(FadeIn(head3_bg, run_time=0.4), FadeIn(head3, run_time=1.0))
+        self.wait(1.0)
 
+        # Three side-by-side tool cards.
+        c1 = make_equation_card(
+            r"\text{Spreadsheet: } \texttt{=SLOPE(...)}",
+            color=BLUE_TERM, scale=0.7,
+        )
+        c1.move_to(BAND_CHART_CENTER + UP * 0.15 + LEFT * 3.3)
+        c2 = make_equation_card(
+            r"\text{Graphics calculator}",
+            color=BLUE_TERM, scale=0.7,
+        )
+        c2.move_to(BAND_CHART_CENTER + UP * 0.15)
+        c3 = make_equation_card(
+            r"\text{Desmos / GeoGebra}",
+            color=BLUE_TERM, scale=0.7,
+        )
+        c3.move_to(BAND_CHART_CENTER + UP * 0.15 + RIGHT * 3.3)
+        tools = VGroup(c1, c2, c3)
+        beat_3 = beat_group(beat_3, c1, c2, c3)
+        self.play(FadeIn(c1, shift=UP * 0.2, run_time=1.0))
+        self.wait(0.3)
+        self.play(FadeIn(c2, shift=UP * 0.2, run_time=1.0))
+        self.wait(0.3)
+        self.play(FadeIn(c3, shift=UP * 0.2, run_time=1.0))
+        self.wait(6.0)
+        self.play(FadeOut(beat_3, run_time=0.8))
+
+        # ──────────────────────────────────────────────────────────────────
+        # Beat 4 — Interpret slope and intercept (~22 s)
+        # ──────────────────────────────────────────────────────────────────
+        beat_4 = beat_group()
+
+        head4 = Text("Now interpret the numbers",
+                     font_size=24, color=BLUE_TERM)
+        head4.move_to(BAND_CHART_CENTER + UP * 1.05)
+        head4_bg = BackgroundRectangle(head4, color=BLACK, fill_opacity=0.95, buff=0.15)
+        head4_bg.move_to(head4.get_center())
+        beat_4 = beat_group(beat_4, head4, head4_bg)
+        self.play(FadeIn(head4_bg, run_time=0.4), FadeIn(head4, run_time=1.0))
+        self.wait(0.6)
+
+        slope = MathTex(
+            r"\text{slope: } \Delta y \;=\; \text{slope} \times \Delta x",
+            color=ORANGE_TERM,
+        ).scale(0.95)
+        slope.move_to(BAND_CHART_CENTER + UP * 0.25)
+        slope_bg = BackgroundRectangle(slope, color=BLACK, fill_opacity=1, buff=0.2)
+        slope_bg.move_to(slope.get_center())
+        beat_4 = beat_group(beat_4, slope, slope_bg)
+        self.play(FadeIn(slope_bg, run_time=0.4), FadeIn(slope, run_time=1.6))
+        self.wait(2.0)
+
+        intr = MathTex(
+            r"\text{intercept} \;=\; y(0) \quad \text{only if } 0 \text{ is in range}",
+            color=GREEN_OK,
+        ).scale(0.95)
+        intr.next_to(slope, DOWN, buff=0.45)
+        intr_bg = BackgroundRectangle(intr, color=BLACK, fill_opacity=1, buff=0.2)
+        intr_bg.move_to(intr.get_center())
+        beat_4 = beat_group(beat_4, intr, intr_bg)
+        self.play(FadeIn(intr_bg, run_time=0.4), FadeIn(intr, run_time=2.0))
+        self.wait(8.0)
+        self.play(FadeOut(beat_4, run_time=0.8))
+
+        # ──────────────────────────────────────────────────────────────────
+        # Beat 5 — Final takeaway (~32 s, total ≈ 76 s)
+        # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,
-            r"\hat y=a+bx\quad\text{minimises}\quad\sum_i(y_i-\hat y_i)^2",
-            "Use the line only when the scatterplot is roughly linear.",
+            r"\hat y = a + b\,x \quad\Longleftrightarrow\quad b = \text{slope},\; a = \text{intercept}",
+            "Let the software compute it; your skill is interpreting the numbers.",
             final_wait=32.0,
         )

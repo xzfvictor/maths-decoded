@@ -1,155 +1,94 @@
-"""
-Manim scene for the lesson `solving-rational`
-(topic `l10a-aa-linear-rational`).
-
-Solve f(x)/g(x) = 0. The fraction is zero exactly when the numerator
-f(x) is zero AND the denominator g(x) is non-zero. Example:
-(x^2 - 4) / (x - 2) = 0 gives x = -2 (NOT x = 2).
-
-Target duration: ~82.4 s (matches the audio narration length).
-"""
+"""Manim scene aligned to the solving-rational narration."""
 
 import sys
 sys.path.insert(0, '/home/victor/maths-decoded/scripts/videos')
-from _common import (
-    BAND_CHART_CENTER, BLUE_TERM, TEAL_TERM, ORANGE_TERM, RED_REJECT,
-    GREEN_OK, beat_group, make_term_card, make_equation_card,
-    animate_intro, animate_final_definition,
-)
+
 from manim import *
-import numpy as np
+from _common import (
+    BAND_CHART_CENTER, BLUE_TERM, TEAL_TERM, ORANGE_TERM, GREEN_OK,
+    beat_group, make_equation_card, animate_intro,
+    animate_final_definition,
+)
 
 
 class SolvingRationalScene(Scene):
     def construct(self) -> None:
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 1 — Title (~5 s)
-        # ──────────────────────────────────────────────────────────────────
         animate_intro(
             self,
-            "Solving a rational equation",
-            "Set the numerator to zero — but exclude zeros of the denominator.",
+            "Solving equations with fractional coefficients",
+            "Clear the fractions, then solve a whole-number equation.",
         )
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 2 — The rule (~15 s)
-        # ──────────────────────────────────────────────────────────────────
-        head = Text("The rule", font_size=26, color=BLUE_TERM)
-        head.move_to(BAND_CHART_CENTER + UP * 1.7)
+        head = Text("Recommended method", font_size=26, color=BLUE_TERM)
+        head.move_to(BAND_CHART_CENTER + UP * 1.46)
         head_bg = BackgroundRectangle(head, color=BLACK, fill_opacity=0.95, buff=0.15)
-        head_bg.move_to(head.get_center())
-        self.play(FadeIn(head_bg, run_time=0.4), FadeIn(head, run_time=1.0))
-        self.wait(0.8)
+        method = VGroup(
+            Text("1. Find the lowest common denominator (LCD)", font_size=21, color=BLUE_TERM),
+            Text("2. Multiply every term on both sides by the LCD", font_size=21, color=TEAL_TERM),
+            Text("3. Solve the resulting linear equation", font_size=21, color=GREEN_OK),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.3).move_to(BAND_CHART_CENTER + UP * 0.02)
+        method_bgs = VGroup(*[
+            BackgroundRectangle(line, color=BLACK, fill_opacity=0.97, buff=0.11)
+            for line in method
+        ])
+        equality = Text("Multiplying both sides by the same number preserves equality.", font_size=19, color=ORANGE_TERM)
+        equality.move_to(BAND_CHART_CENTER + DOWN * 1.12)
+        equality_bg = BackgroundRectangle(equality, color=BLACK, fill_opacity=0.96, buff=0.11)
+        beat2 = beat_group(head_bg, head, method_bgs, method, equality_bg, equality)
+        self.play(FadeIn(head_bg), FadeIn(head))
+        for bg, line in zip(method_bgs, method):
+            self.play(FadeIn(bg), FadeIn(line), run_time=0.75)
+        self.play(FadeIn(equality_bg), FadeIn(equality))
+        self.wait(2.5)
+        self.play(FadeOut(beat2, run_time=0.8))
 
-        rule = make_equation_card(
-            r"\dfrac{f(x)}{g(x)} = 0 \iff f(x)=0\ \text{and}\ g(x)\neq 0",
-            color=BLUE_TERM, scale=0.95,
-        )
-        rule.move_to(BAND_CHART_CENTER + UP * 0.3)
-        self.play(FadeIn(rule, shift=UP * 0.2, run_time=1.6))
-        self.wait(1.5)
-
-        note = Text(
-            "Zero divided by a non-zero is zero.",
-            font_size=20, color=WHITE,
-        ).next_to(rule, DOWN, buff=0.4)
-        note_bg = BackgroundRectangle(note, color=BLACK,
-                                      fill_opacity=0.95, buff=0.15)
-        note_bg.move_to(note.get_center())
-        self.play(FadeIn(note_bg, run_time=0.4),
-                  FadeIn(note, run_time=1.0))
+        head3 = Text("Worked example: LCD = 6", font_size=26, color=TEAL_TERM)
+        head3.move_to(BAND_CHART_CENTER + UP * 1.48)
+        head3_bg = BackgroundRectangle(head3, color=BLACK, fill_opacity=0.95, buff=0.15)
+        equation = make_equation_card(r"\frac{x}{2}+\frac{x}{3}=5", color=BLUE_TERM, scale=1.0)
+        equation.move_to(BAND_CHART_CENTER + UP * 0.72)
+        lines = VGroup(
+            MathTex(r"6\left(\frac{x}{2}\right)+6\left(\frac{x}{3}\right)=6(5)", color=ORANGE_TERM).scale(0.78),
+            MathTex(r"3x+2x=30", color=TEAL_TERM).scale(0.9),
+            MathTex(r"5x=30", color=TEAL_TERM).scale(0.9),
+            MathTex(r"x=6", color=GREEN_OK).scale(1.05),
+        ).arrange(DOWN, buff=0.17).move_to(BAND_CHART_CENTER + DOWN * 0.48)
+        line_bgs = VGroup(*[
+            BackgroundRectangle(line, color=BLACK, fill_opacity=1, buff=0.1)
+            for line in lines
+        ])
+        beat3 = beat_group(head3_bg, head3, equation, line_bgs, lines)
+        self.play(FadeIn(head3_bg), FadeIn(head3))
+        self.play(FadeIn(equation))
+        for bg, line in zip(line_bgs, lines):
+            self.play(FadeIn(bg), Write(line), run_time=0.8)
+            self.wait(0.35)
+        self.play(Indicate(lines[-1], color=GREEN_OK))
         self.wait(2.0)
+        self.play(FadeOut(beat3, run_time=0.8))
 
-        beat2 = beat_group(head, head_bg, rule, note, note_bg)
-        self.play(FadeOut(beat2, run_time=1.0))
+        head4 = Text("Why clearing first is safer", font_size=25, color=GREEN_OK)
+        head4.move_to(BAND_CHART_CENTER + UP * 1.42)
+        head4_bg = BackgroundRectangle(head4, color=BLACK, fill_opacity=0.95, buff=0.15)
+        compare = VGroup(
+            Text("Fractions disappear in one step", font_size=22, color=BLUE_TERM),
+            Text("Then ordinary inverse operations take over", font_size=22, color=TEAL_TERM),
+            Text("Keeping fractions works — but invites small slip-ups", font_size=20, color=ORANGE_TERM),
+        ).arrange(DOWN, buff=0.32).move_to(BAND_CHART_CENTER + DOWN * 0.05)
+        compare_bgs = VGroup(*[
+            BackgroundRectangle(line, color=BLACK, fill_opacity=0.97, buff=0.11)
+            for line in compare
+        ])
+        beat4 = beat_group(head4_bg, head4, compare_bgs, compare)
+        self.play(FadeIn(head4_bg), FadeIn(head4))
+        for bg, line in zip(compare_bgs, compare):
+            self.play(FadeIn(bg), FadeIn(line), run_time=0.7)
+        self.wait(2.5)
+        self.play(FadeOut(beat4, run_time=0.8))
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 3 — Worked example: (x^2 - 4)/(x - 2) = 0 (~15 s)
-        # ──────────────────────────────────────────────────────────────────
-        head3 = Text("Worked example", font_size=26, color=GREEN_OK)
-        head3.move_to(BAND_CHART_CENTER + UP * 1.45)
-        head3_bg = BackgroundRectangle(head3, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
-        head3_bg.move_to(head3.get_center())
-        self.play(FadeIn(head3_bg, run_time=0.4), FadeIn(head3, run_time=1.0))
-        self.wait(0.8)
-
-        problem = make_equation_card(
-            r"\dfrac{x^{2}-4}{x-2} = 0",
-            color=GREEN_OK, scale=0.95,
-        )
-        problem.move_to(BAND_CHART_CENTER + UP * 0.4)
-        self.play(FadeIn(problem, shift=UP * 0.2, run_time=1.4))
-        self.wait(1.0)
-
-        # Replace the original rational equation before showing the
-        # numerator equation; keeping both cards visible caused a cross-fade overlap.
-        self.play(FadeOut(problem, run_time=0.5))
-        self.wait(0.2)
-
-        step1 = MathTex(
-            r"x^{2} - 4 = 0",
-            color=BLUE_TERM,
-        ).scale(0.95)
-        step1.move_to(BAND_CHART_CENTER + UP * 0.2)
-        step1_bg = BackgroundRectangle(step1, color=BLACK,
-                                       fill_opacity=1, buff=0.2)
-        step1_bg.move_to(step1.get_center())
-        self.play(FadeIn(step1_bg, run_time=0.3),
-                  FadeIn(step1, shift=UP * 0.2, run_time=1.4))
-        self.wait(1.0)
-
-        step2 = make_equation_card(
-            r"x = \pm 2",
-            color=ORANGE_TERM, scale=0.95,
-        )
-        step2.move_to(BAND_CHART_CENTER + DOWN * 0.85)
-        self.play(FadeIn(step2, shift=UP * 0.2, run_time=1.4))
-        self.wait(1.0)
-
-        beat3 = beat_group(head3, head3_bg, problem, step1, step1_bg, step2)
-        self.play(FadeOut(beat3, run_time=1.0))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 4 — Reject x = 2 because denominator is zero (~10 s)
-        # ──────────────────────────────────────────────────────────────────
-        head4 = Text("Reject x = 2", font_size=26, color=RED_REJECT)
-        head4.move_to(BAND_CHART_CENTER + UP * 1.45)
-        head4_bg = BackgroundRectangle(head4, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
-        head4_bg.move_to(head4.get_center())
-        self.play(FadeIn(head4_bg, run_time=0.4), FadeIn(head4, run_time=1.0))
-        self.wait(0.8)
-
-        reject = MathTex(
-            r"x = 2\ \Rightarrow\ \text{denom} = 0",
-            color=RED_REJECT,
-        ).scale(0.9)
-        reject.move_to(BAND_CHART_CENTER + UP * 0.4)
-        reject_bg = BackgroundRectangle(reject, color=BLACK,
-                                       fill_opacity=1, buff=0.2)
-        reject_bg.move_to(reject.get_center())
-        self.play(FadeIn(reject_bg, run_time=0.3),
-                  FadeIn(reject, shift=UP * 0.2, run_time=1.4))
-        self.wait(1.0)
-
-        ans = make_equation_card(
-            r"\therefore\ x = -2\ \text{only}",
-            color=GREEN_OK, scale=0.95,
-        )
-        ans.move_to(BAND_CHART_CENTER + DOWN * 0.85)
-        self.play(FadeIn(ans, shift=UP * 0.2, run_time=1.4))
-        self.wait(2.0)
-
-        beat4 = beat_group(head4, head4_bg, reject, reject_bg, ans)
-        self.play(FadeOut(beat4, run_time=1.0))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (held; total ≈ 82.4 s)
-        # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,
-            r"\dfrac{f(x)}{g(x)}=0\ \Rightarrow\ f(x)=0,\ g(x)\neq 0",
-            "Solve the numerator, then exclude zeros of the denominator.",
-            final_wait=37.0,
+            r"\frac{x}{2}+\frac{x}{3}=5\ \xrightarrow{\times 6}\ 3x+2x=30\ \Rightarrow\ x=6",
+            "Multiply every term by the LCD, then solve normally.",
+            final_wait=48.0,
         )

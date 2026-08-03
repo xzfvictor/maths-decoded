@@ -1,220 +1,121 @@
-"""
-Manim scene for the lesson `reading-features`
-(topic `l10a-aa-polynomial-features`).
-
-From the graph of a polynomial, identify roots, max/min, and axis of
-symmetry. Reject the mistake of confusing roots with the y-intercept.
-
-Target duration: ~85 s (matches the audio narration length).
-"""
+"""Manim scene aligned to the reading-features narration."""
 
 import sys
 sys.path.insert(0, '/home/victor/maths-decoded/scripts/videos')
-from _common import (
-    BAND_CHART_CENTER, BLUE_TERM, TEAL_TERM, ORANGE_TERM, RED_REJECT,
-    GREEN_OK, make_term_card, make_equation_card, animate_intro,
-    animate_final_definition, beat_group,
-)
+
 from manim import *
-import numpy as np
+from _common import (
+    BAND_CHART_CENTER, BLUE_TERM, TEAL_TERM, ORANGE_TERM, GREEN_OK,
+    beat_group, make_equation_card, animate_intro,
+    animate_final_definition,
+)
 
 
 class ReadingFeaturesScene(Scene):
     def construct(self) -> None:
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 1 — Title + subtitle (~5 s)
-        # ──────────────────────────────────────────────────────────────────
-        title = animate_intro(
+        animate_intro(
             self,
-            "Reading features from a polynomial graph",
-            "Roots, turning points, axis of symmetry",
+            "Read polynomial features from the equation",
+            "Build the curve's summary before graphing.",
         )
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 2 — Show cubic with two clear roots (~25 s)
-        # ──────────────────────────────────────────────────────────────────
-        beat_2 = beat_group()
-
-        ax = Axes(
-            x_range=[-3, 3, 1],
-            y_range=[-2, 2, 1],
-            x_length=6.0,
-            y_length=2.4,
-            tips=False,
-            axis_config={"include_numbers": False, "stroke_width": 2},
-        ).move_to(BAND_CHART_CENTER + DOWN * 0.05)
-        beat_2 = beat_group(beat_2, ax)
-
-        x_lbls = VGroup(*[
-            MathTex(str(i), font_size=22).next_to(ax.c2p(i, 0), DOWN, buff=0.15)
-            for i in [-2, -1, 1, 2]
-        ])
-        y_lbls = VGroup(*[
-            MathTex(str(i), font_size=22).next_to(ax.c2p(0, i), LEFT, buff=0.15)
-            for i in [-2, 2]
-        ])
-        zero_origin = MathTex("0", font_size=22).next_to(ax.c2p(0, 0), DL, buff=0.1)
-        beat_2 = beat_group(beat_2, x_lbls, y_lbls, zero_origin)
-
-        # Cubic y = x^3 - 3x  (roots at -sqrt(3), 0, sqrt(3); local max at -1, min at 1).
-        cubic = ax.plot(
-            lambda x: x**3 - 3 * x,
-            x_range=[-2.1, 2.1],
-            color=BLUE_TERM,
-            stroke_width=4,
+        polynomial = make_equation_card(
+            r"p(x)=x^3-2x^2-x+2", color=BLUE_TERM, scale=1.05,
         )
-        beat_2 = beat_group(beat_2, cubic)
-
-        self.play(Create(ax), run_time=1.4)
-        self.play(
-            *[Write(lbl) for lbl in x_lbls],
-            *[Write(lbl) for lbl in y_lbls],
-            Write(zero_origin),
-            run_time=1.5,
-        )
-        self.play(Create(cubic), run_time=2.0)
-        self.wait(1.5)
-
-        # Mark the roots.
-        roots = [
-            (np.sqrt(3), r"x \approx 1.73"),
-            (-np.sqrt(3), r"x \approx -1.73"),
-        ]
-        for rx, lbl_tex in roots:
-            dot = Dot(ax.c2p(rx, 0), color=GREEN_OK, radius=0.08)
-            lbl = MathTex(lbl_tex, color=GREEN_OK).scale(0.85)
-            lbl.next_to(dot, DOWN if rx > 0 else UP, buff=0.2)
-            lbl_bg = BackgroundRectangle(lbl, color=BLACK, fill_opacity=0.95, buff=0.1)
-            lbl_bg.move_to(lbl.get_center())
-            beat_2 = beat_group(beat_2, dot, lbl, lbl_bg)
-            self.play(FadeIn(dot, run_time=0.3))
-            self.play(FadeIn(lbl_bg, run_time=0.3), FadeIn(lbl, run_time=0.7))
-            self.wait(1.0)
-
-        # Annotation. Explicitly positioned inside the safe band so it
-        # cannot extend past the title/subtitle at the top.
-        root_lbl = Text("roots: x-values where y = 0", font_size=18, color=GREEN_OK)
-        root_lbl.move_to(BAND_CHART_CENTER + LEFT * 2.5 + UP * 0.4)
-        root_lbl_bg = BackgroundRectangle(root_lbl, color=BLACK, fill_opacity=0.95, buff=0.12)
-        root_lbl_bg.move_to(root_lbl.get_center())
-        beat_2 = beat_group(beat_2, root_lbl, root_lbl_bg)
-        self.play(FadeIn(root_lbl_bg, run_time=0.3), FadeIn(root_lbl, run_time=1.0))
-        self.wait(2.0)
-        self.play(FadeOut(beat_2, run_time=0.8))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 3 — Turning points and axis of symmetry (~25 s)
-        # ──────────────────────────────────────────────────────────────────
-        beat_3 = beat_group()
-        ax2 = Axes(
-            x_range=[-3, 3, 1],
-            y_range=[-2, 2, 1],
-            x_length=6.0,
-            y_length=2.4,
-            tips=False,
-            axis_config={"include_numbers": False, "stroke_width": 2},
-        ).move_to(BAND_CHART_CENTER + DOWN * 0.05)
-        beat_3 = beat_group(beat_3, ax2)
-        x_lbls2 = VGroup(*[
-            MathTex(str(i), font_size=22).next_to(ax2.c2p(i, 0), DOWN, buff=0.15)
-            for i in [-2, -1, 1, 2]
+        polynomial.move_to(BAND_CHART_CENTER + UP * 1.16)
+        features = VGroup(
+            MathTex(r"\text{degree}=3\quad\Rightarrow\quad\text{cubic shape}", color=TEAL_TERM).scale(0.82),
+            MathTex(r"\text{leading coefficient}=+1", color=GREEN_OK).scale(0.84),
+            Text("Positive odd degree: left end down, right end up", font_size=20, color=ORANGE_TERM),
+        ).arrange(DOWN, buff=0.25).move_to(BAND_CHART_CENTER + DOWN * 0.28)
+        feature_bgs = VGroup(*[
+            BackgroundRectangle(item, color=BLACK, fill_opacity=0.97, buff=0.11)
+            for item in features
         ])
-        y_lbls2 = VGroup(*[
-            MathTex(str(i), font_size=22).next_to(ax2.c2p(0, i), LEFT, buff=0.15)
-            for i in [-2, 2]
-        ])
-        zero2 = MathTex("0", font_size=22).next_to(ax2.c2p(0, 0), DL, buff=0.1)
-        beat_3 = beat_group(beat_3, x_lbls2, y_lbls2, zero2)
-
-        cubic2 = ax2.plot(lambda x: x**3 - 3 * x, x_range=[-2.1, 2.1], color=BLUE_TERM, stroke_width=4)
-        beat_3 = beat_group(beat_3, cubic2)
-
-        self.play(Create(ax2), run_time=1.0)
-        self.play(
-            *[Write(lbl) for lbl in x_lbls2],
-            *[Write(lbl) for lbl in y_lbls2],
-            Write(zero2),
-            run_time=1.2,
-        )
-        self.play(Create(cubic2), run_time=1.5)
-
-        # Local max at x = -1, y = 2.
-        max_dot = Dot(ax2.c2p(-1, 2), color=ORANGE_TERM, radius=0.08)
-        max_lbl = MathTex(r"\text{local max}", color=ORANGE_TERM).scale(0.85)
-        max_lbl.next_to(max_dot, UL, buff=0.2)
-        max_lbl_bg = BackgroundRectangle(max_lbl, color=BLACK, fill_opacity=0.95, buff=0.1)
-        max_lbl_bg.move_to(max_lbl.get_center())
-        beat_3 = beat_group(beat_3, max_dot, max_lbl, max_lbl_bg)
-        self.play(FadeIn(max_dot, run_time=0.3))
-        self.play(FadeIn(max_lbl_bg, run_time=0.3), FadeIn(max_lbl, run_time=0.7))
-        self.wait(1.0)
-
-        # Local min at x = 1, y = -2.
-        min_dot = Dot(ax2.c2p(1, -2), color=ORANGE_TERM, radius=0.08)
-        min_lbl = MathTex(r"\text{local min}", color=ORANGE_TERM).scale(0.85)
-        min_lbl.next_to(min_dot, DR, buff=0.2)
-        min_lbl_bg = BackgroundRectangle(min_lbl, color=BLACK, fill_opacity=0.95, buff=0.1)
-        min_lbl_bg.move_to(min_lbl.get_center())
-        beat_3 = beat_group(beat_3, min_dot, min_lbl, min_lbl_bg)
-        self.play(FadeIn(min_dot, run_time=0.3))
-        self.play(FadeIn(min_lbl_bg, run_time=0.3), FadeIn(min_lbl, run_time=0.7))
-        self.wait(1.5)
-
-        # Annotation about turning points, kept inside the safe area.
-        tp_note = Text("turning points (peaks/troughs)", font_size=22, color=ORANGE_TERM)
-        tp_note.move_to(BAND_CHART_CENTER + RIGHT * 2.6 + UP * 0.4)
-        tp_note_bg = BackgroundRectangle(tp_note, color=BLACK, fill_opacity=0.95, buff=0.12)
-        tp_note_bg.move_to(tp_note.get_center())
-        beat_3 = beat_group(beat_3, tp_note, tp_note_bg)
-        self.play(FadeIn(tp_note_bg, run_time=0.3), FadeIn(tp_note, run_time=1.0))
+        beat2 = beat_group(polynomial, feature_bgs, features)
+        self.play(FadeIn(polynomial))
+        for bg, item in zip(feature_bgs, features):
+            self.play(FadeIn(bg), FadeIn(item), run_time=0.75)
         self.wait(2.5)
-        self.play(FadeOut(beat_3, run_time=0.8))
+        self.play(FadeOut(beat2, run_time=0.8))
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 4 — Reject: roots are NOT the y-intercept (~20 s)
-        # ──────────────────────────────────────────────────────────────────
-        beat_4 = beat_group()
-        wrong = MathTex(
-            r"\text{root} = y\text{-intercept?}",
-            color=RED_REJECT,
-        ).scale(1.1)
-        wrong.move_to(BAND_CHART_CENTER + UP * 0.6)
-        wrong_bg = BackgroundRectangle(wrong, color=BLACK, fill_opacity=1, buff=0.25)
-        wrong_bg.move_to(wrong.get_center())
-        beat_4 = beat_group(beat_4, wrong, wrong_bg)
-        self.play(FadeIn(wrong_bg, run_time=0.4), Write(wrong, run_time=1.5))
-        cross = Cross(wrong, color=RED_REJECT, stroke_width=5)
-        beat_4 = beat_group(beat_4, cross)
-        self.play(Create(cross, run_time=0.8))
-        self.wait(1.0)
+        head3 = Text("Set x = 0 for the y-intercept", font_size=26, color=TEAL_TERM)
+        head3.move_to(BAND_CHART_CENTER + UP * 1.45)
+        head3_bg = BackgroundRectangle(head3, color=BLACK, fill_opacity=0.95, buff=0.15)
+        substitute = MathTex(
+            r"p(0)=0^3-2(0)^2-0+2=2", color=BLUE_TERM
+        ).scale(0.9).move_to(BAND_CHART_CENTER + UP * 0.35)
+        substitute_bg = BackgroundRectangle(substitute, color=BLACK, fill_opacity=1, buff=0.17)
+        intercept = make_equation_card(r"y\text{-intercept }(0,2)", color=GREEN_OK, scale=0.95)
+        intercept.move_to(BAND_CHART_CENTER + DOWN * 0.68)
+        constant = Text("For a polynomial, this is the constant term.", font_size=20, color=ORANGE_TERM)
+        constant.move_to(BAND_CHART_CENTER + DOWN * 1.25)
+        constant_bg = BackgroundRectangle(constant, color=BLACK, fill_opacity=0.96, buff=0.1)
+        beat3 = beat_group(head3_bg, head3, substitute_bg, substitute, intercept, constant_bg, constant)
+        self.play(FadeIn(head3_bg), FadeIn(head3))
+        self.play(FadeIn(substitute_bg), Write(substitute))
+        self.play(FadeIn(intercept))
+        self.play(FadeIn(constant_bg), FadeIn(constant))
+        self.wait(2.5)
+        self.play(FadeOut(beat3, run_time=0.8))
 
-        # Explanation.
-        expl = Text(
-            "Roots are x-values where y = 0; the y-intercept is where x = 0.",
-            font_size=22,
-            color=RED_REJECT,
-        ).next_to(wrong, DOWN, buff=0.5)
-        expl_bg = BackgroundRectangle(expl, color=BLACK, fill_opacity=0.95, buff=0.18)
-        expl_bg.move_to(expl.get_center())
-        beat_4 = beat_group(beat_4, expl, expl_bg)
-        self.play(FadeIn(expl_bg, run_time=0.3), FadeIn(expl, run_time=1.0))
-        self.wait(2.0)
+        head4 = Text("Use the factor theorem for candidate roots", font_size=25, color=GREEN_OK)
+        head4.move_to(BAND_CHART_CENTER + UP * 1.47)
+        head4_bg = BackgroundRectangle(head4, color=BLACK, fill_opacity=0.95, buff=0.15)
+        tests = VGroup(
+            MathTex(r"p(1)=0", color=BLUE_TERM).scale(0.88),
+            MathTex(r"p(-1)=0", color=TEAL_TERM).scale(0.88),
+            MathTex(r"p(2)=0", color=ORANGE_TERM).scale(0.88),
+        ).arrange(RIGHT, buff=0.85).move_to(BAND_CHART_CENTER + UP * 0.52)
+        test_bgs = VGroup(*[
+            BackgroundRectangle(test, color=BLACK, fill_opacity=1, buff=0.12)
+            for test in tests
+        ])
+        factor = MathTex(r"p(x)=(x+1)(x-1)(x-2)", color=GREEN_OK).scale(0.9)
+        factor.move_to(BAND_CHART_CENTER + DOWN * 0.24)
+        factor_bg = BackgroundRectangle(factor, color=BLACK, fill_opacity=1, buff=0.15)
+        roots = MathTex(r"x=-1,\ 1,\ 2\quad\text{are the x-intercepts}", color=GREEN_OK).scale(0.82)
+        roots.move_to(BAND_CHART_CENTER + DOWN * 0.93)
+        roots_bg = BackgroundRectangle(roots, color=BLACK, fill_opacity=1, buff=0.13)
+        turn = Text("Sign changes help locate possible turning points.", font_size=19, color=ORANGE_TERM)
+        turn.move_to(BAND_CHART_CENTER + DOWN * 1.32)
+        turn_bg = BackgroundRectangle(turn, color=BLACK, fill_opacity=0.96, buff=0.09)
+        beat4 = beat_group(
+            head4_bg, head4, test_bgs, tests, factor_bg, factor,
+            roots_bg, roots, turn_bg, turn,
+        )
+        self.play(FadeIn(head4_bg), FadeIn(head4))
+        for bg, test in zip(test_bgs, tests):
+            self.play(FadeIn(bg), Write(test), run_time=0.65)
+        self.play(FadeIn(factor_bg), Write(factor))
+        self.play(FadeIn(roots_bg), FadeIn(roots))
+        self.play(FadeIn(turn_bg), FadeIn(turn))
+        self.wait(3.0)
+        self.play(FadeOut(beat4, run_time=0.8))
 
-        rem = Text("Read them on different axes.", font_size=22, color=GREEN_OK)
-        rem.next_to(expl, DOWN, buff=0.4)
-        rem_bg = BackgroundRectangle(rem, color=BLACK, fill_opacity=0.95, buff=0.18)
-        rem_bg.move_to(rem.get_center())
-        beat_4 = beat_group(beat_4, rem, rem_bg)
-        self.play(FadeIn(rem_bg, run_time=0.3), FadeIn(rem, run_time=0.9))
-        self.wait(2.0)
-        self.play(FadeOut(beat_4, run_time=0.8))
+        head5 = Text("Equation-first summary", font_size=26, color=BLUE_TERM)
+        head5.move_to(BAND_CHART_CENTER + UP * 1.42)
+        head5_bg = BackgroundRectangle(head5, color=BLACK, fill_opacity=0.95, buff=0.15)
+        summary = VGroup(
+            Text("Degree → curve family", font_size=21, color=BLUE_TERM),
+            Text("Leading sign → end behaviour", font_size=21, color=TEAL_TERM),
+            Text("Set x = 0 → y-intercept", font_size=21, color=ORANGE_TERM),
+            Text("Factor theorem → candidate roots", font_size=21, color=GREEN_OK),
+        ).arrange(DOWN, aligned_edge=LEFT, buff=0.25).move_to(BAND_CHART_CENTER + DOWN * 0.08)
+        summary_bgs = VGroup(*[
+            BackgroundRectangle(line, color=BLACK, fill_opacity=0.97, buff=0.1)
+            for line in summary
+        ])
+        beat5 = beat_group(head5_bg, head5, summary_bgs, summary)
+        self.play(FadeIn(head5_bg), FadeIn(head5))
+        for bg, line in zip(summary_bgs, summary):
+            self.play(FadeIn(bg), FadeIn(line), run_time=0.65)
+        self.wait(2.5)
+        self.play(FadeOut(beat5, run_time=0.8))
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (~38 s, total ≈ 85 s)
-        # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,
-            r"\text{Roots: } y = 0,\quad \text{Turning points: } \dfrac{dy}{dx} = 0",
-            "Read each feature from its own axis.",
-            final_wait=38.0,
+            r"p(x)=x^3-2x^2-x+2=(x+1)(x-1)(x-2)",
+            "Read degree, leading sign, y-intercept, and roots before graphing.",
+            final_wait=47.0,
         )

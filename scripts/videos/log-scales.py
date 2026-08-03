@@ -2,11 +2,12 @@
 Manim scene for the lesson `log-scales`
 (topic `l10a-an-logarithms-scales`).
 
-Logarithms turn huge exponential ranges into compact readable scales.
-The animation uses the Richter scale (a 10^5 fold jump from mag 1 to
-mag 6) to show why log plots compress data that linear axes cannot.
+Logarithmic scales compress huge ranges into a readable axis: equal
+steps along the axis correspond to equal ratios, not equal differences.
+Show the decibels (10×), pH (10×) and Richter (10×) scales — each one
+encodes a tenfold ratio per unit.
 
-Target duration: ~80.6 s (matches the audio narration length).
+Target duration: ~80 s (matches the audio narration length).
 """
 
 import sys
@@ -24,181 +25,128 @@ class LogScalesScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 1 — Title (~5 s)
         # ──────────────────────────────────────────────────────────────────
-        animate_intro(
+        title = animate_intro(
             self,
             "Logarithmic scales",
-            "Compress huge ranges: a jump of 1 on the log axis is x10.",
+            "Equal steps on the axis mean equal ratios, not equal differences.",
         )
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 2 — Concrete example: Richter scale magnitudes vs. energy (~22 s)
+        # Beat 2 — Show three 10× scales side-by-side (~25 s)
         # ──────────────────────────────────────────────────────────────────
-        head = Text("Earthquake energy", font_size=26, color=BLUE_TERM)
-        head.move_to(BAND_CHART_CENTER + UP * 1.7)
+        beat_2 = beat_group()
+
+        head = Text("Three scales, each jumps by ×10",
+                    font_size=24, color=BLUE_TERM)
+        head.move_to(BAND_CHART_CENTER + UP * 1.15)
         head_bg = BackgroundRectangle(head, color=BLACK, fill_opacity=0.95, buff=0.15)
         head_bg.move_to(head.get_center())
-        self.play(FadeIn(head_bg, run_time=0.4), FadeIn(head, run_time=1.0))
+        beat_2 = beat_group(beat_2, head, head_bg)
+        self.play(FadeIn(head_bg, run_time=0.4), FadeIn(head, run_time=1.2))
         self.wait(1.0)
 
-        # Side-by-side: magnitude (linear-feeling small) vs. energy (10^N).
-        mag_card = make_equation_card(
-            r"\text{Mag. } 1 \rightarrow 6",
-            color=BLUE_TERM, scale=0.9,
+        db = make_equation_card(
+            r"\text{dB} \;=\; 10\,\log\!\left(\dfrac{I}{I_{0}}\right)",
+            color=GREEN_OK,
+            scale=0.78,
         )
-        mag_card.move_to(BAND_CHART_CENTER + UP * 0.5 + LEFT * 2.0)
-        mag_lbl = Text("linear scale", font_size=20, color=BLUE_TERM)
-        mag_lbl.next_to(mag_card, DOWN, buff=0.25)
-        mag_lbl_bg = BackgroundRectangle(mag_lbl, color=BLACK,
-                                         fill_opacity=0.95, buff=0.15)
-        mag_lbl_bg.move_to(mag_lbl.get_center())
-        mag_grp = VGroup(mag_card, mag_lbl, mag_lbl_bg)
+        db.move_to(BAND_CHART_CENTER + UP * 0.1 + LEFT * 3.6)
+        db_lbl = Text("sound intensity", font_size=20, color=GREEN_OK)
+        db_lbl.next_to(db, DOWN, buff=0.25)
+        db_lbl_bg = BackgroundRectangle(db_lbl, color=BLACK,
+                                        fill_opacity=0.95, buff=0.12)
+        db_lbl_bg.move_to(db_lbl.get_center())
+        db_grp = VGroup(db, db_lbl, db_lbl_bg)
+        beat_2 = beat_group(beat_2, db_grp)
 
-        en_card = make_equation_card(
-            r"\text{Energy: } 10^{1} \rightarrow 10^{6}",
-            color=ORANGE_TERM, scale=0.9,
+        ph = make_equation_card(
+            r"\text{pH} \;=\; -\log[\,\text{H}^{+}\,]",
+            color=ORANGE_TERM,
+            scale=0.78,
         )
-        en_card.move_to(BAND_CHART_CENTER + UP * 0.5 + RIGHT * 2.0)
-        en_lbl = Text("100 000× larger", font_size=20, color=ORANGE_TERM)
-        en_lbl.next_to(en_card, DOWN, buff=0.25)
-        en_lbl_bg = BackgroundRectangle(en_lbl, color=BLACK,
-                                        fill_opacity=0.95, buff=0.15)
-        en_lbl_bg.move_to(en_lbl.get_center())
-        en_grp = VGroup(en_card, en_lbl, en_lbl_bg)
+        ph.move_to(BAND_CHART_CENTER + UP * 0.1 + RIGHT * 0.1)
+        ph_lbl = Text("acidity", font_size=20, color=ORANGE_TERM)
+        ph_lbl.next_to(ph, DOWN, buff=0.25)
+        ph_lbl_bg = BackgroundRectangle(ph_lbl, color=BLACK,
+                                         fill_opacity=0.95, buff=0.12)
+        ph_lbl_bg.move_to(ph_lbl.get_center())
+        ph_grp = VGroup(ph, ph_lbl, ph_lbl_bg)
+        beat_2 = beat_group(beat_2, ph_grp)
 
-        self.play(FadeIn(mag_grp, shift=UP * 0.2, run_time=1.2))
-        self.wait(1.5)
-        self.play(FadeIn(en_grp, shift=UP * 0.2, run_time=1.2))
+        rk = make_equation_card(
+            r"\text{Richter} \;\propto\; \log(\text{amplitude})",
+            color=TEAL_TERM,
+            scale=0.78,
+        )
+        rk.move_to(BAND_CHART_CENTER + UP * 0.1 + RIGHT * 3.7)
+        rk_lbl = Text("earthquakes", font_size=20, color=TEAL_TERM)
+        rk_lbl.next_to(rk, DOWN, buff=0.25)
+        rk_lbl_bg = BackgroundRectangle(rk_lbl, color=BLACK,
+                                         fill_opacity=0.95, buff=0.12)
+        rk_lbl_bg.move_to(rk_lbl.get_center())
+        rk_grp = VGroup(rk, rk_lbl, rk_lbl_bg)
+        beat_2 = beat_group(beat_2, rk_grp)
+
+        self.play(FadeIn(db_grp, shift=UP * 0.2, run_time=1.3))
+        self.wait(0.6)
+        self.play(FadeIn(ph_grp, shift=UP * 0.2, run_time=1.3))
+        self.wait(0.6)
+        self.play(FadeIn(rk_grp, shift=UP * 0.2, run_time=1.3))
         self.wait(3.0)
-
-        beat2 = beat_group(head, head_bg, mag_grp, en_grp)
-        self.play(FadeOut(beat2, run_time=1.0))
+        self.play(FadeOut(beat_2, run_time=0.8))
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 3 — Generalise: log axis compresses exponential ranges (~20 s)
+        # Beat 3 — Each tick = a tenfold ratio (~25 s)
         # ──────────────────────────────────────────────────────────────────
-        head3 = Text("Take the logarithm", font_size=26, color=GREEN_OK)
-        head3.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head3_bg = BackgroundRectangle(head3, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
-        head3_bg.move_to(head3.get_center())
-        self.play(FadeIn(head3_bg, run_time=0.4), FadeIn(head3, run_time=1.0))
-        self.wait(1.0)
+        beat_3 = beat_group()
 
-        # A compact bar visualisation: log values 1, 2, 3, 4, 5, 6.
-        bars = VGroup()
-        log_values = [1, 2, 3, 4, 5, 6]
-        for i, lv in enumerate(log_values):
-            x = -3.5 + i * 1.4
-            bar = Rectangle(
-                width=0.7, height=lv * 0.18,
-                color=BLUE_TERM, fill_opacity=0.75, stroke_width=1,
-            )
-            bar.move_to(BAND_CHART_CENTER + LEFT * 0.3 + RIGHT * x + UP * (lv * 0.18 / 2 - 0.7))
-            bars.add(bar)
-
-        # X-axis labels for the bar group.
-        x_lbls = VGroup()
-        for i, lv in enumerate(log_values):
-            x = -3.5 + i * 1.4
-            lbl = MathTex(f"{lv}", color=WHITE).scale(0.6)
-            lbl.move_to(BAND_CHART_CENTER + RIGHT * x + DOWN * 1.2)
-            x_lbls.add(lbl)
-
-        bars_grp = VGroup(bars, x_lbls)
-        bars_grp.move_to(BAND_CHART_CENTER + UP * 0.1)
-
-        axis_lbl = Text("log(energy)", font_size=20, color=WHITE)
-        axis_lbl.next_to(bars_grp, LEFT, buff=0.4)
-
-        self.play(
-            LaggedStart(*[FadeIn(b, shift=UP * 0.3, run_time=0.6) for b in bars],
-                        lag_ratio=0.15),
-        )
-        self.play(FadeIn(x_lbls, run_time=0.8), FadeIn(axis_lbl, run_time=0.6))
-        self.wait(3.0)
-
-        # Highlight a 1-unit step on the log axis (10x in energy).
-        step_note = Text("each step of 1 = ×10 energy", font_size=22, color=GREEN_OK)
-        step_note.move_to(BAND_CHART_CENTER + DOWN * 2.0)
-        step_note_bg = BackgroundRectangle(step_note, color=BLACK,
-                                           fill_opacity=0.95, buff=0.15)
-        step_note_bg.move_to(step_note.get_center())
-
-        self.play(FadeIn(step_note_bg, run_time=0.4), FadeIn(step_note, run_time=1.0))
-        self.wait(3.0)
-
-        beat3 = beat_group(head3, head3_bg, bars, x_lbls, axis_lbl,
-                           step_note, step_note_bg)
-        self.play(FadeOut(beat3, run_time=1.0))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 4 — Contrast: linear axis would squish mag-1 off the page (~14 s)
-        # ──────────────────────────────────────────────────────────────────
-        head4 = Text("Linear axes fail", font_size=26, color=RED_REJECT)
-        head4.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head4_bg = BackgroundRectangle(head4, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
-        head4_bg.move_to(head4.get_center())
-        self.play(FadeIn(head4_bg, run_time=0.4), FadeIn(head4, run_time=1.0))
-        self.wait(0.8)
-
-        # Visualise tiny mag-1 bar next to giant mag-6 bar.
-        bars_lin = VGroup()
-        energies = [1, 10, 100, 1000, 10000, 100000]
-        max_e = max(energies)
-        for i, e in enumerate(energies):
-            x = -3.5 + i * 1.4
-            # On a linear scale, height ∝ energy (so mag-1 is invisible).
-            h = (e / max_e) * 2.5
-            bar = Rectangle(
-                width=0.7, height=max(h, 0.05),
-                color=RED_REJECT, fill_opacity=0.7, stroke_width=1,
-            )
-            bar.move_to(BAND_CHART_CENTER + UP * (h / 2 - 1.0) + RIGHT * x)
-            bars_lin.add(bar)
-
-        x_lbls2 = VGroup()
-        for i, e in enumerate(energies):
-            x = -3.5 + i * 1.4
-            if e >= 1000:
-                lbl_txt = f"{e // 1000}k"
-            else:
-                lbl_txt = str(e)
-            lbl = MathTex(lbl_txt, color=WHITE).scale(0.55)
-            lbl.move_to(BAND_CHART_CENTER + RIGHT * x + DOWN * 1.2)
-            x_lbls2.add(lbl)
-
-        bars_lin_grp = VGroup(bars_lin, x_lbls2)
-        bars_lin_grp.move_to(BAND_CHART_CENTER + UP * 0.1)
-
-        axis_lbl2 = Text("energy (linear)", font_size=20, color=WHITE)
-        axis_lbl2.next_to(bars_lin_grp, LEFT, buff=0.4)
-
-        self.play(
-            LaggedStart(*[FadeIn(b, shift=UP * 0.3, run_time=0.5) for b in bars_lin],
-                        lag_ratio=0.12),
-        )
-        self.play(FadeIn(x_lbls2, run_time=0.8), FadeIn(axis_lbl2, run_time=0.6))
-
-        # Mag-1 bar is invisible.
-        bad_note = Text("mag-1 invisible", font_size=22, color=RED_REJECT)
-        bad_note.move_to(BAND_CHART_CENTER + DOWN * 2.0)
-        bad_note_bg = BackgroundRectangle(bad_note, color=BLACK,
-                                          fill_opacity=0.95, buff=0.15)
-        bad_note_bg.move_to(bad_note.get_center())
-        self.play(FadeIn(bad_note_bg, run_time=0.4), FadeIn(bad_note, run_time=1.0))
+        tick = MathTex(
+            r"\Delta \text{(axis)} \;=\; 1 \;\Longleftrightarrow\; \times 10 \text{ (real value)}",
+            color=BLUE_TERM,
+        ).scale(1.0)
+        tick.move_to(BAND_CHART_CENTER + UP * 0.4)
+        tick_bg = BackgroundRectangle(tick, color=BLACK, fill_opacity=1, buff=0.22)
+        tick_bg.move_to(tick.get_center())
+        beat_3 = beat_group(beat_3, tick, tick_bg)
+        self.play(FadeIn(tick_bg, run_time=0.4), Write(tick, run_time=2.0))
         self.wait(2.5)
 
-        beat4 = beat_group(head4, head4_bg, bars_lin, x_lbls2, axis_lbl2,
-                           bad_note, bad_note_bg)
-        self.play(FadeOut(beat4, run_time=1.0))
+        # Concrete examples under each scale.
+        dbe = Text("+10 dB = sound is 10× louder",
+                   font_size=20, color=GREEN_OK)
+        dbe.move_to(BAND_CHART_CENTER + UP * -0.3 + LEFT * 3.6)
+        dbe_bg = BackgroundRectangle(dbe, color=BLACK, fill_opacity=0.95, buff=0.12)
+        dbe_bg.move_to(dbe.get_center())
+        beat_3 = beat_group(beat_3, dbe, dbe_bg)
+
+        phe = Text("pH −1 means 10× more acid",
+                   font_size=20, color=ORANGE_TERM)
+        phe.move_to(BAND_CHART_CENTER + UP * -0.3 + RIGHT * 0.1)
+        phe_bg = BackgroundRectangle(phe, color=BLACK, fill_opacity=0.95, buff=0.12)
+        phe_bg.move_to(phe.get_center())
+        beat_3 = beat_group(beat_3, phe, phe_bg)
+
+        rke = Text("+1 Richter = 10× shake",
+                   font_size=20, color=TEAL_TERM)
+        rke.move_to(BAND_CHART_CENTER + UP * -0.3 + RIGHT * 3.7)
+        rke_bg = BackgroundRectangle(rke, color=BLACK, fill_opacity=0.95, buff=0.12)
+        rke_bg.move_to(rke.get_center())
+        beat_3 = beat_group(beat_3, rke, rke_bg)
+
+        self.play(FadeIn(dbe_bg, run_time=0.3), FadeIn(dbe, run_time=1.0))
+        self.wait(0.5)
+        self.play(FadeIn(phe_bg, run_time=0.3), FadeIn(phe, run_time=1.0))
+        self.wait(0.5)
+        self.play(FadeIn(rke_bg, run_time=0.3), FadeIn(rke, run_time=1.0))
+        self.wait(5.5)
+        self.play(FadeOut(beat_3, run_time=0.8))
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (~15 s, held)
+        # Beat 4 — Final takeaway (~30 s, total ≈ 80 s)
         # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,
-            r"\log_{10}(E) = \text{magnitude}",
-            "A jump of 1 on a log axis = ×10 the underlying value.",
-            final_wait=35.0,
+            r"\Delta \text{(axis)} \;=\; 1 \;\Longleftrightarrow\; \times 10 \text{ real value}",
+            "Each scale encodes tenfold ratios — once you've used one, all feel familiar.",
+            final_wait=30.0,
         )
