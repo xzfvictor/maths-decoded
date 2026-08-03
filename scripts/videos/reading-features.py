@@ -93,8 +93,8 @@ class ReadingFeaturesScene(Scene):
 
         # Annotation. Explicitly positioned inside the safe band so it
         # cannot extend past the title/subtitle at the top.
-        root_lbl = Text("roots: x-values where y = 0", font_size=22, color=GREEN_OK)
-        root_lbl.move_to(BAND_CHART_CENTER + LEFT * 3.0 + UP * 0.4)
+        root_lbl = Text("roots: x-values where y = 0", font_size=18, color=GREEN_OK)
+        root_lbl.move_to(BAND_CHART_CENTER + LEFT * 2.5 + UP * 0.4)
         root_lbl_bg = BackgroundRectangle(root_lbl, color=BLACK, fill_opacity=0.95, buff=0.12)
         root_lbl_bg.move_to(root_lbl.get_center())
         beat_2 = beat_group(beat_2, root_lbl, root_lbl_bg)

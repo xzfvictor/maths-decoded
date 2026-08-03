@@ -66,7 +66,7 @@ class SketchingProcessScene(Scene):
 
         # Step 1: place roots on x-axis.
         step1 = Text("Step 1: plot the roots", font_size=22, color=BLUE_TERM)
-        step1.move_to(BAND_CHART_CENTER + UP * 1.3)
+        step1.move_to(BAND_CHART_CENTER + UP * 0.6)
         step1_bg = BackgroundRectangle(step1, color=BLACK, fill_opacity=0.95, buff=0.12)
         step1_bg.move_to(step1.get_center())
         beat_2 = beat_group(beat_2, step1, step1_bg)
@@ -132,7 +132,7 @@ class SketchingProcessScene(Scene):
         self.play(FadeIn(r1, run_time=0.2), FadeIn(r2, run_time=0.2))
 
         step2 = Text("Step 2: y-intercept & turning point", font_size=22, color=ORANGE_TERM)
-        step2.move_to(BAND_CHART_CENTER + UP * 1.3)
+        step2.move_to(BAND_CHART_CENTER + UP * 0.6)
         step2_bg = BackgroundRectangle(step2, color=BLACK, fill_opacity=0.95, buff=0.12)
         step2_bg.move_to(step2.get_center())
         beat_3 = beat_group(beat_3, step2, step2_bg)
