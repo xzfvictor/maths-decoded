@@ -33,6 +33,13 @@ touching the rest of the codebase.
   what runs that endpoint.
 - **Listen before you read.** Each lesson has an "Explain to me" button that
   plays a short AI-narrated overview, with a transcript you can read along to.
+- **Watch before you read.** Many lessons also include a short **AI-generated
+  video** that visualises the lesson content while the narration plays. The
+  video sits in the same "Explain to me" card above the transcript and the
+  audio is muxed onto the video itself, so the student only sees one
+  player. If the video is missing, the audio player + transcript still
+  show. Videos are produced offline by `scripts/` in this repo (see
+  "Learn with a video" below).
 - **Track your progress.** Completed lessons and exercise scores are saved
   locally in your browser — no account, no server.
 - **Complete coverage, guaranteed.** A build-time check asserts that every
@@ -46,7 +53,9 @@ touching the rest of the codebase.
 > lesson has a body with `###` headings, 3 worked examples, and 1+ curated
 > intro exercises; core and challenge variants are generated on demand from
 > the `/api/regenerate-exercise` endpoint. The `check:coverage` and
-> `check:exercises` scripts assert the contract stays green.
+> `check:exercises` scripts assert the contract stays green. Year 8 and
+> Year 10A also have **106 narrated video lessons** in `public/video/lessons/`
+> (49 for Year 8 + 57 for Year 10A, see "Learn with a video" below).
 
 ## Modules
 
@@ -55,13 +64,14 @@ modules. New modules (other subjects) plug into the same picker with no
 code changes outside `src/content/topics/index.ts`.
 
 - **Year 7 Mathematics** — `/year-7`. 31 topics across the six Victorian
-  Curriculum strands — currently stubs.
-- **Year 8 Mathematics** — `/year-8`. 29 topics — currently stubs.
-- **Year 9 Mathematics** — `/year-9`. 24 topics — currently stubs.
+  Curriculum strands.
+- **Year 8 Mathematics** — `/year-8`. 29 fully authored topics across the
+  six strands, with 49 narrated video lessons.
+- **Year 9 Mathematics** — `/year-9`. 24 topics.
 - **Year 10 Mathematics** — `/year-10`. 30 fully authored topics across the
   six strands; use as a refresher before VCE, or on its own.
-- **Year 10A Mathematics** — `/year-10a`. 26 topics — currently stubs (no
-  achievement standard; topics extend into VCE Methods).
+- **Year 10A Mathematics** — `/year-10a`. 26 fully authored topics
+  extending into VCE Methods, with 57 narrated video lessons.
 - **VCE Mathematical Methods — Unit 1** — `/maths-methods-unit1`. Functions, algebra,
   calculus and probability. Eleven topics covering all Unit 1 dot points.
 - **VCE Mathematical Methods — Unit 2** — `/maths-methods-unit2`. Transcendental functions,
@@ -159,6 +169,37 @@ each lesson, then probes the same host for a TTS endpoint
 reachable, only the JSON scripts are written and the UI degrades to a
 clear "audio not generated yet" hint. See `CLAUDE.md` for the full
 flow.
+
+## Learn with a video
+
+Many lessons also include a **short narrated video** that animates the
+content on screen while the narration plays — the same `Explain to me`
+audio, just visualised. Videos live at
+`public/video/lessons/{topic}/{lesson}.mp4` (mirroring the audio
+folder). If the MP4 is missing, the card gracefully falls back to
+audio-only + transcript. As of this writing, **106 lessons have videos**:
+49 for Year 8 and 57 for Year 10A. More modules to come.
+
+The video pipeline lives in `scripts/videos/`:
+
+- `scripts/videos/_common.py` — shared helpers (safe-area constants,
+  `beat_group()` VGroup cleaner, `make_term_card()`, `make_equation_card()`,
+  `animate_intro()`, `animate_final_definition()`).
+- `scripts/videos/<lesson>.py` — one Manim `Scene` per lesson, each
+  following a 5-beat structure (title → concrete example →
+  generalisation → contrast → final takeaway).
+- The `manimcommunity/manim:latest` Docker image renders 720p30 MP4s;
+  `ffmpeg` muxes the audio narration on top via `-c:v copy -c:a aac`.
+
+There is **one mandatory workflow step** before any video is declared
+done: extract intermediate frames at 1 fps and inspect **at least 10–15
+of them** to verify no overlap, no content covering the title or
+subtitle, and no shapes extending past the safe area
+`y ∈ [-1.5, 1.8]`. Last-frame-only checks hide most mid-video issues.
+A reusable playbook of safe-area rules, scaling limits, beat_group
+usage, and intermediate-frame verification is in the
+`~/.claude/skills/math-videos/SKILL.md` skill (used by the agents that
+authored the videos).
 
 ## Course map
 
