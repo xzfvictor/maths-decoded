@@ -53,9 +53,10 @@ touching the rest of the codebase.
 > lesson has a body with `###` headings, 3 worked examples, and 1+ curated
 > intro exercises; core and challenge variants are generated on demand from
 > the `/api/regenerate-exercise` endpoint. The `check:coverage` and
-> `check:exercises` scripts assert the contract stays green. Year 8 and
-> Year 10A also have **106 narrated video lessons** in `public/video/lessons/`
-> (49 for Year 8 + 57 for Year 10A, see "Learn with a video" below).
+> `check:exercises` scripts assert the contract stays green. Year 8, Year 10A,
+> and Year 10 have **183 narrated video lessons** in `public/video/lessons/`
+> (49 for Year 8 + 57 for Year 10A + 77 for Year 10, see "Learn with a video"
+> below).
 
 ## Modules
 
@@ -69,7 +70,8 @@ code changes outside `src/content/topics/index.ts`.
   six strands, with 49 narrated video lessons.
 - **Year 9 Mathematics** — `/year-9`. 24 topics.
 - **Year 10 Mathematics** — `/year-10`. 30 fully authored topics across the
-  six strands; use as a refresher before VCE, or on its own.
+  six strands, with 77 narrated video lessons; use as a refresher before VCE,
+  or on its own.
 - **Year 10A Mathematics** — `/year-10a`. 26 fully authored topics
   extending into VCE Methods, with 57 narrated video lessons.
 - **VCE Mathematical Methods — Unit 1** — `/maths-methods-unit1`. Functions, algebra,
@@ -177,8 +179,8 @@ content on screen while the narration plays — the same `Explain to me`
 audio, just visualised. Videos live at
 `public/video/lessons/{topic}/{lesson}.mp4` (mirroring the audio
 folder). If the MP4 is missing, the card gracefully falls back to
-audio-only + transcript. As of this writing, **106 lessons have videos**:
-49 for Year 8 and 57 for Year 10A. More modules to come.
+audio-only + transcript. As of this writing, **183 lessons have videos**:
+49 for Year 8, 57 for Year 10A, and 77 for Year 10. More modules to come.
 
 The video pipeline lives in `scripts/videos/`:
 
@@ -188,8 +190,10 @@ The video pipeline lives in `scripts/videos/`:
 - `scripts/videos/<lesson>.py` — one Manim `Scene` per lesson, each
   following a 5-beat structure (title → concrete example →
   generalisation → contrast → final takeaway).
-- The `manimcommunity/manim:latest` Docker image renders 720p30 MP4s;
-  `ffmpeg` muxes the audio narration on top via `-c:v copy -c:a aac`.
+- The `manimcommunity/manim:latest` Docker image renders the scenes;
+  `ffmpeg` muxes the narration and trims the final MP4 to the measured audio
+  duration. Run `scripts/videos/verify_year10.sh` to check Year 10 coverage,
+  duration alignment, and 1-fps frame extraction.
 
 There is **one mandatory workflow step** before any video is declared
 done: extract intermediate frames at 1 fps and inspect **at least 10–15
