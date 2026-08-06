@@ -151,9 +151,10 @@ class WritingScientificNotationScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"a \times 10^{n}, \quad 1 \le a < 10",
             "One non-zero digit left of the decimal — count shifts for n.",
-            final_wait=20.0,
+            final_wait=89.8,
         )

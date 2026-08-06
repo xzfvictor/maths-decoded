@@ -5,7 +5,7 @@ Manim scene for the lesson `reading-survey`
 When you read a survey report, hunt for the who/what/when/where/how-many
 and ask how the data was actually obtained. Watch for bias.
 
-Render target: ~70-80 s, final_wait=20 s.
+Render target: ~70-80 s, final_wait=59.4 s.
 """
 
 import sys
@@ -119,9 +119,10 @@ class ReadingSurveyScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Check the method before the numbers}",
             "Population, sample, size, method, variable — read carefully.",
-            final_wait=20,
+            final_wait=59.4,
         )

@@ -99,9 +99,10 @@ class GradientScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway (final_wait = 20 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"m \;=\; \dfrac{y_{2} - y_{1}}{x_{2} - x_{1}}",
             "Rise over run: how much y changes per unit of x.",
-            final_wait=20.0,
+            final_wait=93.4,
         )

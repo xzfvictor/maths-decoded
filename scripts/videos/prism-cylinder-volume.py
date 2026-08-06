@@ -137,9 +137,10 @@ class PrismCylinderVolumeScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway (final_wait = 20 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"V = A \times h",
             "Cross-section area × height — for any right prism or cylinder.",
-            final_wait=20.0,
+            final_wait=105.8,
         )

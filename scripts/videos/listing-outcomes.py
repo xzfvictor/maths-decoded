@@ -51,4 +51,4 @@ class ListingOutcomesScene(Scene):
         self.play(FadeIn(formula_bg), Write(formula)); self.wait(2); self.play(FadeIn(ex_bg), LaggedStart(*[Write(x) for x in examples], lag_ratio=0.2)); self.wait(6)
         self.play(FadeOut(beat, run_time=0.8))
 
-        animate_final_definition(self, r"\#\text{ outcomes}=m\times n", "List every leaf; products give fair-tree probabilities.", final_wait=20)
+        animate_final_definition(self, r"\#\text{ outcomes}=m\times n", "List every leaf; products give fair-tree probabilities.", final_wait=75.6)

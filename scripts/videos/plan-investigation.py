@@ -6,7 +6,7 @@ A statistical investigation is a cycle: question → population → sampling
 → collection → analysis → conclusion. Doing the steps in order avoids
 the "collect first, decide what to ask later" trap.
 
-Render target: ~70-80 s, final_wait=20 s.
+Render target: ~70-80 s, final_wait=52.9 s.
 """
 
 import sys
@@ -136,9 +136,10 @@ class PlanInvestigationScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Question} \to \text{Sample} \to \text{Analyse}",
             "Plan first, then collect — never the other way around.",
-            final_wait=20,
+            final_wait=52.9,
         )

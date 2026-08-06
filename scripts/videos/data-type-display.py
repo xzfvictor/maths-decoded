@@ -119,5 +119,5 @@ class DataTypeDisplayScene(Scene):
             self,
             r"\text{display} = f(\text{data type, question})",
             "Categorical → bar/pie. Numerical → histogram. Time → line.",
-            final_wait=20.0,
+            final_wait=59.9,
         )

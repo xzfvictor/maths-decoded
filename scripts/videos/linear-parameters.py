@@ -219,5 +219,5 @@ class LinearParametersScene(Scene):
             self,
             r"y \;=\; m\,x \;+\; c",
             "m tilts (gradient);  c slides (y-intercept).",
-            final_wait=38.0,
+            final_wait=49.2,
         )

@@ -221,5 +221,5 @@ class QuadraticParametersScene(Scene):
             self,
             r"y \;=\; a\,x^{2} \;+\; b\,x \;+\; c",
             "a flips & stretches;  b slides sideways;  c slides vertically.",
-            final_wait=20.0,
+            final_wait=100.4,
         )

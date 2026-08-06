@@ -159,5 +159,5 @@ class TrigRatiosConstantScene(Scene):
             self,
             r"\sin\theta,\; \cos\theta,\; \tan\theta \;=\; \text{constant for a given } \theta",
             "Similar right triangles give the same three ratios.",
-            final_wait=20.0,
+            final_wait=70.6,
         )

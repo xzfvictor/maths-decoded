@@ -6,7 +6,7 @@ Sample variation and the choice of representation: two samples from the
 same population give different numbers, and the chosen display can
 change the impression.
 
-Render target: ~70-80 s, final_wait=20 s.
+Render target: ~70-80 s, final_wait=52.0 s.
 """
 
 import sys
@@ -164,5 +164,5 @@ class RepresentationsScene(Scene):
             self,
             r"\text{Display} \;=\; \text{part of the story}",
             "Sampling varies; choose honest axes and full data.",
-            final_wait=20,
+            final_wait=52.0,
         )

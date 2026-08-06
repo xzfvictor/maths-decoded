@@ -80,9 +80,10 @@ class SolvingLinearEquationsScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 3 — Final takeaway (final_wait = 20 s, total ≈ 18 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"x \;=\; \dfrac{c - b}{a}",
             "Subtract the constant first, then divide by the coefficient.",
-            final_wait=20.0,
+            final_wait=102.6,
         )

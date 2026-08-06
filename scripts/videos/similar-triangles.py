@@ -158,5 +158,5 @@ class SimilarTrianglesScene(Scene):
             self,
             r"\text{Similar} \;\Longleftrightarrow\; \text{angles equal, sides in ratio } k",
             "Equal angles + proportional sides. Both must hold.",
-            final_wait=20.0,
+            final_wait=101.6,
         )

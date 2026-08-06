@@ -49,4 +49,4 @@ class RunningSimulationScene(Scene):
         self.play(FadeIn(apps_bg), FadeIn(apps)); self.wait(5)
         self.play(FadeOut(beat, run_time=0.8))
 
-        animate_final_definition(self, r"\widehat{P}(A) = \frac{k}{N}", "Repeat many trials; the estimate usually stabilises.", final_wait=20)
+        animate_final_definition(self, r"\widehat{P}(A) = \frac{k}{N}", "Repeat many trials; the estimate usually stabilises.", final_wait=41.1)

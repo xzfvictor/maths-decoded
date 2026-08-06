@@ -86,5 +86,5 @@ class DistanceScene(Scene):
             self,
             r"d \;=\; \sqrt{(x_{2}-x_{1})^{2} + (y_{2}-y_{1})^{2}}",
             "Horizontal gap and vertical gap form the two legs of a right triangle.",
-            final_wait=20.0,
+            final_wait=57.0,
         )

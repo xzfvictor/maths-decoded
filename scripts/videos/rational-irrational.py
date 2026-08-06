@@ -173,9 +173,10 @@ class RationalIrrationalScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Rational} = \dfrac{a}{b},\ \text{irrational} = \text{otherwise}",
             "Irrationals have decimals that go on forever without repeating.",
-            final_wait=20.0,
+            final_wait=126.8,
         )

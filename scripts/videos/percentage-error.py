@@ -164,9 +164,10 @@ class PercentageErrorScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 6 — Final takeaway (final_wait = 20 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\dfrac{|\,\text{measured} - \text{true}\,|}{\text{true}} \times 100\%",
             "Use percentage error to compare across very different scales.",
-            final_wait=20.0,
+            final_wait=89.8,
         )

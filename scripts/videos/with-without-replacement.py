@@ -64,4 +64,4 @@ class WithWithoutReplacementScene(Scene):
         self.play(FadeIn(bad_bg), FadeIn(bad)); self.wait(1.5); self.play(Create(cross)); self.play(FadeIn(fix_bg), FadeIn(fix)); self.wait(5)
         self.play(FadeOut(beat, run_time=0.8))
 
-        animate_final_definition(self, r"\text{with: same branches}\quad\text{without: shifted branches}", "Without replacement makes the second draw depend on the first.", final_wait=23)
+        animate_final_definition(self, r"\text{with: same branches}\quad\text{without: shifted branches}", "Without replacement makes the second draw depend on the first.", final_wait=87.8)

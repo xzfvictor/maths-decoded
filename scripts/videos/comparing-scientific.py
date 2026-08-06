@@ -124,9 +124,10 @@ class ComparingScientificScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Exponent first, then coefficient}",
             "Bigger exponent wins for positives; tie? Compare the coefficient.",
-            final_wait=20.0,
+            final_wait=75.8,
         )

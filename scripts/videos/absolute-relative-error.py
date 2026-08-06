@@ -139,9 +139,10 @@ class AbsoluteRelativeErrorScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway (final_wait = 20 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\dfrac{|\,\text{measured} - \text{true}\,|}{\text{true}}",
             "Absolute: original units.  Relative: unit-free fraction.",
-            final_wait=20.0,
+            final_wait=96.4,
         )

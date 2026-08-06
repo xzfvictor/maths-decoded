@@ -148,9 +148,10 @@ class RatioScaleFinanceScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway (final_wait = 20 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{total} = \text{rate} \times \text{quantity}",
             "Same rate, any quantity — scale up or down in proportion.",
-            final_wait=20.0,
+            final_wait=122.2,
         )

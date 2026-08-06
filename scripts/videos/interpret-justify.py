@@ -142,9 +142,10 @@ class InterpretJustifyScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final boxed takeaway (held; final_wait = 20 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{State axes, centre, spread, shape — then the story}",
             "A claim is justified when the numbers back it up.",
-            final_wait=20.0,
+            final_wait=69.6,
         )

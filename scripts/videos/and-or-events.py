@@ -176,5 +176,5 @@ class AndOrEventsScene(Scene):
             self,
             r"\text{And: multiply. Or: add, then subtract the overlap.}",
             "Independent 'and' = P(A)·P(B). Exclusive 'or' = P(A)+P(B).",
-            final_wait=20.0,
+            final_wait=52.2,
         )

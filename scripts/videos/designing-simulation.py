@@ -55,4 +55,4 @@ class DesigningSimulationScene(Scene):
         self.play(FadeIn(bad_bg), Write(bad)); self.wait(1.5); self.play(Create(cross)); self.play(FadeIn(fix_bg), FadeIn(fix)); self.wait(5)
         self.play(FadeOut(beat, run_time=0.8))
 
-        animate_final_definition(self, r"\text{identify} \to \text{map} \to \text{run} \to \text{record} \to \text{estimate}", "A simulation is a carefully mapped pretend experiment.", final_wait=20)
+        animate_final_definition(self, r"\text{identify} \to \text{map} \to \text{run} \to \text{record} \to \text{estimate}", "A simulation is a carefully mapped pretend experiment.", final_wait=48.2)

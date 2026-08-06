@@ -6,7 +6,7 @@ Distribution shapes: symmetric, right-skewed, left-skewed, bimodal.
 For each shape we draw a tiny dot-plot silhouette and pin the
 mean-vs-median rule.
 
-Render target: ~70-80 s, final_wait=20 s.
+Render target: ~70-80 s, final_wait=47.5 s.
 """
 
 import sys
@@ -167,9 +167,10 @@ class ShapeTermsScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final boxed takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Shape} \;\Rightarrow\; \text{mean vs median}",
             "Right tail → mean > median. Symmetric → mean ≈ median.",
-            final_wait=20,
+            final_wait=47.5,
         )

@@ -177,7 +177,7 @@ class SolvingQuadraticsScene(Scene):
         )
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (final_wait=38 s, total ≈ 100 s)
+        # Beat 5 — Final takeaway (final_wait=53.7 s, total ≈ 100 s)
         # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,

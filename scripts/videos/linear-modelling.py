@@ -143,11 +143,11 @@ class LinearModellingScene(Scene):
         )
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (final_wait=30 s, total ≈ 80 s)
+        # Beat 5 — Final takeaway (final_wait=41.4 s, total ≈ 80 s)
         # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,
             r"y \;=\; m\,x + b",
             "m = rate of change, b = starting value.",
-            final_wait=30.0,
+            final_wait=41.4,
         )

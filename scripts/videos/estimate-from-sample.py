@@ -6,7 +6,7 @@ Use the sample mean / median / proportion as point estimates for the
 population values. Bigger samples are more precise; bias cannot be
 fixed with more data.
 
-Render target: ~50-60 s, final_wait=20 s.
+Render target: ~50-60 s, final_wait=48.3 s.
 """
 
 import sys
@@ -119,9 +119,10 @@ class EstimateFromSampleScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\bar{x} \approx \mu,\quad \hat{p} \approx p",
             "Sample summary  ⇒  point estimate of the population value.",
-            final_wait=20,
+            final_wait=48.3,
         )

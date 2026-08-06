@@ -55,4 +55,4 @@ class SimilarityAspectsScene(Scene):
         self.play(FadeIn(bad_bg), FadeIn(bad)); self.wait(1.5); self.play(Create(cross)); self.wait(0.6); self.play(FadeIn(fix_bg), Write(fix)); self.wait(5)
         self.play(FadeOut(beat, run_time=0.8))
 
-        animate_final_definition(self, r"\text{lengths}\times k,\quad \text{areas}\times k^2,\quad \text{volumes}\times k^3", "Angles and shape stay the same: the image is similar.", final_wait=20)
+        animate_final_definition(self, r"\text{lengths}\times k,\quad \text{areas}\times k^2,\quad \text{volumes}\times k^3", "Angles and shape stay the same: the image is similar.", final_wait=66.8)

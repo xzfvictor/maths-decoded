@@ -144,9 +144,10 @@ class TrigRatiosScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\sin\theta = \frac{\text{opp}}{\text{hyp}}",
             "Pick the ratio that has the two sides you know.",
-            final_wait=20.0,
+            final_wait=75.0,
         )

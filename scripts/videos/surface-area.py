@@ -135,5 +135,5 @@ class SurfaceAreaScene(Scene):
             self,
             r"SA = 2\pi r^{2} + 2\pi r h",
             "Two circles + curved side.  (For prisms: 2 × (sum of face areas).)",
-            final_wait=20.0,
+            final_wait=78.1,
         )

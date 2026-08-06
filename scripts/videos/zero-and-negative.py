@@ -94,5 +94,5 @@ class ZeroAndNegativeScene(Scene):
             self,
             r"a^{0} \;=\; 1, \quad a^{-n} \;=\; \dfrac{1}{a^{n}} \quad (\text{for } a \neq 0)",
             "Zero exponent → 1; negative exponent → reciprocal.",
-            final_wait=20.0,
+            final_wait=78.3,
         )

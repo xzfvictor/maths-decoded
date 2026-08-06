@@ -110,5 +110,5 @@ class ThreeLawsScene(Scene):
             self,
             r"a^{m} a^{n} \;=\; a^{m+n}, \quad \dfrac{a^{m}}{a^{n}} \;=\; a^{m-n}, \quad (a^{m})^{n} \;=\; a^{mn}",
             "Add (product), subtract (quotient), multiply (power of a power).",
-            final_wait=32.0,
+            final_wait=93.4,
         )

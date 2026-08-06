@@ -137,9 +137,10 @@ class RealNumberOperationsScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Reals closed under } +,\ -,\ \times,\ \div",
             "Adding a non-zero rational to an irrational keeps it irrational.",
-            final_wait=20.0,
+            final_wait=136.2,
         )

@@ -178,5 +178,5 @@ class IdentifyingGraphingScene(Scene):
             self,
             r"y \;=\; a\,x^{2} + b\,x + c",
             "Smooth parabola — vertex, axis of symmetry, y-intercept at (0, c).",
-            final_wait=28.0,
+            final_wait=67.3,
         )

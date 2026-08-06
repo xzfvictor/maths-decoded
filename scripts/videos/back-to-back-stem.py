@@ -158,9 +158,10 @@ class BackToBackStemScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final boxed takeaway (held; final_wait = 20 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Back-to-back: one stem, two leaves, side by side}",
             "Read left side right-to-left, right side left-to-right.",
-            final_wait=20.0,
+            final_wait=71.4,
         )

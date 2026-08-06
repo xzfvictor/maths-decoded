@@ -164,11 +164,12 @@ class QuadraticAndOtherModellingScene(Scene):
         )
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (final_wait=38 s, total ≈ 99 s)
+        # Beat 5 — Final takeaway (final_wait=59.8 s, total ≈ 99 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"y \;=\; a\,x^{2} + b\,x + c",
             "Constant second differences → quadratic model.",
-            final_wait=38.0,
+            final_wait=59.8,
         )

@@ -159,9 +159,10 @@ class SketchingLinesScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway (final_wait = 20 s, total ≈ 29 s)
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"y \;=\; m\,x + c",
             "m is the gradient, c is the y-intercept — two points sketch the line.",
-            final_wait=20.0,
+            final_wait=118.0,
         )

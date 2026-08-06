@@ -56,4 +56,4 @@ class EnlargementBasicsScene(Scene):
         self.play(FadeIn(fix_bg), FadeIn(fix)); self.wait(5)
         self.play(FadeOut(beat, run_time=0.8))
 
-        animate_final_definition(self, r"CP'=k\,CP\quad\text{along the ray from }C", "An enlargement keeps the shape similar while scaling it.", final_wait=20)
+        animate_final_definition(self, r"CP'=k\,CP\quad\text{along the ray from }C", "An enlargement keeps the shape similar while scaling it.", final_wait=90.4)

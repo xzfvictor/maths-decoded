@@ -70,4 +70,4 @@ class RelativeFrequencyScene(Scene):
         self.wait(5)
         self.play(FadeOut(beat, run_time=0.8))
 
-        animate_final_definition(self, r"P(A) \approx \frac{\text{number of times }A\text{ occurs}}{n}", "More trials usually make the estimate settle.", final_wait=20)
+        animate_final_definition(self, r"P(A) \approx \frac{\text{number of times }A\text{ occurs}}{n}", "More trials usually make the estimate settle.", final_wait=30.1)

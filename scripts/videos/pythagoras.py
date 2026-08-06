@@ -138,9 +138,10 @@ class PythagorasScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final boxed takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"a^{2} + b^{2} = c^{2}",
             "c is the hypotenuse — the side opposite the right angle.",
-            final_wait=20.0,
+            final_wait=51.0,
         )

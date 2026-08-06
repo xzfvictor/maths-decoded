@@ -140,5 +140,5 @@ class ProportionRatesScene(Scene):
             self,
             r"y = k\,x \quad (k = \text{unit rate})",
             "Find k from one pair; multiply to scale up, divide to scale down.",
-            final_wait=20.0,
+            final_wait=65.8,
         )

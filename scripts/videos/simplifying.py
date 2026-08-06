@@ -127,10 +127,11 @@ class SimplifyingScene(Scene):
         self.play(FadeOut(final_row, run_time=0.8))
         self.wait(0.6)
 
-        # Final boxed definition (sized to audio final_wait=26 s).
+        # Final boxed definition (sized to audio final_wait=36.3 s).
+        
         animate_final_definition(
             self,
             r"\text{Like terms: same variable part}",
             "Add or subtract the coefficients; leave unlike terms alone.",
-            final_wait=26.0,
+            final_wait=36.3,
         )

@@ -5,7 +5,7 @@ Manim scene for the lesson `strength-of-evidence`
 Big random samples give strong evidence; small or biased samples give
 weak evidence — even if the result is dramatic.
 
-Render target: ~50-60 s, final_wait=20 s.
+Render target: ~50-60 s, final_wait=46.1 s.
 """
 
 import sys
@@ -112,9 +112,10 @@ class StrengthOfEvidenceScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Big + random} \Rightarrow \text{strong evidence}",
             "Small or biased samples give weak evidence — always.",
-            final_wait=20,
+            final_wait=46.1,
         )

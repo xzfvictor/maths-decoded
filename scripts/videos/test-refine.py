@@ -150,5 +150,5 @@ class TestRefineScene(Scene):
             self,
             r"\text{Run} \;\to\; \text{Check} \;\to\; \text{Revise} \;\to\; \text{Re-test}",
             "Refine one step at a time — try edge cases before declaring it done.",
-            final_wait=20.0,
+            final_wait=109.4,
         )

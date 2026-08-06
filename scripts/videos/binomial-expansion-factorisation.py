@@ -175,7 +175,7 @@ class BinomialExpansionFactorisationScene(Scene):
         )
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (final_wait=38 s, total ≈ 101 s)
+        # Beat 5 — Final takeaway (final_wait=55.9 s, total ≈ 101 s)
         # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,

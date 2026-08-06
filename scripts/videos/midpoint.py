@@ -88,5 +88,5 @@ class MidpointScene(Scene):
             self,
             r"M \;=\; \left(\dfrac{x_{1} + x_{2}}{2}, \ \dfrac{y_{1} + y_{2}}{2}\right)",
             "Equidistant from both endpoints.",
-            final_wait=20.0,
+            final_wait=55.2,
         )

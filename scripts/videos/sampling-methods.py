@@ -5,7 +5,7 @@ Manim scene for the lesson `sampling-methods`
 Random sampling aims to be unbiased; convenience, voluntary and quota
 samples trade some bias for ease.
 
-Render target: ~70-80 s, final_wait=20 s.
+Render target: ~70-80 s, final_wait=60.8 s.
 """
 
 import sys
@@ -123,9 +123,10 @@ class SamplingMethodsScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
+        
         animate_final_definition(
             self,
             r"\text{Random} \;=\; \text{unbiased by design}",
             "Convenience and voluntary samples trade bias for ease.",
-            final_wait=20,
+            final_wait=60.8,
         )

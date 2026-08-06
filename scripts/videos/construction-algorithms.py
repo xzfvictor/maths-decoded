@@ -173,5 +173,5 @@ class ConstructionAlgorithmsScene(Scene):
             self,
             r"\text{Algorithm} \;:\; \text{Inputs} \;\to\; \text{Steps} \;\to\; \text{Outputs}",
             "Build from compass-and-straightedge blocks, each step a primitive.",
-            final_wait=20.0,
+            final_wait=111.8,
         )
