@@ -1,177 +1,59 @@
-"""
-Manim scene for the lesson `enlargement-basics`
-(topic `l9-sp-enlargement-transformation`).
-
-An enlargement scales every point from a centre C by a factor k, so
-P' lies on the ray from C through P with CP' = k * CP. The shape stays
-similar; lengths scale by k, areas by k^2. The animation scales a
-triangle from the origin by k = 2, generalises the rule, and rejects
-"k can be zero".
-
-Target duration: ~93.6 s (matches the audio narration length).
-"""
-
 import sys
 sys.path.insert(0, '/home/victor/maths-decoded/scripts/videos')
 from _common import (
     BAND_CHART_CENTER, BLUE_TERM, TEAL_TERM, ORANGE_TERM, RED_REJECT,
-    GREEN_OK, make_term_card, make_equation_card, animate_intro,
-    animate_final_definition,
+    GREEN_OK, beat_group, make_term_card, make_equation_card,
+    animate_intro, animate_final_definition,
 )
 from manim import *
 
 
 class EnlargementBasicsScene(Scene):
     def construct(self) -> None:
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 1 — Title (~5 s)
-        # ──────────────────────────────────────────────────────────────────
-        title = animate_intro(
-            self,
-            "Enlargement with a scale factor",
-            "Every point moves along its ray from C by factor k.",
-        )
+        animate_intro(self, "Enlargement basics", "Every point travels from a centre by scale factor k")
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 2 — Concrete example: triangle scaled by k=2 from origin (~22 s)
-        # ──────────────────────────────────────────────────────────────────
-        # Original triangle on the left; image on the right.
-        original = Polygon(
-            [-5.5, -0.5, 0], [-4.0, -0.5, 0], [-4.75, 1.0, 0],
-            color=BLUE_TERM, stroke_width=4,
-        )
-        original_lbl = MathTex(r"\triangle ABC", color=BLUE_TERM).scale(0.9)
-        original_lbl.next_to(original, DOWN, buff=0.3)
-        original_lbl_bg = BackgroundRectangle(original_lbl, color=BLACK, fill_opacity=0.95, buff=0.12)
-        original_lbl_bg.move_to(original_lbl.get_center())
+        # Beat 2: a point, centre, ray, and a positive scale factor.
+        beat = None
+        centre = Dot(LEFT * 2.8 + DOWN * 0.65, color=ORANGE_TERM)
+        c_label = MathTex("C", color=ORANGE_TERM).scale(0.8).next_to(centre, DOWN, buff=0.18)
+        c_bg = BackgroundRectangle(c_label, color=BLACK, fill_opacity=0.95, buff=0.08); c_bg.move_to(c_label.get_center())
+        point = Dot(LEFT * 0.9 + UP * 0.25, color=BLUE_TERM)
+        p_label = MathTex("P", color=BLUE_TERM).scale(0.8).next_to(point, RIGHT, buff=0.18)
+        p_bg = BackgroundRectangle(p_label, color=BLACK, fill_opacity=0.95, buff=0.08); p_bg.move_to(p_label.get_center())
+        image = Dot(RIGHT * 2.9 + UP * 1.15, color=TEAL_TERM)
+        i_label = MathTex("P'", color=TEAL_TERM).scale(0.8).move_to(image.get_center() + UP * 0.22 + RIGHT * 0.12)
+        i_bg = BackgroundRectangle(i_label, color=BLACK, fill_opacity=0.95, buff=0.08); i_bg.move_to(i_label.get_center())
+        ray = Line(centre.get_center(), image.get_center(), color=WHITE)
+        labels = VGroup(MathTex(r"CP'=k\cdot CP", color=GREEN_OK).scale(0.95).move_to(UP * 0.95), MathTex(r"k=2", color=TEAL_TERM).scale(0.9).move_to(DOWN * 0.95))
+        bg = BackgroundRectangle(labels, color=BLACK, fill_opacity=0.95, buff=0.18); bg.move_to(labels.get_center())
+        beat = beat_group(beat, centre, c_bg, c_label, point, p_bg, p_label, image, i_bg, i_label, ray, labels, bg)
+        self.play(FadeIn(bg), FadeIn(labels), FadeIn(centre), FadeIn(c_bg), FadeIn(c_label), FadeIn(point), FadeIn(p_bg), FadeIn(p_label), Create(ray), FadeIn(image), FadeIn(i_bg), FadeIn(i_label)); self.wait(5)
+        self.play(FadeOut(beat, run_time=0.8))
 
-        image = Polygon(
-            [-1.5, -1.5, 0], [2.5, -1.5, 0], [0.5, 2.0, 0],
-            color=ORANGE_TERM, stroke_width=4,
-        )
-        image_lbl = MathTex(r"\triangle A'B'C'", color=ORANGE_TERM).scale(0.9)
-        image_lbl.next_to(image, DOWN, buff=0.3)
-        image_lbl_bg = BackgroundRectangle(image_lbl, color=BLACK, fill_opacity=0.95, buff=0.12)
-        image_lbl_bg.move_to(image_lbl.get_center())
+        # Beat 3: the recipe plus a coordinate example.
+        beat = None
+        recipe = VGroup(Text("1  choose centre C", font_size=22, color=ORANGE_TERM), Text("2  choose k", font_size=22, color=TEAL_TERM), Text("3  move each point along its ray", font_size=22, color=BLUE_TERM)).arrange(DOWN, aligned_edge=LEFT, buff=0.32).move_to(LEFT * 2.0 + UP * 0.35)
+        recipe_bg = BackgroundRectangle(recipe, color=BLACK, fill_opacity=1, buff=0.2); recipe_bg.move_to(recipe.get_center())
+        example = VGroup(MathTex(r"P=(1,2)", color=BLUE_TERM), MathTex(r"C=(0,0),\ k=2", color=ORANGE_TERM), MathTex(r"P'=(2,4)", color=TEAL_TERM)).arrange(DOWN, buff=0.38).scale(0.9).move_to(RIGHT * 2.5 + UP * 0.2)
+        ex_bg = BackgroundRectangle(example, color=BLACK, fill_opacity=1, buff=0.2); ex_bg.move_to(example.get_center())
+        beat = beat_group(beat, recipe_bg, recipe, ex_bg, example)
+        self.play(FadeIn(recipe_bg), LaggedStart(*[FadeIn(x) for x in recipe], lag_ratio=0.18)); self.wait(3); self.play(FadeIn(ex_bg), LaggedStart(*[Write(x) for x in example], lag_ratio=0.18)); self.wait(5)
+        self.play(FadeOut(beat, run_time=0.8))
 
-        self.play(
-            Create(original, run_time=1.4),
-            FadeIn(original_lbl_bg, run_time=0.4),
-            FadeIn(original_lbl, run_time=0.8),
-        )
-        self.wait(1.5)
-        self.play(
-            Create(image, run_time=1.4),
-            FadeIn(image_lbl_bg, run_time=0.4),
-            FadeIn(image_lbl, run_time=0.8),
-        )
-        self.wait(1.5)
-
-        # Centre dot at origin between them.
-        centre = Dot([0.0, 0.0, 0.0], color=WHITE, radius=0.08)
-        centre_lbl = MathTex("C", color=WHITE).scale(0.9).next_to(centre, UR, buff=0.15)
-        centre_lbl_bg = BackgroundRectangle(centre_lbl, color=BLACK, fill_opacity=0.95, buff=0.1)
-        centre_lbl_bg.move_to(centre_lbl.get_center())
-        self.play(FadeIn(centre, run_time=0.5), FadeIn(centre_lbl, run_time=0.5),
-                  FadeIn(centre_lbl_bg, run_time=0.3))
-        self.wait(1.0)
-
-        # k = 2 callout above.
-        k_lbl = MathTex(r"k \;=\; 2", color=GREEN_OK).scale(1.3)
-        k_lbl.move_to(BAND_CHART_CENTER + UP * 2.2)
-        k_lbl_bg = BackgroundRectangle(k_lbl, color=BLACK, fill_opacity=1, buff=0.22)
-        k_lbl_bg.move_to(k_lbl.get_center())
-        self.play(FadeIn(k_lbl_bg, run_time=0.4), FadeIn(k_lbl, run_time=1.0))
-        self.wait(1.5)
-
-        # CP' = k * CP note.
-        cp = MathTex(
-            r"CP' \;=\; k \cdot CP",
-            color=GREEN_OK,
-        ).scale(1.05)
-        cp.next_to(original_lbl, DOWN, buff=0.5)
-        cp_bg = BackgroundRectangle(cp, color=BLACK, fill_opacity=1, buff=0.22)
-        cp_bg.move_to(cp.get_center())
-        self.play(FadeIn(cp_bg, run_time=0.4), FadeIn(cp, run_time=1.5))
-        self.wait(3.0)
-
-        beat2 = VGroup(original, original_lbl, original_lbl_bg, image, image_lbl, image_lbl_bg,
-                       centre, centre_lbl, centre_lbl_bg, k_lbl, k_lbl_bg, cp, cp_bg)
-        self.play(FadeOut(beat2, run_time=1.4))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 3 — What scales with k (~22 s)
-        # ──────────────────────────────────────────────────────────────────
-        len_card = make_term_card(r"\text{Length}", r"\times k", BLUE_TERM)
-        area_card = make_term_card(r"\text{Area}", r"\times k^{2}", TEAL_TERM)
-        vol_card = make_term_card(r"\text{Volume}", r"\times k^{3}", ORANGE_TERM)
-        row = VGroup(len_card, area_card, vol_card).arrange(RIGHT, buff=0.55)
-        row.move_to(BAND_CHART_CENTER + UP * 0.6)
-        for grp in row:
-            for m in grp:
-                m.set_z_index(2)
-
-        for c in row:
-            self.play(FadeIn(c, shift=UP * 0.2, run_time=0.9))
-            self.wait(1.0)
-
-        # Concrete counter-check: a square of side 10, k = 0.5 → area 25.
-        worked = MathTex(
-            r"\text{Side 10, } k = 0.5: \text{ area} = (10 \cdot 0.5)^{2} = 25",
-            color=GREEN_OK,
-        ).scale(1.0)
-        worked.next_to(row, DOWN, buff=0.6)
-        worked_bg = BackgroundRectangle(worked, color=BLACK, fill_opacity=1, buff=0.22)
-        worked_bg.move_to(worked.get_center())
-        self.play(FadeIn(worked_bg, run_time=0.4), FadeIn(worked, run_time=2.0))
-        self.wait(3.5)
-
-        shape_note = Text(
-            "Shape stays similar — only size changes.",
-            font_size=22, color=GREEN_OK,
-        ).next_to(worked, DOWN, buff=0.5)
-        sn_bg = BackgroundRectangle(shape_note, color=BLACK, fill_opacity=0.95, buff=0.16)
-        sn_bg.move_to(shape_note.get_center())
-        self.play(FadeIn(sn_bg, run_time=0.4), FadeIn(shape_note, run_time=1.4))
-        self.wait(3.0)
-
-        beat3 = VGroup(row, worked, worked_bg, shape_note, sn_bg)
-        self.play(FadeOut(beat3, run_time=1.4))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 4 — Reject: k = 0 collapses the shape to a point (~10 s)
-        # ──────────────────────────────────────────────────────────────────
-        bad = MathTex(
-            r"k \;=\; 0 \text{ keeps the shape — it just shrinks}",
-            color=WHITE,
-        ).scale(0.9)
-        bad.move_to(BAND_CHART_CENTER + UP * 0.7)
-        bad_bg = BackgroundRectangle(bad, color=BLACK, fill_opacity=1, buff=0.22)
-        bad_bg.move_to(bad.get_center())
-        self.play(FadeIn(bad_bg, run_time=0.4), FadeIn(bad, run_time=1.4))
-        self.wait(2.0)
-
+        # Beat 4: reject the idea that an enlargement changes the shape.
+        beat = None
+        bad = Text("\"An enlargement distorts the shape.\"", font_size=25).move_to(UP * 0.45)
+        bad_bg = BackgroundRectangle(bad, color=BLACK, fill_opacity=1, buff=0.18); bad_bg.move_to(bad.get_center())
         cross = Cross(bad, color=RED_REJECT, stroke_width=6)
-        self.play(Create(cross, run_time=1.0))
+        fix = Text("No: angles and orientation are preserved when k is positive.", font_size=20, color=GREEN_OK).move_to(DOWN * 0.7)
+        fix_bg = BackgroundRectangle(fix, color=BLACK, fill_opacity=0.95, buff=0.17); fix_bg.move_to(fix.get_center())
+        beat = beat_group(beat, bad_bg, bad, cross, fix_bg, fix)
+        self.play(FadeIn(bad_bg), FadeIn(bad)); self.wait(1.5)
+        # Let the bad statement sit before drawing the strike-through so
+        # the two animations don't fight for the same vertical band.
+        self.wait(1.0)
+        self.play(Create(cross)); self.wait(1.0)
+        self.play(FadeIn(fix_bg), FadeIn(fix)); self.wait(5)
+        self.play(FadeOut(beat, run_time=0.8))
 
-        fix = Text(
-            "Every point lands on the centre — there is no shape left.",
-            font_size=20, color=RED_REJECT,
-        ).next_to(bad, DOWN, buff=0.5)
-        fix_bg = BackgroundRectangle(fix, color=BLACK, fill_opacity=0.95, buff=0.18)
-        fix_bg.move_to(fix.get_center())
-        self.play(FadeIn(fix_bg, run_time=0.4), FadeIn(fix, run_time=1.4))
-        self.wait(2.0)
-
-        beat4 = VGroup(bad, bad_bg, cross, fix, fix_bg)
-        self.play(FadeOut(beat4, run_time=1.2))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (held; total ≈ 93.6 s)
-        # ──────────────────────────────────────────────────────────────────
-        animate_final_definition(
-            self,
-            r"CP' \;=\; k \cdot CP",
-            "k > 1 enlarges; 0 < k < 1 shrinks; k < 0 flips through C.",
-            final_wait=35.0,
-        )
+        animate_final_definition(self, r"CP'=k\,CP\quad\text{along the ray from }C", "An enlargement keeps the shape similar while scaling it.", final_wait=20)

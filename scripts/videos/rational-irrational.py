@@ -1,12 +1,14 @@
 """
 Manim scene for the lesson `rational-irrational`
-(topic `l10a-an-surds`).
+(topic `l9-n-real-numbers`).
 
-Surds are irrational roots of non-perfect squares; the animation shows
-decimal expansions of sqrt(2) and sqrt(3) to prove they never repeat,
-contrasting with terminating decimals like 0.5.
+Every real number is either rational (can be written as a fraction
+of two integers) or irrational (cannot). The scene shows the
+decimal expansion of sqrt(2) and pi, then contrasts it with
+terminating decimals like 0.5, and gives the perfect-square
+shortcut.
 
-Target duration: ~102.9 s (matches the audio narration length).
+Render target: ~43 s audio + 20 s final wait.
 """
 
 import sys
@@ -22,146 +24,158 @@ from manim import *
 class RationalIrrationalScene(Scene):
     def construct(self) -> None:
         # ──────────────────────────────────────────────────────────────────
-        # Beat 1 — Title (~5 s)
+        # Beat 1 — Title + subtitle
         # ──────────────────────────────────────────────────────────────────
         animate_intro(
             self,
-            "Surds are irrational",
-            "Roots of non-perfect squares give non-repeating decimals.",
+            "Rational vs irrational numbers",
+            "Rational = fraction of two integers. Irrational = anything else.",
         )
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 2 — sqrt(2): decimal expansion never repeats (~26 s)
+        # Beat 2 — Concrete: sqrt(2) decimal never repeats
         # ──────────────────────────────────────────────────────────────────
-        head = MathTex(r"\sqrt{2}", font_size=32, color=RED_REJECT)
-        head.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head_bg = BackgroundRectangle(head, color=BLACK, fill_opacity=0.95, buff=0.15)
+        head = MathTex(r"\sqrt{2}", color=RED_REJECT).scale(1.4)
+        head.move_to(BAND_CHART_CENTER + UP * 1.0)
+        head_bg = BackgroundRectangle(head, color=BLACK, fill_opacity=1, buff=0.25)
         head_bg.move_to(head.get_center())
-        self.play(FadeIn(head_bg, run_time=0.4), FadeIn(head, run_time=1.0))
-        self.wait(1.0)
+        self.play(FadeIn(head_bg, run_time=0.4), Write(head, run_time=1.0))
+        self.wait(0.6)
 
-        eq = make_equation_card(
+        eq = MathTex(
             r"\sqrt{2} \approx 1.41421356\ldots",
-            color=RED_REJECT, scale=1.0,
-        )
-        eq.move_to(BAND_CHART_CENTER + UP * 0.3)
+            color=RED_REJECT,
+        ).scale(1.0)
+        eq.move_to(BAND_CHART_CENTER + UP * 0.0)
+        eq_bg = BackgroundRectangle(eq, color=BLACK, fill_opacity=1, buff=0.2)
+        eq_bg.move_to(eq.get_center())
+        self.play(FadeIn(eq_bg, run_time=0.4), Write(eq, run_time=1.3))
+        self.wait(0.6)
 
-        self.play(FadeIn(eq, shift=UP * 0.2, run_time=1.6))
-        self.wait(2.5)
-
-        note = Text("no pattern, never repeats", font_size=22, color=RED_REJECT)
-        note.next_to(eq, DOWN, buff=0.3)
-        note_bg = BackgroundRectangle(note, color=BLACK,
-                                      fill_opacity=0.95, buff=0.15)
+        note = Text("no pattern, never repeats",
+                    font_size=22, color=RED_REJECT)
+        note.next_to(eq, DOWN, buff=0.35)
+        note_bg = BackgroundRectangle(note, color=BLACK, fill_opacity=0.95, buff=0.15)
         note_bg.move_to(note.get_center())
-        self.play(FadeIn(note_bg, run_time=0.4), FadeIn(note, run_time=1.0))
-        self.wait(3.0)
+        self.play(FadeIn(note_bg, run_time=0.3), FadeIn(note, run_time=0.8))
+        self.wait(0.6)
 
-        # Compare to terminating decimal 0.5.
-        term = make_equation_card(r"\dfrac{1}{2} = 0.5", color=GREEN_OK, scale=1.0)
-        term.move_to(BAND_CHART_CENTER + DOWN * 1.5)
-        term_lbl = Text("terminates → rational", font_size=20, color=GREEN_OK)
+        # Fade out the "no pattern" note before showing the terminating
+        # decimal comparison, so the two blocks don't overlap.
+        self.play(
+            FadeOut(note, run_time=0.5),
+            FadeOut(note_bg, run_time=0.5),
+        )
+        self.wait(0.6)
+
+        # Compare to terminating decimal 0.75.
+        term = MathTex(r"0.75 = \dfrac{3}{4}", color=GREEN_OK).scale(1.0)
+        term.move_to(BAND_CHART_CENTER + DOWN * 0.7)
+        term_bg = BackgroundRectangle(term, color=BLACK, fill_opacity=1, buff=0.2)
+        term_bg.move_to(term.get_center())
+
+        term_lbl = Text("terminates → rational",
+                        font_size=20, color=GREEN_OK)
         term_lbl.next_to(term, DOWN, buff=0.25)
         term_lbl_bg = BackgroundRectangle(term_lbl, color=BLACK,
-                                          fill_opacity=0.95, buff=0.15)
+                                          fill_opacity=0.95, buff=0.13)
         term_lbl_bg.move_to(term_lbl.get_center())
-        term_grp = VGroup(term, term_lbl, term_lbl_bg)
 
-        self.play(FadeIn(term_grp, shift=UP * 0.2, run_time=1.3))
-        self.wait(3.0)
+        self.play(FadeIn(term_bg, run_time=0.3), Write(term, run_time=1.0))
+        self.wait(0.3)
+        self.play(FadeIn(term_lbl_bg, run_time=0.3), FadeIn(term_lbl, run_time=0.6))
+        self.wait(0.5)
 
-        beat2 = beat_group(head, head_bg, eq, note, note_bg, term_grp)
-        self.play(FadeOut(beat2, run_time=1.2))
+        beat2 = beat_group(
+            head, head_bg, eq, eq_bg,
+            term, term_bg, term_lbl, term_lbl_bg,
+        )
+        self.play(FadeOut(beat2, run_time=0.8))
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 3 — sqrt(3) and pi confirm the pattern (~22 s)
+        # Beat 3 — Generalise: more irrationals (sqrt(3), pi)
         # ──────────────────────────────────────────────────────────────────
-        head3 = Text("More irrationals", font_size=28, color=RED_REJECT)
-        head3.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head3_bg = BackgroundRectangle(head3, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
+        head3 = Text("More irrationals", font_size=24, color=RED_REJECT)
+        head3.move_to(BAND_CHART_CENTER + UP * 1.1)
+        head3_bg = BackgroundRectangle(head3, color=BLACK, fill_opacity=0.95, buff=0.13)
         head3_bg.move_to(head3.get_center())
-        self.play(FadeIn(head3_bg, run_time=0.4), FadeIn(head3, run_time=1.0))
-        self.wait(1.0)
+        self.play(FadeIn(head3_bg, run_time=0.3), FadeIn(head3, run_time=0.7))
+        self.wait(0.4)
 
-        sq3 = make_equation_card(
+        sq3 = MathTex(
             r"\sqrt{3} \approx 1.7320508\ldots",
-            color=RED_REJECT, scale=0.95,
-        )
-        sq3.move_to(BAND_CHART_CENTER + UP * 0.4)
+            color=RED_REJECT,
+        ).scale(0.9)
+        sq3.move_to(BAND_CHART_CENTER + UP * 0.15)
+        sq3_bg = BackgroundRectangle(sq3, color=BLACK, fill_opacity=1, buff=0.18)
+        sq3_bg.move_to(sq3.get_center())
 
-        pi_card = make_equation_card(
+        pi_card = MathTex(
             r"\pi \approx 3.14159265\ldots",
-            color=RED_REJECT, scale=0.95,
-        )
-        pi_card.move_to(BAND_CHART_CENTER + DOWN * 0.6)
+            color=RED_REJECT,
+        ).scale(0.9)
+        pi_card.move_to(BAND_CHART_CENTER + DOWN * 0.55)
+        pi_bg = BackgroundRectangle(pi_card, color=BLACK, fill_opacity=1, buff=0.18)
+        pi_bg.move_to(pi_card.get_center())
 
-        self.play(FadeIn(sq3, shift=UP * 0.2, run_time=1.4))
-        self.wait(1.5)
-        self.play(FadeIn(pi_card, shift=UP * 0.2, run_time=1.4))
-        self.wait(3.0)
+        self.play(FadeIn(sq3_bg, run_time=0.3), Write(sq3, run_time=1.0))
+        self.wait(0.3)
+        self.play(FadeIn(pi_bg, run_time=0.3), Write(pi_card, run_time=1.0))
+        self.wait(0.4)
 
-        note3 = Text("none of these repeat forever", font_size=22, color=RED_REJECT)
-        note3.move_to(BAND_CHART_CENTER + DOWN * 1.9)
+        note3 = Text("none of these repeat forever",
+                     font_size=20, color=RED_REJECT)
+        note3.move_to(BAND_CHART_CENTER + DOWN * 1.2)
         note3_bg = BackgroundRectangle(note3, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
+                                       fill_opacity=0.95, buff=0.13)
         note3_bg.move_to(note3.get_center())
-        self.play(FadeIn(note3_bg, run_time=0.4), FadeIn(note3, run_time=1.0))
-        self.wait(2.5)
+        self.play(FadeIn(note3_bg, run_time=0.3), FadeIn(note3, run_time=0.7))
+        self.wait(0.6)
 
-        beat3 = beat_group(head3, head3_bg, sq3, pi_card, note3, note3_bg)
-        self.play(FadeOut(beat3, run_time=1.2))
+        beat3 = beat_group(
+            head3, head3_bg, sq3, sq3_bg, pi_card, pi_bg, note3, note3_bg,
+        )
+        self.play(FadeOut(beat3, run_time=0.8))
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 4 — Reject: a "clean" decimal like 0.75 IS rational (~15 s)
+        # Beat 4 — Quick test: square roots of perfect squares
         # ──────────────────────────────────────────────────────────────────
-        head4 = Text("Contradiction check", font_size=28, color=GREEN_OK)
-        head4.move_to(BAND_CHART_CENTER + UP * 1.7)
-        head4_bg = BackgroundRectangle(head4, color=BLACK,
-                                       fill_opacity=0.95, buff=0.15)
+        head4 = Text("Quick test", font_size=24, color=BLUE_TERM)
+        head4.move_to(BAND_CHART_CENTER + UP * 1.1)
+        head4_bg = BackgroundRectangle(head4, color=BLACK, fill_opacity=0.95, buff=0.13)
         head4_bg.move_to(head4.get_center())
-        self.play(FadeIn(head4_bg, run_time=0.4), FadeIn(head4, run_time=1.0))
-        self.wait(1.0)
+        self.play(FadeIn(head4_bg, run_time=0.3), FadeIn(head4, run_time=0.7))
+        self.wait(0.4)
 
-        ok = make_equation_card(
-            r"0.75 = \dfrac{3}{4}",
-            color=GREEN_OK, scale=1.1,
-        )
+        ok = MathTex(
+            r"\sqrt{4}=2,\ \sqrt{9}=3,\ \sqrt{16}=4 \;\Rightarrow\; \text{rational}",
+            color=GREEN_OK,
+        ).scale(0.8)
         ok.move_to(BAND_CHART_CENTER + UP * 0.2)
-        ok_lbl = Text("rational — has fraction form", font_size=22, color=GREEN_OK)
-        ok_lbl.next_to(ok, DOWN, buff=0.3)
-        ok_lbl_bg = BackgroundRectangle(ok_lbl, color=BLACK,
-                                        fill_opacity=0.95, buff=0.15)
-        ok_lbl_bg.move_to(ok_lbl.get_center())
-        ok_grp = VGroup(ok, ok_lbl, ok_lbl_bg)
+        ok_bg = BackgroundRectangle(ok, color=BLACK, fill_opacity=1, buff=0.2)
+        ok_bg.move_to(ok.get_center())
+        self.play(FadeIn(ok_bg, run_time=0.3), Write(ok, run_time=1.2))
+        self.wait(0.4)
 
-        self.play(FadeIn(ok_grp, shift=UP * 0.2, run_time=1.4))
-        self.wait(2.0)
+        bad = MathTex(
+            r"\sqrt{2},\ \sqrt{3},\ \sqrt{5},\ \sqrt{7} \;\Rightarrow\; \text{irrational}",
+            color=RED_REJECT,
+        ).scale(0.8)
+        bad.move_to(BAND_CHART_CENTER + DOWN * 0.5)
+        bad_bg = BackgroundRectangle(bad, color=BLACK, fill_opacity=1, buff=0.2)
+        bad_bg.move_to(bad.get_center())
+        self.play(FadeIn(bad_bg, run_time=0.3), Write(bad, run_time=1.2))
+        self.wait(0.6)
 
-        bad = make_equation_card(
-            r"\sqrt{2} \neq \dfrac{a}{b}",
-            color=RED_REJECT, scale=1.1,
-        )
-        bad.move_to(BAND_CHART_CENTER + DOWN * 1.4)
-        bad_lbl = Text("irrational — no fraction form", font_size=22, color=RED_REJECT)
-        bad_lbl.next_to(bad, DOWN, buff=0.3)
-        bad_lbl_bg = BackgroundRectangle(bad_lbl, color=BLACK,
-                                         fill_opacity=0.95, buff=0.15)
-        bad_lbl_bg.move_to(bad_lbl.get_center())
-        bad_grp = VGroup(bad, bad_lbl, bad_lbl_bg)
-
-        self.play(FadeIn(bad_grp, shift=UP * 0.2, run_time=1.4))
-        self.wait(3.0)
-
-        beat4 = beat_group(head4, head4_bg, ok_grp, bad_grp)
-        self.play(FadeOut(beat4, run_time=1.2))
+        beat4 = beat_group(head4, head4_bg, ok, ok_bg, bad, bad_bg)
+        self.play(FadeOut(beat4, run_time=0.8))
 
         # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (held; total ≈ 102.9 s)
+        # Beat 5 — Final takeaway
         # ──────────────────────────────────────────────────────────────────
         animate_final_definition(
             self,
-            r"\text{Surd} \;=\; \sqrt{n},\ n \text{ not a perfect square}",
-            "Non-perfect-square roots give irrational, non-repeating decimals.",
-            final_wait=47.0,
+            r"\text{Rational} = \dfrac{a}{b},\ \text{irrational} = \text{otherwise}",
+            "Irrationals have decimals that go on forever without repeating.",
+            final_wait=20.0,
         )

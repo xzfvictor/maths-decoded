@@ -62,7 +62,16 @@ class SolvingQuadraticsScene(Scene):
         ans_bg = BackgroundRectangle(ans, color=BLACK, fill_opacity=1, buff=0.25)
         ans_bg.move_to(ans.get_center())
         self.play(FadeIn(ans_bg, run_time=0.5), FadeIn(ans, run_time=1.5))
-        self.wait(1.5)
+        self.wait(1.0)
+
+        # Fade out the explanatory "head / ans" pair before the next beat.
+        self.play(
+            FadeOut(head, run_time=0.6),
+            FadeOut(head_bg, run_time=0.6),
+            FadeOut(ans, run_time=0.6),
+            FadeOut(ans_bg, run_time=0.6),
+        )
+        self.wait(0.8)
 
         # Factorise.
         eq2 = make_equation_card(r"(x - 2)(x - 3) = 0",
@@ -91,8 +100,7 @@ class SolvingQuadraticsScene(Scene):
         self.play(FadeIn(sol, shift=UP * 0.2, run_time=1.4))
         self.wait(1.5)
 
-        beat2_group = VGroup(eq1, head, head_bg, ans, ans_bg,
-                             nfl, nfl_bg, sol)
+        beat2_group = VGroup(eq1, nfl, nfl_bg, sol)
         self.play(FadeOut(beat2_group, run_time=1.2))
 
         # ──────────────────────────────────────────────────────────────────

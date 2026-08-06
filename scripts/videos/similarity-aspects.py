@@ -1,159 +1,58 @@
-"""
-Manim scene for the lesson `similarity-aspects`
-(topic `l9-sp-enlargement-transformation`).
-
-An enlargement preserves shape: angles are unchanged, parallel lines
-stay parallel, but every length scales by |k|, every area by k^2, every
-volume by k^3. The animation starts with two similar triangles,
-spells out the three scaling laws, and rejects "similar = congruent".
-
-Target duration: ~87.4 s (matches the audio narration length).
-"""
-
 import sys
 sys.path.insert(0, '/home/victor/maths-decoded/scripts/videos')
 from _common import (
     BAND_CHART_CENTER, BLUE_TERM, TEAL_TERM, ORANGE_TERM, RED_REJECT,
-    GREEN_OK, make_term_card, make_equation_card, animate_intro,
-    animate_final_definition,
+    GREEN_OK, beat_group, make_term_card, make_equation_card,
+    animate_intro, animate_final_definition,
 )
 from manim import *
 
 
 class SimilarityAspectsScene(Scene):
     def construct(self) -> None:
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 1 — Title (~5 s)
-        # ──────────────────────────────────────────────────────────────────
-        title = animate_intro(
-            self,
-            "Similarity: what stays, what changes",
-            "Angles unchanged — lengths, areas, volumes scale by powers of k.",
-        )
+        animate_intro(self, "Similarity after enlargement", "What stays the same — and what scales")
 
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 2 — Concrete similar triangles (~22 s)
-        # ──────────────────────────────────────────────────────────────────
-        small = Polygon(
-            [-5.5, -0.5, 0], [-4.0, -0.5, 0], [-4.75, 1.0, 0],
-            color=BLUE_TERM, stroke_width=4,
-        )
-        big = Polygon(
-            [-1.0, -1.5, 0], [3.0, -1.5, 0], [1.0, 2.0, 0],
-            color=TEAL_TERM, stroke_width=4,
-        )
+        # Beat 2: preserved shape facts.
+        beat = None
+        same = VGroup(
+            Text("same angles", font_size=24, color=GREEN_OK),
+            Text("parallel lines stay parallel", font_size=24, color=GREEN_OK),
+            Text("a circle stays a circle", font_size=24, color=GREEN_OK),
+        ).arrange(DOWN, buff=0.32).move_to(LEFT * 2.3 + DOWN * 0.05)
+        same_bg = BackgroundRectangle(same, color=BLACK, fill_opacity=1, buff=0.2); same_bg.move_to(same.get_center())
+        circle = Circle(radius=0.65, color=BLUE_TERM).move_to(RIGHT * 2.7 + DOWN * 0.05)
+        circle2 = Circle(radius=1.15, color=TEAL_TERM).move_to(RIGHT * 2.7 + DOWN * 0.05)
+        similar = Text("same shape", font_size=22, color=TEAL_TERM).move_to(RIGHT * 2.7 + DOWN * 1.2)
+        sim_bg = BackgroundRectangle(similar, color=BLACK, fill_opacity=0.95, buff=0.16); sim_bg.move_to(similar.get_center())
+        beat = beat_group(beat, same_bg, same, circle, circle2, sim_bg, similar)
+        self.play(FadeIn(same_bg), LaggedStart(*[FadeIn(x) for x in same], lag_ratio=0.16), Create(circle)); self.wait(2); self.play(Create(circle2)); self.play(FadeIn(sim_bg), FadeIn(similar)); self.wait(5)
+        self.play(FadeOut(beat, run_time=0.8))
 
-        self.play(Create(small, run_time=1.4))
-        self.wait(1.0)
-        self.play(Create(big, run_time=1.4))
-        self.wait(1.5)
+        # Beat 3: k, k squared, k cubed, with the 1 cm square and cube intuition.
+        beat = None
+        scales = VGroup(
+            MathTex(r"\text{lengths}\ \times k", color=BLUE_TERM),
+            MathTex(r"\text{areas}\ \times k^2", color=TEAL_TERM),
+            MathTex(r"\text{volumes}\ \times k^3", color=ORANGE_TERM),
+        ).arrange(DOWN, buff=0.35).scale(0.95).move_to(LEFT * 2.3 + DOWN * 0.05)
+        scales_bg = BackgroundRectangle(scales, color=BLACK, fill_opacity=1, buff=0.2); scales_bg.move_to(scales.get_center())
+        square = Square(side_length=1.0, color=BLUE_TERM).move_to(RIGHT * 2.4 + UP * 0.45)
+        sq_label = Text("1 cm × 1 cm", font_size=20, color=BLUE_TERM).next_to(square, DOWN, buff=0.2)
+        sq_note = MathTex(r"k\times k\text{ little squares}\Rightarrow k^2", color=TEAL_TERM).scale(0.72).move_to(RIGHT * 2.35 + DOWN * 0.95)
+        sq_bg = BackgroundRectangle(VGroup(sq_label, sq_note), color=BLACK, fill_opacity=0.95, buff=0.16); sq_bg.move_to(VGroup(sq_label, sq_note).get_center())
+        beat = beat_group(beat, scales_bg, scales, square, sq_label, sq_note, sq_bg)
+        self.play(FadeIn(scales_bg), LaggedStart(*[Write(x) for x in scales], lag_ratio=0.18)); self.wait(2); self.play(Create(square), FadeIn(sq_label)); self.play(FadeIn(sq_bg), Write(sq_note)); self.wait(6)
+        self.play(FadeOut(beat, run_time=0.8))
 
-        # Angles preserved note.
-        ang = MathTex(
-            r"\text{Matching angles are equal}",
-            color=GREEN_OK,
-        ).scale(0.95)
-        ang.move_to(BAND_CHART_CENTER + UP * 2.1)
-        ang_bg = BackgroundRectangle(ang, color=BLACK, fill_opacity=1, buff=0.22)
-        ang_bg.move_to(ang.get_center())
-        self.play(FadeIn(ang_bg, run_time=0.4), FadeIn(ang, run_time=1.4))
-        self.wait(2.5)
-
-        # Ratio rule.
-        ratio = MathTex(
-            r"\dfrac{AB}{DE} \;=\; \dfrac{BC}{EF} \;=\; \dfrac{CA}{FD} \;=\; k",
-            color=WHITE,
-        ).scale(0.95)
-        ratio.move_to(BAND_CHART_CENTER + DOWN * 1.0)
-        ratio_bg = BackgroundRectangle(ratio, color=BLACK, fill_opacity=1, buff=0.24)
-        ratio_bg.move_to(ratio.get_center())
-        self.play(FadeIn(ratio_bg, run_time=0.5), Write(ratio, run_time=2.0))
-        self.wait(3.0)
-
-        k_val = MathTex(r"k \;=\; 2", color=GREEN_OK).scale(1.3)
-        k_val.next_to(ratio, DOWN, buff=0.4)
-        k_val_bg = BackgroundRectangle(k_val, color=BLACK, fill_opacity=1, buff=0.2)
-        k_val_bg.move_to(k_val.get_center())
-        self.play(FadeIn(k_val_bg, run_time=0.4), FadeIn(k_val, run_time=1.2))
-        self.wait(3.0)
-
-        beat2 = VGroup(small, big, ang, ang_bg, ratio, ratio_bg, k_val, k_val_bg)
-        self.play(FadeOut(beat2, run_time=1.4))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 3 — Length / Area / Volume scaling (~22 s)
-        # ──────────────────────────────────────────────────────────────────
-        len_card = make_term_card(r"\text{Length}", r"\times k", BLUE_TERM)
-        area_card = make_term_card(r"\text{Area}", r"\times k^{2}", TEAL_TERM)
-        vol_card = make_term_card(r"\text{Volume}", r"\times k^{3}", ORANGE_TERM)
-        row = VGroup(len_card, area_card, vol_card).arrange(RIGHT, buff=0.55)
-        row.move_to(BAND_CHART_CENTER + UP * 0.6)
-        for grp in row:
-            for m in grp:
-                m.set_z_index(2)
-
-        for c in row:
-            self.play(FadeIn(c, shift=UP * 0.2, run_time=0.85))
-            self.wait(1.0)
-
-        # Worked example: 12 cm perimeter, k = 5 → 60 cm.
-        eg = MathTex(
-            r"\text{Perimeter } 12 \to 12 \times 5 \;=\; 60 \text{ cm}",
-            color=GREEN_OK,
-        ).scale(1.0)
-        eg.next_to(row, DOWN, buff=0.55)
-        eg_bg = BackgroundRectangle(eg, color=BLACK, fill_opacity=1, buff=0.22)
-        eg_bg.move_to(eg.get_center())
-        self.play(FadeIn(eg_bg, run_time=0.4), FadeIn(eg, run_time=1.6))
-        self.wait(2.5)
-
-        eg2 = MathTex(
-            r"\text{Volume } 40, \, k=2: \;40 \times 2^{3} \;=\; 320",
-            color=GREEN_OK,
-        ).scale(1.0)
-        eg2.next_to(eg, DOWN, buff=0.4)
-        eg2_bg = BackgroundRectangle(eg2, color=BLACK, fill_opacity=1, buff=0.22)
-        eg2_bg.move_to(eg2.get_center())
-        self.play(FadeIn(eg2_bg, run_time=0.4), FadeIn(eg2, run_time=1.6))
-        self.wait(4.0)
-
-        beat3 = VGroup(row, eg, eg_bg, eg2, eg2_bg)
-        self.play(FadeOut(beat3, run_time=1.4))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 4 — Reject: similar = congruent (~10 s)
-        # ──────────────────────────────────────────────────────────────────
-        bad = Text(
-            "Two similar shapes must be congruent (the same size).",
-            font_size=22, color=WHITE,
-        )
-        bad.move_to(BAND_CHART_CENTER + UP * 0.7)
-        bad_bg = BackgroundRectangle(bad, color=BLACK, fill_opacity=1, buff=0.2)
-        bad_bg.move_to(bad.get_center())
-        self.play(FadeIn(bad_bg, run_time=0.4), FadeIn(bad, run_time=1.4))
-        self.wait(2.0)
-
+        # Beat 4: reject the linear-only rule; area and volume grow by powers.
+        beat = None
+        bad = Text("\"Area and volume scale by k too.\"", font_size=24).move_to(UP * 0.45)
+        bad_bg = BackgroundRectangle(bad, color=BLACK, fill_opacity=1, buff=0.18); bad_bg.move_to(bad.get_center())
         cross = Cross(bad, color=RED_REJECT, stroke_width=6)
-        self.play(Create(cross, run_time=1.0))
+        fix = MathTex(r"\text{lengths: }k\qquad\text{areas: }k^2\qquad\text{volumes: }k^3", color=GREEN_OK).scale(0.82).move_to(DOWN * 0.7)
+        fix_bg = BackgroundRectangle(fix, color=BLACK, fill_opacity=0.95, buff=0.19); fix_bg.move_to(fix.get_center())
+        beat = beat_group(beat, bad_bg, bad, cross, fix_bg, fix)
+        self.play(FadeIn(bad_bg), FadeIn(bad)); self.wait(1.5); self.play(Create(cross)); self.wait(0.6); self.play(FadeIn(fix_bg), Write(fix)); self.wait(5)
+        self.play(FadeOut(beat, run_time=0.8))
 
-        fix = Text(
-            "Similar allows different sizes; congruent means k = 1 exactly.",
-            font_size=20, color=RED_REJECT,
-        ).next_to(bad, DOWN, buff=0.5)
-        fix_bg = BackgroundRectangle(fix, color=BLACK, fill_opacity=0.95, buff=0.18)
-        fix_bg.move_to(fix.get_center())
-        self.play(FadeIn(fix_bg, run_time=0.4), FadeIn(fix, run_time=1.4))
-        self.wait(2.0)
-
-        beat4 = VGroup(bad, bad_bg, cross, fix, fix_bg)
-        self.play(FadeOut(beat4, run_time=1.2))
-
-        # ──────────────────────────────────────────────────────────────────
-        # Beat 5 — Final takeaway (held; total ≈ 87.4 s)
-        # ──────────────────────────────────────────────────────────────────
-        animate_final_definition(
-            self,
-            r"\text{Similar} \;\Longrightarrow\; \text{angles equal, sides in ratio } k",
-            "Lengths scale by k, areas by k^2, volumes by k^3.",
-            final_wait=33.0,
-        )
+        animate_final_definition(self, r"\text{lengths}\times k,\quad \text{areas}\times k^2,\quad \text{volumes}\times k^3", "Angles and shape stay the same: the image is similar.", final_wait=20)

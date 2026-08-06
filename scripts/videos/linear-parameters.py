@@ -44,43 +44,43 @@ class LinearParametersScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Card showing y = mx + 1 with m highlighted.
         eq = MathTex(r"y \;=\; m\,x \;+\; 1", color=WHITE).scale(1.0)
-        eq.move_to(BAND_CHART_CENTER + UP * 1.5)
+        eq.move_to(BAND_CHART_CENTER + UP * 1.2)
         eq_bg = BackgroundRectangle(eq, color=BLACK, fill_opacity=1, buff=0.25)
         eq_bg.move_to(eq.get_center())
 
         self.play(FadeIn(eq_bg, run_time=0.5), Write(eq, run_time=1.5))
         self.wait(1.5)
 
-        # Show three lines all through (0,1), rotating as m changes.
+        # Show three lines all through (0, 0.5), rotating as m changes.
+        # y_range is constrained to ≤ 1.2 so the line endpoints stay
+        # below the subtitle and inside the safe area.
         axes = Axes(
             x_range=[-3, 3, 1],
-            y_range=[-2, 3, 1],
+            y_range=[-1.5, 1.2, 1],
             x_length=5.0,
-            y_length=3.5,
+            y_length=2.2,
             tips=False,
             axis_config={"include_numbers": False, "stroke_width": 1.5},
-        ).move_to(BAND_CHART_CENTER + DOWN * 0.6)
+        ).move_to(BAND_CHART_CENTER + DOWN * 0.3)
         axes_bg = BackgroundRectangle(axes, color=BLACK, fill_opacity=1, buff=0.2)
         axes_bg.move_to(axes.get_center())
         self.play(FadeIn(axes_bg, run_time=0.5), FadeIn(axes, run_time=1.0))
 
-        # Three lines through (0,1) in axes coordinates.
+        # Three lines through (0, 0.5) in axes coordinates.
         def line_in_axes(m_val, color):
-            # Axes centre is at BAND_CHART_CENTER + DOWN*0.6.
             center = axes.get_center()
             x_unit = axes.x_axis.get_unit_size()
             y_unit = axes.y_axis.get_unit_size()
-            # Two points: x=-2.5 and x=2.5 in axis units
-            x1, x2 = -2.5, 2.5
-            y1 = m_val * x1 + 1
-            y2 = m_val * x2 + 1
+            x1, x2 = -2.0, 2.0
+            y1 = m_val * x1 + 0.5
+            y2 = m_val * x2 + 0.5
             p1 = center + np.array([x1 * x_unit, y1 * y_unit, 0])
             p2 = center + np.array([x2 * x_unit, y2 * y_unit, 0])
             return Line(p1, p2, color=color, stroke_width=4)
 
-        l1 = line_in_axes(-1.5, TEAL_TERM)
+        l1 = line_in_axes(-0.3, TEAL_TERM)
         l2 = line_in_axes( 0.0, ORANGE_TERM)
-        l3 = line_in_axes( 1.5, BLUE_TERM)
+        l3 = line_in_axes( 0.3, BLUE_TERM)
 
         self.play(Create(l1, run_time=1.4))
         self.wait(1.5)
@@ -113,8 +113,8 @@ class LinearParametersScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         # Beat 3 — Effect of c (parallel lines) (~24 s)
         # ──────────────────────────────────────────────────────────────────
-        eq2 = MathTex(r"y \;=\; 2x \;+\; c", color=WHITE).scale(1.0)
-        eq2.move_to(BAND_CHART_CENTER + UP * 1.5)
+        eq2 = MathTex(r"y \;=\; 0.3\,x \;+\; c", color=WHITE).scale(1.0)
+        eq2.move_to(BAND_CHART_CENTER + UP * 1.2)
         eq2_bg = BackgroundRectangle(eq2, color=BLACK, fill_opacity=1, buff=0.25)
         eq2_bg.move_to(eq2.get_center())
 
@@ -123,12 +123,12 @@ class LinearParametersScene(Scene):
 
         axes2 = Axes(
             x_range=[-3, 3, 1],
-            y_range=[-2, 3, 1],
+            y_range=[-1.5, 1.2, 1],
             x_length=5.0,
-            y_length=3.5,
+            y_length=2.2,
             tips=False,
             axis_config={"include_numbers": False, "stroke_width": 1.5},
-        ).move_to(BAND_CHART_CENTER + DOWN * 0.6)
+        ).move_to(BAND_CHART_CENTER + DOWN * 0.3)
         axes2_bg = BackgroundRectangle(axes2, color=BLACK, fill_opacity=1, buff=0.2)
         axes2_bg.move_to(axes2.get_center())
         self.play(FadeIn(axes2_bg, run_time=0.5), FadeIn(axes2, run_time=1.0))
@@ -137,16 +137,16 @@ class LinearParametersScene(Scene):
             center = axes2.get_center()
             x_unit = axes2.x_axis.get_unit_size()
             y_unit = axes2.y_axis.get_unit_size()
-            x1, x2 = -2.5, 2.5
+            x1, x2 = -2.0, 2.0
             y1 = m_val * x1 + c_val
             y2 = m_val * x2 + c_val
             p1 = center + np.array([x1 * x_unit, y1 * y_unit, 0])
             p2 = center + np.array([x2 * x_unit, y2 * y_unit, 0])
             return Line(p1, p2, color=color, stroke_width=4)
 
-        p1 = line_in_axes2(2.0, -1.0, TEAL_TERM)
-        p2 = line_in_axes2(2.0,  0.5, ORANGE_TERM)
-        p3 = line_in_axes2(2.0,  2.0, BLUE_TERM)
+        p1 = line_in_axes2(0.3, -0.4, TEAL_TERM)
+        p2 = line_in_axes2(0.3,  0.0, ORANGE_TERM)
+        p3 = line_in_axes2(0.3,  0.4, BLUE_TERM)
 
         self.play(Create(p1, run_time=1.4))
         self.wait(1.0)

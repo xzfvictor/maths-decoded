@@ -38,7 +38,7 @@ class QuadraticAndOtherModellingScene(Scene):
         # ──────────────────────────────────────────────────────────────────
         head = Text("Sequence: 0, 3, 12, 27, 48, ...",
                     font_size=24, color=BLUE_TERM)
-        head.move_to(BAND_CHART_CENTER + UP * 2.2)
+        head.move_to(BAND_CHART_CENTER + UP * 1.3)
         head_bg = BackgroundRectangle(head, color=BLACK,
                                        fill_opacity=0.95, buff=0.15)
         head_bg.move_to(head.get_center())

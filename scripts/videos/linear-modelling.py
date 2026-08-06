@@ -36,7 +36,7 @@ class LinearModellingScene(Scene):
         # Beat 2 — Concrete taxi fare example (~18 s)
         # ──────────────────────────────────────────────────────────────────
         head = Text("Taxi fare", font_size=24, color=BLUE_TERM)
-        head.move_to(BAND_CHART_CENTER + UP * 2.2)
+        head.move_to(BAND_CHART_CENTER + UP * 1.3)
         head_bg = BackgroundRectangle(head, color=BLACK, fill_opacity=0.95, buff=0.15)
         head_bg.move_to(head.get_center())
 
@@ -65,6 +65,8 @@ class LinearModellingScene(Scene):
         formula.move_to(BAND_CHART_CENTER + DOWN * 1.2)
         for m in formula:
             m.set_z_index(2)
+        # Fade out the per-km card before the formula appears so they don't overlap.
+        self.play(FadeOut(rate, run_time=0.6))
         self.play(FadeIn(formula, shift=UP * 0.2, run_time=1.4))
         self.wait(2.0)
 

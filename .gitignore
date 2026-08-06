@@ -28,6 +28,11 @@ public/video/videos/
 public/video/images/
 public/video/Tex/
 public/video/texts/
+videos-rerender/
+
+# 1-fps frame extracts used by the verification workflow
+# (regenerated on demand from public/video/lessons/*.mp4).
+check-frames/
 
 # Python bytecode caches (transient, regenerated on every run).
 __pycache__/

@@ -67,6 +67,11 @@ class SimplifyingScene(Scene):
         self.play(Indicate(VGroup(t2, t4), color=TEAL_TERM, scale_factor=1.08), run_time=1.6)
         self.wait(1.5)
 
+        # Fade out the row + labels before Beat 4 so the y-term labels
+        # don't overlap the upcoming "x + y" reject example.
+        self.play(FadeOut(row, run_time=0.8))
+        self.wait(0.6)
+
         # ──────────────────────────────────────────────────────────────────
         # Beat 4 — Reject combining unlike terms (~12 s)
         # ──────────────────────────────────────────────────────────────────
@@ -109,12 +114,18 @@ class SimplifyingScene(Scene):
             m.set_z_index(2)
 
         self.play(FadeOut(row, run_time=1.0))
+        self.wait(0.4)
         self.play(
             FadeIn(x_part, shift=UP * 0.2, run_time=1.2),
             FadeIn(plus_final, run_time=0.6),
             FadeIn(y_part, shift=UP * 0.2, run_time=1.2),
         )
         self.wait(2.0)
+
+        # Fade out the simplified expression before the final definition
+        # so it doesn't overlap the "Like terms" recap.
+        self.play(FadeOut(final_row, run_time=0.8))
+        self.wait(0.6)
 
         # Final boxed definition (sized to audio final_wait=26 s).
         animate_final_definition(

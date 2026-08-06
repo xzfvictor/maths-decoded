@@ -92,17 +92,22 @@ class BinomialExpansionFactorisationScene(Scene):
         ann2 = Text("15 = 3 × 5 (product)",
                     font_size=22, color=TEAL_TERM)
         ann1.next_to(right, DOWN, buff=0.5)
-        ann2.next_to(ann1, DOWN, buff=0.3)
+        ann2.next_to(right, DOWN, buff=0.5)
         ann1_bg = BackgroundRectangle(ann1, color=BLACK, fill_opacity=0.95, buff=0.15)
         ann1_bg.move_to(ann1.get_center())
         ann2_bg = BackgroundRectangle(ann2, color=BLACK, fill_opacity=0.95, buff=0.15)
         ann2_bg.move_to(ann2.get_center())
         self.play(FadeIn(ann1_bg, run_time=0.4), FadeIn(ann1, run_time=1.0))
+        self.wait(1.0)
+        self.play(
+            FadeOut(ann1, run_time=0.6),
+            FadeOut(ann1_bg, run_time=0.6),
+        )
         self.wait(0.6)
         self.play(FadeIn(ann2_bg, run_time=0.4), FadeIn(ann2, run_time=1.0))
         self.wait(1.5)
 
-        beat2_group = VGroup(right, ann1, ann1_bg, ann2, ann2_bg)
+        beat2_group = VGroup(right, ann2, ann2_bg)
         self.play(FadeOut(beat2_group, run_time=1.0))
 
         # ──────────────────────────────────────────────────────────────────
